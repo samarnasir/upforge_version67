@@ -1,0 +1,883 @@
+{
+  "flowTitle": "Find out how we can help",
+  "version": "1.0",
+  "questions": {
+    "stage": {
+      "id": "q1",
+      "label": "Where are you right now?",
+      "type": "single_select",
+      "options": [
+        {
+          "id": "1",
+          "label": "Just an idea",
+          "customQuestion": {
+            "id": "custom_q",
+            "label": "What's the single biggest unknown about your idea that, once answered, would give you the confidence to move forward?",
+            "placeholder": "e.g. Whether people will pay for it, if the market is big enough..."
+          },
+          "problems": [
+            {
+              "id": "1A",
+              "label": "Difficulty in testing the idea",
+              "roadblocks": [
+                {
+                  "id": "1Aa",
+                  "label": "Feedback feels too polite"
+                },
+                {
+                  "id": "1Ab",
+                  "label": "Getting vague user feedback"
+                },
+                {
+                  "id": "1Ac",
+                  "label": "Not sure what to ask"
+                },
+                {
+                  "id": "1Ad",
+                  "label": "Can't find people to ask"
+                },
+                {
+                  "id": "1Ae",
+                  "label": "Fear someone steals it"
+                },
+                {
+                  "id": "1Af",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "1B",
+              "label": "Don't know who wants it",
+              "roadblocks": [
+                {
+                  "id": "1Ba",
+                  "label": "Can't identify ideal users"
+                },
+                {
+                  "id": "1Bb",
+                  "label": "Target audience is too broad"
+                },
+                {
+                  "id": "1Bc",
+                  "label": "Can't reach potential buyers"
+                },
+                {
+                  "id": "1Bd",
+                  "label": "Not sure who pays"
+                },
+                {
+                  "id": "1Be",
+                  "label": "Market feels too crowded"
+                },
+                {
+                  "id": "1Bf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "1C",
+              "label": "Not knowing how to start",
+              "roadblocks": [
+                {
+                  "id": "1Ca",
+                  "label": "Overwhelmed by next steps"
+                },
+                {
+                  "id": "1Cb",
+                  "label": "Don't have technical skills"
+                },
+                {
+                  "id": "1Cc",
+                  "label": "Stuck in planning, no action"
+                },
+                {
+                  "id": "1Cd",
+                  "label": "Trouble finding a co-founder"
+                },
+                {
+                  "id": "1Ce",
+                  "label": "Difficulty in building the first version"
+                },
+                {
+                  "id": "1Cf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "1D",
+              "label": "The money side",
+              "roadblocks": [
+                {
+                  "id": "1Da",
+                  "label": "Afraid to risk personal savings"
+                },
+                {
+                  "id": "1Db",
+                  "label": "No money for prototype"
+                },
+                {
+                  "id": "1Dc",
+                  "label": "High cost to incorporate"
+                },
+                {
+                  "id": "1Dd",
+                  "label": "Don't know how to fundraise"
+                },
+                {
+                  "id": "1De",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "1E",
+              "label": "Too many different ideas",
+              "roadblocks": [
+                {
+                  "id": "1Ea",
+                  "label": "Can't choose just one"
+                },
+                {
+                  "id": "1Eb",
+                  "label": "Fear of picking wrong idea"
+                },
+                {
+                  "id": "1Ec",
+                  "label": "Constantly changing my mind"
+                },
+                {
+                  "id": "1Ed",
+                  "label": "Ideas feel too similar"
+                },
+                {
+                  "id": "1Ee",
+                  "label": "Don't know which is profitable"
+                },
+                {
+                  "id": "1Ef",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "1F",
+              "label": "Other",
+              "type": "text_input",
+              "roadblocks": []
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "label": "Building the product",
+          "customQuestion": {
+            "id": "custom_q",
+            "label": "What's the one thing slowing you down the most right now, and what would need to change to fix it?",
+            "placeholder": "e.g. Need a technical co-founder, unclear on feature priority..."
+          },
+          "problems": [
+            {
+              "id": "2A",
+              "label": "Progress feels painfully slow",
+              "roadblocks": [
+                {
+                  "id": "2Aa",
+                  "label": "Don't know which features to keep"
+                },
+                {
+                  "id": "2Ab",
+                  "label": "Lacking team strength"
+                },
+                {
+                  "id": "2Ac",
+                  "label": "More complex than expected"
+                },
+                {
+                  "id": "2Ad",
+                  "label": "Constantly changing the direction"
+                },
+                {
+                  "id": "2Ae",
+                  "label": "Too many bugs and fixes"
+                },
+                {
+                  "id": "2Af",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "2B",
+              "label": "Product never feels ready",
+              "roadblocks": [
+                {
+                  "id": "2Ba",
+                  "label": "Stuck polishing small details"
+                },
+                {
+                  "id": "2Bb",
+                  "label": "Major technical bugs"
+                },
+                {
+                  "id": "2Bc",
+                  "label": "Not able to finalize what features to put out"
+                },
+                {
+                  "id": "2Bd",
+                  "label": "Don't know how to launch publicly"
+                },
+                {
+                  "id": "2Be",
+                  "label": "Design and UI not up to expectations"
+                },
+                {
+                  "id": "2Bf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "2C",
+              "label": "Can't get early users",
+              "roadblocks": [
+                {
+                  "id": "2Ca",
+                  "label": "Launched, no interest"
+                },
+                {
+                  "id": "2Cb",
+                  "label": "People sign up, disappear"
+                },
+                {
+                  "id": "2Cc",
+                  "label": "Attracting the wrong crowd"
+                },
+                {
+                  "id": "2Cd",
+                  "label": "Nobody responds to outreach"
+                },
+                {
+                  "id": "2Ce",
+                  "label": "Don't know where users are"
+                },
+                {
+                  "id": "2Cf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "2D",
+              "label": "Money is running low",
+              "roadblocks": [
+                {
+                  "id": "2Da",
+                  "label": "Spent much more than planned"
+                },
+                {
+                  "id": "2Db",
+                  "label": "Not enough cash to finish building"
+                },
+                {
+                  "id": "2Dc",
+                  "label": "Cannot charge users for it yet"
+                },
+                {
+                  "id": "2Dd",
+                  "label": "Need investment but have nothing ready"
+                },
+                {
+                  "id": "2De",
+                  "label": "Stuck operating purely in survival mode"
+                },
+                {
+                  "id": "2Df",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "2E",
+              "label": "Don't have the right team",
+              "roadblocks": [
+                {
+                  "id": "2Ea",
+                  "label": "Can't build it myself"
+                },
+                {
+                  "id": "2Eb",
+                  "label": "Need a co-founder badly"
+                },
+                {
+                  "id": "2Ec",
+                  "label": "Can build, can't sell"
+                },
+                {
+                  "id": "2Ed",
+                  "label": "Can sell, can't build"
+                },
+                {
+                  "id": "2Ee",
+                  "label": "Team arguments slowing progress"
+                },
+                {
+                  "id": "2Ef",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "2F",
+              "label": "Other",
+              "type": "text_input",
+              "roadblocks": []
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "label": "Ready to launch",
+          "customQuestion": {
+            "id": "custom_q",
+            "label": "What's the biggest gap between your product right now and the launch traction you're hoping for?",
+            "placeholder": "e.g. No audience, unfinished features, unclear messaging..."
+          },
+          "problems": [
+            {
+              "id": "3A",
+              "label": "Nobody knows we exist",
+              "roadblocks": [
+                {
+                  "id": "3Aa",
+                  "label": "No email list or launch network"
+                },
+                {
+                  "id": "3Ab",
+                  "label": "Can't get organic social media reach"
+                },
+                {
+                  "id": "3Ac",
+                  "label": "Paid ads are too expensive to test"
+                },
+                {
+                  "id": "3Ad",
+                  "label": "Core marketing messaging isn't clicking"
+                },
+                {
+                  "id": "3Ae",
+                  "label": "Don't know how to create interest"
+                },
+                {
+                  "id": "3Af",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "3B",
+              "label": "Don't know how to launch",
+              "roadblocks": [
+                {
+                  "id": "3Ba",
+                  "label": "No clear launch plan or strategy"
+                },
+                {
+                  "id": "3Bb",
+                  "label": "Don't know which channel to pick first"
+                },
+                {
+                  "id": "3Bc",
+                  "label": "Confused about which target audience to focus on"
+                },
+                {
+                  "id": "3Bd",
+                  "label": "Don't know how to reach early users"
+                },
+                {
+                  "id": "3Be",
+                  "label": "Don't know how to budget and manage launch costs"
+                },
+                {
+                  "id": "3Bf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "3C",
+              "label": "Product feels unpolished",
+              "roadblocks": [
+                {
+                  "id": "3Ca",
+                  "label": "Core features are buggy"
+                },
+                {
+                  "id": "3Cb",
+                  "label": "Clunky user onboarding flow"
+                },
+                {
+                  "id": "3Cc",
+                  "label": "Missing essential launch features"
+                },
+                {
+                  "id": "3Cd",
+                  "label": "Unprofessional design and layout"
+                },
+                {
+                  "id": "3Ce",
+                  "label": "Payment setup is broken"
+                },
+                {
+                  "id": "3Cf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "3D",
+              "label": "Establishing online presence",
+              "roadblocks": [
+                {
+                  "id": "3Da",
+                  "label": "Making the brand look credible"
+                },
+                {
+                  "id": "3Db",
+                  "label": "Producing content regularly"
+                },
+                {
+                  "id": "3Dc",
+                  "label": "Driving traffic to pages"
+                },
+                {
+                  "id": "3Dd",
+                  "label": "Designing the website layout"
+                },
+                {
+                  "id": "3De",
+                  "label": "Ranking on search engines"
+                },
+                {
+                  "id": "3Df",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "3E",
+              "label": "Unsure what to charge",
+              "roadblocks": [
+                {
+                  "id": "3Ea",
+                  "label": "Don't know price point"
+                },
+                {
+                  "id": "3Eb",
+                  "label": "Confused by tier structures"
+                },
+                {
+                  "id": "3Ec",
+                  "label": "Complex competitor pricing models"
+                },
+                {
+                  "id": "3Ed",
+                  "label": "Fear of scaring users"
+                },
+                {
+                  "id": "3Ee",
+                  "label": "Running out of cash"
+                },
+                {
+                  "id": "3Ef",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "3F",
+              "label": "Other",
+              "type": "text_input",
+              "roadblocks": []
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "label": "Have early users",
+          "customQuestion": {
+            "id": "custom_q",
+            "label": "What's holding you back from turning your early traction into consistent revenue or growth?",
+            "placeholder": "e.g. Low conversion, high churn, can't scale..."
+          },
+          "problems": [
+            {
+              "id": "4A",
+              "label": "Difficulty keeping users",
+              "roadblocks": [
+                {
+                  "id": "4Aa",
+                  "label": "Users don't build habit"
+                },
+                {
+                  "id": "4Ab",
+                  "label": "Missing clear user onboarding"
+                },
+                {
+                  "id": "4Ac",
+                  "label": "Hard to show immediate value"
+                },
+                {
+                  "id": "4Ad",
+                  "label": "Users face friction points"
+                },
+                {
+                  "id": "4Ae",
+                  "label": "Drop-off after first use"
+                },
+                {
+                  "id": "4Af",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "4B",
+              "label": "Getting valuable feedback is tough",
+              "roadblocks": [
+                {
+                  "id": "4Ba",
+                  "label": "Low response rates to surveys"
+                },
+                {
+                  "id": "4Bb",
+                  "label": "Getting conflicting user opinions"
+                },
+                {
+                  "id": "4Bc",
+                  "label": "Feedback is too surface-level"
+                },
+                {
+                  "id": "4Bd",
+                  "label": "Users struggle to explain issues"
+                },
+                {
+                  "id": "4Be",
+                  "label": "Difficulty in tracking feedback"
+                },
+                {
+                  "id": "4Bf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "4C",
+              "label": "Too much manual work",
+              "roadblocks": [
+                {
+                  "id": "4Ca",
+                  "label": "Spending hours on support"
+                },
+                {
+                  "id": "4Cb",
+                  "label": "Manually processing user data"
+                },
+                {
+                  "id": "4Cc",
+                  "label": "No automation for onboarding"
+                },
+                {
+                  "id": "4Cd",
+                  "label": "Fixing system errors manually"
+                },
+                {
+                  "id": "4Ce",
+                  "label": "Daily operations draining time"
+                },
+                {
+                  "id": "4Cf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "4D",
+              "label": "Not making enough money",
+              "roadblocks": [
+                {
+                  "id": "4Da",
+                  "label": "Free users won't upgrade"
+                },
+                {
+                  "id": "4Db",
+                  "label": "Struggling to charge more"
+                },
+                {
+                  "id": "4Dc",
+                  "label": "High costs to serve users"
+                },
+                {
+                  "id": "4Dd",
+                  "label": "Users canceling their subscriptions"
+                },
+                {
+                  "id": "4De",
+                  "label": "Income is too unpredictable"
+                },
+                {
+                  "id": "4Df",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "4E",
+              "label": "Don't know next steps",
+              "roadblocks": [
+                {
+                  "id": "4Ea",
+                  "label": "Unsure which features to build next"
+                },
+                {
+                  "id": "4Eb",
+                  "label": "Confused on how to scale marketing"
+                },
+                {
+                  "id": "4Ec",
+                  "label": "Lacking a long-term business plan"
+                },
+                {
+                  "id": "4Ed",
+                  "label": "Struggling to shift focus from product to growth"
+                },
+                {
+                  "id": "4Ee",
+                  "label": "Finding it hard to set new goals"
+                },
+                {
+                  "id": "4Ef",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "4F",
+              "label": "Other",
+              "type": "text_input",
+              "roadblocks": []
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "label": "Growing and scaling",
+          "customQuestion": {
+            "id": "custom_q",
+            "label": "What's the one bottleneck that, if removed, would unlock your next phase of growth?",
+            "placeholder": "e.g. Hiring, systems breaking, customer acquisition costs..."
+          },
+          "problems": [
+            {
+              "id": "5A",
+              "label": "Customer acquisition is slowing",
+              "roadblocks": [
+                {
+                  "id": "5Aa",
+                  "label": "Current marketing channels are maxing out"
+                },
+                {
+                  "id": "5Ab",
+                  "label": "Cost to get new users is rising"
+                },
+                {
+                  "id": "5Ac",
+                  "label": "Finding new audiences is getting harder"
+                },
+                {
+                  "id": "5Ad",
+                  "label": "Referral word-of-mouth has slowed down"
+                },
+                {
+                  "id": "5Ae",
+                  "label": "Competitors are copying the strategy"
+                },
+                {
+                  "id": "5Af",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "5B",
+              "label": "Systems are breaking down",
+              "roadblocks": [
+                {
+                  "id": "5Ba",
+                  "label": "Technology can't handle the user load"
+                },
+                {
+                  "id": "5Bb",
+                  "label": "Customer support requests are piling up"
+                },
+                {
+                  "id": "5Bc",
+                  "label": "Internal communication is getting messy"
+                },
+                {
+                  "id": "5Bd",
+                  "label": "Tracking company data is getting confusing"
+                },
+                {
+                  "id": "5Be",
+                  "label": "Fixing old issues takes up too much time"
+                },
+                {
+                  "id": "5Bf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "5C",
+              "label": "Team is stretched thin",
+              "roadblocks": [
+                {
+                  "id": "5Ca",
+                  "label": "Hiring the right people takes too long"
+                },
+                {
+                  "id": "5Cb",
+                  "label": "Current employees are burning out"
+                },
+                {
+                  "id": "5Cc",
+                  "label": "Training new hires slows everyone down"
+                },
+                {
+                  "id": "5Cd",
+                  "label": "Difficulty handing off tasks to others"
+                },
+                {
+                  "id": "5Ce",
+                  "label": "Management is becoming a full-time job"
+                },
+                {
+                  "id": "5Cf",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "5D",
+              "label": "Funding growth",
+              "roadblocks": [
+                {
+                  "id": "5Da",
+                  "label": "Cash flow is tight between payments"
+                },
+                {
+                  "id": "5Db",
+                  "label": "Expanding requires too much upfront cash"
+                },
+                {
+                  "id": "5Dc",
+                  "label": "Unsure whether to bootstrap or raise money"
+                },
+                {
+                  "id": "5Dd",
+                  "label": "Pitching investors takes time away from business"
+                },
+                {
+                  "id": "5De",
+                  "label": "Profits are too low to reinvest into growth"
+                },
+                {
+                  "id": "5Df",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "5E",
+              "label": "Losing that personal touch",
+              "roadblocks": [
+                {
+                  "id": "5Ea",
+                  "label": "Quality of service is slipping"
+                },
+                {
+                  "id": "5Eb",
+                  "label": "Can't give every customer individual attention"
+                },
+                {
+                  "id": "5Ec",
+                  "label": "Company culture is changing too fast"
+                },
+                {
+                  "id": "5Ed",
+                  "label": "Hard to keep the original brand message clear"
+                },
+                {
+                  "id": "5Ee",
+                  "label": "Early loyal users feel left behind"
+                },
+                {
+                  "id": "5Ef",
+                  "label": "Other",
+                  "type": "text_input"
+                }
+              ]
+            },
+            {
+              "id": "5F",
+              "label": "Other",
+              "type": "text_input",
+              "roadblocks": []
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "label": "Other (in-between, losing/stagnant sales)",
+          "customQuestion": {
+            "id": "custom_q",
+            "label": "What's the most critical thing your business needs right now that you don't have?",
+            "placeholder": "e.g. Clear direction, funding, the right team..."
+          },
+          "problems": []
+        }
+      ]
+    },
+    "finalCta": {
+      "label": "Book a Free Diagnostic Call",
+      "description": "Use the answers collected above to tailor the diagnostic."
+    }
+  }
+}

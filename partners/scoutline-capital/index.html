@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UpForge Consulting × Scoutline Capital — Strategy & Fundraising</title>
+  <meta name="description" content="A joint programme from UpForge Consulting (market entry strategy) and Scoutline Capital (fundraising advisory). 12 weeks from strategy to close." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0d0d0d;
+      --s1:      #111111;
+      --s2:      #181818;
+      --border:  rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --w:       #ffffff;
+      --d1:      rgba(255,255,255,0.60);
+      --d2:      rgba(255,255,255,0.32);
+      --d3:      rgba(255,255,255,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--w);
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 28px; }
+
+    /* ─── NAV ─── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .nav-brand {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--w);
+    }
+    .nav-brand span { color: var(--d2); margin: 0 6px; }
+    .nav-pill {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--d2);
+      border: 1px solid var(--border2);
+      padding: 5px 12px;
+    }
+
+    /* ─── HERO ─── */
+    .hero { padding: 88px 0 72px; border-bottom: 1px solid var(--border); }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--d2);
+      border: 1px solid var(--border2);
+      padding: 4px 10px;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--d1);
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--d1);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 52px;
+    }
+
+    /* ─── STAT STRIP ─── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border2);
+    }
+    @media (max-width: 560px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat {
+      padding: 24px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    @media (max-width: 560px) {
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3) { border-top: 1px solid var(--border); }
+      .stat:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+    }
+    .stat-n {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-l {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--d2);
+    }
+
+    /* ─── GENERIC SECTION ─── */
+    .sec { padding: 72px 0; border-bottom: 1px solid var(--border); }
+    .sec-last { padding: 72px 0; }
+
+    .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--d2);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .sec-title {
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .sec-sub {
+      font-size: 14px;
+      color: var(--d1);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+
+    /* ─── PROBLEM ─── */
+    .problem-box {
+      border: 1px solid var(--border2);
+      padding: 36px 40px;
+      background: var(--s1);
+    }
+    @media (max-width: 540px) { .problem-box { padding: 28px 24px; } }
+
+    .problem-box .big {
+      font-size: clamp(18px, 3vw, 22px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+      margin-bottom: 20px;
+    }
+    .two-col-problem {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 540px) { .two-col-problem { grid-template-columns: 1fr; } }
+
+    .prob-item { border-left: 2px solid var(--border2); padding-left: 16px; }
+    .prob-item strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .prob-item span { font-size: 13px; color: var(--d1); }
+
+    /* ─── TWO FIRMS ─── */
+    .firms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+    @media (max-width: 580px) { .firms-grid { grid-template-columns: 1fr; } }
+
+    .firm-card {
+      background: var(--bg);
+      padding: 36px 32px;
+    }
+    .firm-name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .firm-type {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--d2);
+      margin-bottom: 20px;
+    }
+    .firm-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      font-size: 12px;
+      color: var(--d1);
+      border: 1px solid var(--border2);
+      padding: 4px 10px;
+      line-height: 1.3;
+    }
+
+    /* ─── SERVICE MATRIX ─── */
+    .matrix {
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr;
+      border: 1px solid var(--border2);
+    }
+    @media (max-width: 560px) { .matrix { grid-template-columns: 1fr; } }
+
+    .matrix-cell {
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--d1);
+      line-height: 1.55;
+    }
+    .matrix-cell:nth-child(3n) { border-right: none; }
+    .matrix-cell:nth-last-child(-n+3) { border-bottom: none; }
+
+    @media (max-width: 560px) {
+      .matrix-cell { border-right: none !important; }
+      .matrix-cell:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .matrix-cell:last-child { border-bottom: none; }
+    }
+    .matrix-cell.head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--d2);
+      background: var(--s1);
+    }
+    .matrix-cell.row-head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--w);
+      background: var(--s1);
+    }
+    .matrix-cell ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .matrix-cell ul li::before { content: '– '; color: var(--d2); }
+
+    /* ─── ROADMAP ─── */
+    .roadmap { display: flex; flex-direction: column; gap: 0; }
+
+    .road-row {
+      display: grid;
+      grid-template-columns: 80px 120px 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      align-items: stretch;
+    }
+    .road-row:first-child { border-top: 1px solid var(--border); }
+
+    @media (max-width: 600px) { .road-row { grid-template-columns: 60px 1fr; } }
+
+    .road-phase {
+      padding: 22px 16px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .road-phase-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--d2);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+    @media (max-width: 600px) {
+      .road-phase-num { writing-mode: horizontal-tb; transform: none; font-size: 10px; }
+      .road-phase { padding: 16px 10px; }
+    }
+    .road-meta {
+      padding: 22px 20px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+    @media (max-width: 600px) { .road-meta { display: none; } }
+
+    .road-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .road-weeks {
+      font-size: 11px;
+      color: var(--d2);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .road-deliverables {
+      padding: 22px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .dlv {
+      font-size: 12px;
+      color: var(--d1);
+      border: 1px solid var(--border2);
+      padding: 5px 12px;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+    .dlv-uf { border-color: rgba(255,255,255,0.18); }
+    .dlv-sc { border-color: rgba(255,255,255,0.10); color: var(--d2); }
+
+    /* ─── WHO THIS IS FOR ─── */
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+    }
+    .fit-card {
+      background: var(--bg);
+      padding: 28px 26px;
+    }
+    .fit-icon {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .fit-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .fit-desc {
+      font-size: 13px;
+      color: var(--d1);
+      line-height: 1.55;
+    }
+
+    /* ─── TEAM ─── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1px;
+      background: var(--border);
+    }
+    .team-card {
+      background: var(--bg);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--d1);
+      flex-shrink: 0;
+    }
+    .team-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .team-firm {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--d2);
+    }
+    .team-note {
+      font-size: 12px;
+      color: var(--d1);
+      line-height: 1.4;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border2);
+    }
+    .faq-item {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .faq-a {
+      font-size: 13px;
+      color: var(--d1);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    /* ─── CTA ─── */
+    .cta-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+    @media (max-width: 540px) { .cta-block { grid-template-columns: 1fr; } }
+
+    .cta-cell {
+      background: var(--bg);
+      padding: 36px 32px;
+    }
+    .cta-cell .cta-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--d2);
+      margin-bottom: 12px;
+    }
+    .cta-cell a {
+      display: block;
+      font-size: 14px;
+      color: var(--d1);
+      text-decoration: none;
+      line-height: 1.9;
+      transition: color 0.12s;
+    }
+    .cta-cell a:hover { color: var(--w); }
+    .cta-cell .cta-big {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    /* ─── LEGAL ─── */
+    .legal {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+    .legal-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--d2);
+      margin-bottom: 14px;
+    }
+    .legal p {
+      font-size: 11.5px;
+      color: var(--d2);
+      line-height: 1.75;
+      max-width: 880px;
+    }
+    .legal p + p { margin-top: 10px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .foot-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .foot-inner span, .foot-inner a {
+      font-size: 12px;
+      color: var(--d2);
+      text-decoration: none;
+    }
+    .foot-inner a:hover { color: var(--d1); }
+    .foot-links { display: flex; gap: 20px; }
+
+    /* ─── UTILS ─── */
+    .rule { border: none; border-top: 1px solid var(--border); }
+
+    .tent {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--d2);
+      border: 1px dashed var(--border2);
+      padding: 3px 8px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .not-fit-box {
+      margin-top: 24px;
+      border: 1px solid var(--border);
+      padding: 22px 26px;
+      background: var(--s1);
+    }
+    .not-fit-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--d2);
+      margin-bottom: 10px;
+    }
+    .not-fit-text {
+      font-size: 13px;
+      color: var(--d1);
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="wrap nav-inner">
+    <div class="nav-brand">
+      UpForge Consulting <span>×</span> Scoutline Capital
+    </div>
+    <div class="nav-pill">Partnership Announcement</div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="tag">Joint Engagement · 2025–26</div>
+    <h1>Strategy.<br><em>Capital.</em><br>One team.</h1>
+    <p class="hero-sub">
+      Market entry from UpForge. Fundraising from Scoutline.
+      One 12-week programme — both tracks run at the same time.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-n">23+</div>
+        <div class="stat-l">Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">18</div>
+        <div class="stat-l">Industries</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">6</div>
+        <div class="stat-l">Countries</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">12</div>
+        <div class="stat-l">Weeks to Close</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── THE GAP ─── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="label">Why This Exists</span>
+    <div class="problem-box">
+      <div class="big">
+        Most startups fix strategy OR fundraising.<br>
+        Very few fix both — at the same time.
+      </div>
+      <div class="two-col-problem">
+        <div class="prob-item">
+          <strong>The strategy gap</strong>
+          <span>Great pitch. No market plan. Investors ask the hard questions and the deck falls apart.</span>
+        </div>
+        <div class="prob-item">
+          <strong>The fundraising gap</strong>
+          <span>Good product. No financial story. Market traction that never turns into a term sheet.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TWO FIRMS ─── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="label">The Two Firms</span>
+    <div class="firms-grid">
+      <div class="firm-card">
+        <div class="firm-name">UpForge Consulting LLP</div>
+        <div class="firm-type">Market Entry · Strategy · Execution</div>
+        <div class="firm-chips">
+          <span class="chip">Market Entry Strategy</span>
+          <span class="chip">Campaign Execution</span>
+          <span class="chip">Competitive Positioning</span>
+          <span class="chip">Crisis Management</span>
+          <span class="chip">Risk Assessment</span>
+          <span class="chip">Gen-Z Alignment</span>
+          <span class="chip">Operations Support</span>
+        </div>
+      </div>
+      <div class="firm-card">
+        <div class="firm-name">Scoutline Capital</div>
+        <div class="firm-type">Sell-Side Advisory · Fundraising</div>
+        <div class="firm-chips">
+          <span class="chip">Financial Modelling</span>
+          <span class="chip">Valuation</span>
+          <span class="chip">Pitch Deck</span>
+          <span class="chip">Investor Matching</span>
+          <span class="chip">Direct Outreach</span>
+          <span class="chip">Pitch Training</span>
+          <span class="chip">Fund Incorporation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICE MATRIX ─── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="label">What We Do Together</span>
+    <div class="sec-sub" style="margin-bottom:28px;">Both tracks run in parallel — not sequentially.</div>
+
+    <div class="matrix">
+      <div class="matrix-cell head"></div>
+      <div class="matrix-cell head">UpForge — Strategy</div>
+      <div class="matrix-cell head">Scoutline — Fundraising</div>
+
+      <div class="matrix-cell row-head">Planning</div>
+      <div class="matrix-cell">
+        <ul>
+          <li>12-step market entry framework</li>
+          <li>Competitive landscape</li>
+          <li>Channel &amp; segment definition</li>
+        </ul>
+      </div>
+      <div class="matrix-cell">
+        <ul>
+          <li>Financial modelling &amp; valuation</li>
+          <li>Fundraise target + timeline</li>
+          <li>Investor roadmap design</li>
+        </ul>
+      </div>
+
+      <div class="matrix-cell row-head">Execution</div>
+      <div class="matrix-cell">
+        <ul>
+          <li>Marketing &amp; ops campaigns</li>
+          <li>Research execution</li>
+          <li>Hands-on delivery (not just advice)</li>
+        </ul>
+      </div>
+      <div class="matrix-cell">
+        <ul>
+          <li>Investor-ready pitch deck</li>
+          <li>Curated investor list</li>
+          <li>Outreach on your behalf</li>
+        </ul>
+      </div>
+
+      <div class="matrix-cell row-head">Optimisation</div>
+      <div class="matrix-cell">
+        <ul>
+          <li>Risk assessment</li>
+          <li>Crisis management</li>
+          <li>Gen-Z proofing</li>
+        </ul>
+      </div>
+      <div class="matrix-cell">
+        <ul>
+          <li>Mock pitch sessions</li>
+          <li>Negotiation advisory</li>
+          <li>Fund incorporation planning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ROADMAP ─── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="label">The 12-Week Roadmap <span class="tent">Indicative</span></span>
+    <div class="sec-sub" style="margin-bottom:28px;">
+      Exact deliverables and pacing are scoped per client at kickoff.
+      This is the typical programme shape.
+    </div>
+
+    <div class="roadmap">
+      <div class="road-row">
+        <div class="road-phase"><div class="road-phase-num">Phase 01</div></div>
+        <div class="road-meta">
+          <div class="road-title">Strategy &amp; Planning</div>
+          <div class="road-weeks">Weeks 1–2</div>
+        </div>
+        <div class="road-deliverables">
+          <span class="dlv dlv-uf">Market entry framework</span>
+          <span class="dlv dlv-uf">Competitive landscape</span>
+          <span class="dlv dlv-uf">Target segment map</span>
+          <span class="dlv dlv-sc">Financial model (v1)</span>
+          <span class="dlv dlv-sc">Valuation range</span>
+          <span class="dlv dlv-sc">Fundraise target</span>
+        </div>
+      </div>
+      <div class="road-row">
+        <div class="road-phase"><div class="road-phase-num">Phase 02</div></div>
+        <div class="road-meta">
+          <div class="road-title">Deck &amp; Materials</div>
+          <div class="road-weeks">Weeks 3–4</div>
+        </div>
+        <div class="road-deliverables">
+          <span class="dlv dlv-uf">Go-to-market narrative</span>
+          <span class="dlv dlv-uf">Positioning visuals</span>
+          <span class="dlv dlv-sc">Pitch deck</span>
+          <span class="dlv dlv-sc">Unit economics</span>
+          <span class="dlv dlv-sc">Financial projections</span>
+        </div>
+      </div>
+      <div class="road-row">
+        <div class="road-phase"><div class="road-phase-num">Phase 03</div></div>
+        <div class="road-meta">
+          <div class="road-title">Outreach</div>
+          <div class="road-weeks">Weeks 5–8</div>
+        </div>
+        <div class="road-deliverables">
+          <span class="dlv dlv-uf">Campaign execution</span>
+          <span class="dlv dlv-uf">Market activation</span>
+          <span class="dlv dlv-sc">Curated investor list</span>
+          <span class="dlv dlv-sc">Direct outreach</span>
+          <span class="dlv dlv-sc">15–25 conversations targeted</span>
+        </div>
+      </div>
+      <div class="road-row">
+        <div class="road-phase"><div class="road-phase-num">Phase 04</div></div>
+        <div class="road-meta">
+          <div class="road-title">Pitch &amp; Close</div>
+          <div class="road-weeks">Weeks 9–12</div>
+        </div>
+        <div class="road-deliverables">
+          <span class="dlv dlv-uf">Risk &amp; crisis review</span>
+          <span class="dlv dlv-uf">Operations handoff plan</span>
+          <span class="dlv dlv-sc">Mock pitch + Q&amp;A prep</span>
+          <span class="dlv dlv-sc">Negotiation advisory</span>
+          <span class="dlv dlv-sc">Fund incorporation planning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHO THIS IS FOR ─── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="label">Who This Is For</span>
+    <div class="sec-sub" style="margin-bottom:28px;">
+      The joint programme is designed for a specific kind of startup. See if this matches where you are.
+    </div>
+
+    <div class="fit-grid">
+      <div class="fit-card">
+        <div class="fit-icon">◎</div>
+        <div class="fit-title">Early-stage founders</div>
+        <div class="fit-desc">Pre-seed to Series A. You have a product, early traction, and a market you want to enter seriously.</div>
+      </div>
+      <div class="fit-card">
+        <div class="fit-icon">◎</div>
+        <div class="fit-title">Ready to raise in 3–6 months</div>
+        <div class="fit-desc">Not hypothetically. You have a fundraising intent and want to go to market with a real financial story.</div>
+      </div>
+      <div class="fit-card">
+        <div class="fit-icon">◎</div>
+        <div class="fit-title">No full-time strategy or BD hire yet</div>
+        <div class="fit-desc">You need both strategy execution and investor outreach handled — not just advice on what you should do.</div>
+      </div>
+      <div class="fit-card">
+        <div class="fit-icon">◎</div>
+        <div class="fit-title">Multi-industry, cross-border</div>
+        <div class="fit-desc">Clients across Security, FnB, Ed-Tech, Jewellery, Logistics, Consumer Goods, and more across 6 countries.</div>
+      </div>
+    </div>
+
+    <div class="not-fit-box">
+      <div class="not-fit-label">Not the right fit if —</div>
+      <div class="not-fit-text">
+        You need investment from us directly, are looking for a registered SEBI Investment Adviser, or want a
+        guaranteed fundraise outcome. We are a consulting and advisory service — not a placement agent, fund, or
+        regulated intermediary.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TEAM ─── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="label">The Team</span>
+    <div class="sec-sub" style="margin-bottom:28px;">
+      People from both firms work as a single unit on each engagement.
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">SS</div>
+        <div>
+          <div class="team-name">Shardul Singh</div>
+          <div class="team-firm">UpForge</div>
+          <div class="team-note">Founding Partner · Strategy Lead</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">ZZ</div>
+        <div>
+          <div class="team-name">Zaara Zaidi</div>
+          <div class="team-firm">UpForge</div>
+          <div class="team-note">Founding Partner · Consulting</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">GK</div>
+        <div>
+          <div class="team-name">Gaurav Kalal</div>
+          <div class="team-firm">UpForge</div>
+          <div class="team-note">Founding Partner · Operations</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">SN</div>
+        <div>
+          <div class="team-name">Samar Nasir</div>
+          <div class="team-firm">UpForge</div>
+          <div class="team-note">Consultant</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">OS</div>
+        <div>
+          <div class="team-name">Ojas Srivastava</div>
+          <div class="team-firm">UpForge</div>
+          <div class="team-note">Consultant</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">TV</div>
+        <div>
+          <div class="team-name">Tirth Virkar</div>
+          <div class="team-firm">UpForge</div>
+          <div class="team-note">Consultant</div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="avatar">AV</div>
+        <div>
+          <div class="team-name">Ajeet Verma</div>
+          <div class="team-firm">UpForge</div>
+          <div class="team-note">Consultant</div>
+        </div>
+      </div>
+
+      <div class="team-card" style="background: var(--s1);">
+        <div class="avatar" style="border-style:dashed;">SC</div>
+        <div>
+          <div class="team-name">Scoutline Team</div>
+          <div class="team-firm">Scoutline Capital</div>
+          <div class="team-note">Fundraising, modelling &amp; investor advisory</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:12px; color:var(--d2); margin-top:16px;">
+      * Role descriptions are indicative. Actual engagement leads are confirmed at onboarding.
+      Team composition may vary by mandate.
+    </p>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="label">Common Questions</span>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Is the 12-week timeline fixed?</div>
+        <div class="faq-a">No. It is a typical shape, not a rigid contract. Actual scope and pace are agreed with each client at kickoff based on where they are and what they need. The roadmap on this page is indicative.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you guarantee a fundraise close?</div>
+        <div class="faq-a">No. We handle strategy, preparation, and outreach on your behalf — the "15–25 investor conversations" figure is a programme target, not a guaranteed outcome. Fundraising results depend on many factors outside any adviser's control.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Are you a registered investment adviser or stockbroker?</div>
+        <div class="faq-a">No. UpForge Consulting LLP and Scoutline Capital are consulting and startup advisory firms. Neither is registered as an Investment Adviser under SEBI (Investment Advisers) Regulations, 2013, or as any other regulated intermediary. Services are advisory in nature only.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What industries do you work in?</div>
+        <div class="faq-a">Across both firms: Security, FnB, Ed-Tech, Jewellery, Logistics, Consumer Goods, and more — 18 industries to date. We'll tell you at the first call if your sector isn't a good fit.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Where are you based?</div>
+        <div class="faq-a">UpForge Consulting LLP is incorporated in Mumbai, Maharashtra, India (LLPIN: ACR-4016). Scoutline Capital operates at scoutlinecapital.in. Both firms have worked with clients across 6 countries.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="sec-last">
+  <div class="wrap">
+    <span class="label">Get In Touch</span>
+    <div class="cta-block">
+      <div class="cta-cell">
+        <div class="cta-big">Ready to scale<br>and raise?</div>
+        <p style="font-size:13px; color:var(--d1); line-height:1.65;">
+          Reach out to start the conversation. We'll scope the engagement
+          together — no generic decks, no retainer before a call.
+        </p>
+      </div>
+      <div class="cta-cell">
+        <div class="cta-label">Email</div>
+        <a href="mailto:outreach@upforgeconsulting.com">outreach@upforgeconsulting.com</a>
+        <a href="mailto:shardulsingh@upforgeconsulting.com">shardulsingh@upforgeconsulting.com</a>
+        <div class="cta-label" style="margin-top:20px;">Websites</div>
+        <a href="https://upforgeconsulting.com" target="_blank" rel="noopener noreferrer">upforgeconsulting.com ↗</a>
+        <a href="https://scoutlinecapital.in" target="_blank" rel="noopener noreferrer">scoutlinecapital.in ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LEGAL DISCLAIMER ─── -->
+<div class="wrap">
+  <div class="legal">
+    <div class="legal-title">Legal Disclaimer</div>
+    <p>
+      This page is for general informational purposes only and does not constitute financial advice,
+      investment advice, or any regulated advisory service. UpForge Consulting LLP (LLPIN: ACR-4016,
+      incorporated in India under the Limited Liability Partnership Act, 2008) and Scoutline Capital
+      are consulting and startup advisory firms. Neither entity is registered as an Investment Adviser
+      under the SEBI (Investment Advisers) Regulations, 2013, nor as a stockbroker, merchant banker,
+      portfolio manager, or any other regulated intermediary under applicable Indian or foreign law.
+      Nothing on this page should be construed as a solicitation to invest in any security or financial
+      instrument.
+    </p>
+    <p>
+      All services described are advisory and consulting in nature. Engagement does not guarantee
+      the successful raising of capital, completion of any transaction, or any specific business
+      outcome. The "15–25 investor conversations" figure is a programme target, not a guarantee.
+      Financial models and projections prepared during engagements are indicative only — not
+      investment advice and not a guarantee of future performance.
+    </p>
+    <p>
+      The 12-week roadmap on this page is indicative and tentative. Actual scope, timeline, and
+      deliverables are defined in a separate written engagement agreement with each client. Nothing
+      on this page constitutes a binding offer or contract. Client statistics (23+ clients, 18
+      industries, 6 countries) reflect aggregate historical work by both firms as of the date of
+      publication and are subject to change without notice. Team role descriptions are indicative —
+      confirmed engagement leads are agreed at onboarding. Team composition may vary by mandate.
+    </p>
+    <p>
+      Clients are advised to seek independent legal, financial, tax, and accounting counsel before
+      entering any investment transaction or fundraising process. Any engagement is governed solely
+      by the terms of a separate written agreement executed between the parties. Third-party names,
+      marks, or industries referenced are the property of their respective owners and do not imply
+      endorsement, affiliation, or sponsorship by UpForge Consulting LLP or Scoutline Capital.
+    </p>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2025–2026 UpForge Consulting LLP &amp; Scoutline Capital. All rights reserved.</span>
+    <div class="foot-links">
+      <a href="https://upforgeconsulting.com" target="_blank" rel="noopener noreferrer">UpForge</a>
+      <a href="https://scoutlinecapital.in" target="_blank" rel="noopener noreferrer">Scoutline</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

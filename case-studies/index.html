@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Studies - UpForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3462fc;
+      --dark: #092d53;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #f8f9fc;
+      color: var(--dark);
+      min-height: 100vh;
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 50px;
+      background: #fff;
+      border-bottom: 1px solid rgba(9, 45, 83, 0.08);
+    }
+    .navbar .logo img { height: 32px; }
+    .nav-links { display: flex; list-style: none; gap: 32px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a.active { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    .nav-cta:hover { opacity: 0.9; }
+    .page-header {
+      text-align: center;
+      padding: 80px 20px 40px;
+    }
+    .page-header h1 {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+    .page-header p {
+      font-size: 18px;
+      color: #666;
+      margin-top: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .case-list {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .case-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid rgba(9, 45, 83, 0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      display: flex;
+      gap: 28px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .case-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 40px rgba(52, 98, 252, 0.1);
+    }
+    .case-thumb {
+      width: 200px;
+      height: 140px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), #1a3f9e);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: rgba(255,255,255,0.3);
+      overflow: hidden;
+    }
+    .case-thumb svg { width: 60px; height: 60px; opacity: 0.4; }
+    .case-body { flex: 1; }
+    .case-body h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+    .case-body .subtitle {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .case-body .read-more {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .case-body .read-more:hover { text-decoration: underline; }
+    .tag {
+      display: inline-block;
+      background: rgba(52, 98, 252, 0.08);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.7; }
+    @media (max-width: 768px) {
+      .navbar { padding: 16px 20px; }
+      .nav-links { gap: 16px; }
+      .page-header h1 { font-size: 28px; }
+      .page-header p { font-size: 15px; }
+      .case-card { flex-direction: column; padding: 20px; }
+      .case-thumb { width: 100%; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo"><a href="../"><img src="../assets/images/brand/logo.png" alt="UpForge"></a></div>
+    <ul class="nav-links">
+      <li><a href="../">Home</a></li>
+      <li><a href="../#testimonials">Testimonials</a></li>
+      <li><a href="#" class="active">Case Studies</a></li>
+    </ul>
+    <button class="nav-cta" onclick="window.open('https://calendly.com/shardulsingh166/30min', '_blank')">Book a Free Call</button>
+  </nav>
+
+  <div class="page-header">
+    <a href="../" class="back-link">← Back to Home</a>
+    <h1>Case Studies</h1>
+    <p>Deep-dive research and strategic analysis from the UpForge team.</p>
+  </div>
+
+  <div class="case-list">
+
+    <a href="kpmg-anthropic-alliance/" class="case-card">
+      <div class="case-thumb">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="64" height="64" rx="16" stroke="white" stroke-width="3"/>
+          <path d="M28 44 L40 32 L52 44" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="40" cy="28" r="6" fill="white"/>
+        </svg>
+      </div>
+      <div class="case-body">
+        <span class="tag">Partnership Analysis</span>
+        <h2>KPMG–Anthropic Alliance: Strategic Partnership Analysis</h2>
+        <p class="subtitle">A comprehensive dashboard exploring the KPMG-Anthropic global alliance and KPMG Digital Gateway Powered by Claude — covering deal structure, market rationale, competitive landscape, and risk assessment.</p>
+        <span class="read-more">Read Case Study →</span>
+      </div>
+    </a>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,4598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            const mobileBreakpoint = 768;
+            const oldWebsitePath = './mobile/index.html';
+
+            if (window.innerWidth <= mobileBreakpoint) {
+                window.location.replace(oldWebsitePath);
+            }
+        })();
+    </script>
+    <title>UpForge - We Hate Traditional Consulting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Anton&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3462fc;
+            --dark: #092d53;
+            --white: #ffffff;
+            --conveyor-speed: 20s;
+        }
+
+        .mobile-br {
+            display: none;
+        }
+
+        .desktop-br {
+            display: inline;
+        }
+
+        /* Lenis Required Base CSS */
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        html.lenis,
+        html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-smooth iframe {
+            pointer-events: none;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        :focus {
+            outline: none;
+        }
+
+        :where(a, button, input, [tabindex], .stage-choice-btn):focus-visible {
+            outline: 3px solid rgba(52, 98, 252, 0.95);
+            outline-offset: 3px;
+            box-shadow: 0 0 0 7px rgba(52, 98, 252, 0.2);
+        }
+
+        input[type=range]:focus-visible {
+            border-radius: 999px;
+        }
+
+        .comparison-card:focus-within,
+        .problem-item:focus-within,
+        .solution-container:focus-within,
+        .team-gallery:focus-within {
+            box-shadow: 0 0 0 4px rgba(52, 98, 252, 0.16), 0 0 0 8px rgba(52, 98, 252, 0.08);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: url('/assets/hero-BNfmkjik.jpeg') center/cover no-repeat;
+        }
+
+        .hero-text {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero-paper {
+            position: absolute;
+            z-index: 5;
+            will-change: transform;
+            pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .hero-paper-mobile-hidden {
+            display: none !important;
+        }
+
+        .hate-text {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(60px, 10vw, 130px);
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        .consulting {
+            margin-bottom: 20px;
+        }
+
+        .hero-subtext {
+            font-size: clamp(18px, 1.5vw, 24px);
+            color: var(--white);
+            opacity: 0;
+            line-height: 1.6;
+            max-width: 500px;
+            font-weight: 400;
+            animation: fadeInUp 0.8s 1.8s forwards;
+        }
+
+        .we-hate {
+            opacity: 1;
+        }
+
+        .traditional {
+            color: var(--primary);
+            opacity: 1;
+            position: relative;
+        }
+
+        .consulting {
+            opacity: 1;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+        }
+
+        @keyframes lineExpand {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        /* Animated Background Grid */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(52, 98, 252, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(52, 98, 252, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0;
+            animation-delay: 2s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        /* Conveyor Belt */
+        .conveyor-container {
+            --belt-safe-zone: clamp(240px, 20vw, 320px);
+            position: relative;
+            min-height: 100vh;
+            padding: var(--space-section, 80px) var(--belt-safe-zone) var(--space-section, 80px) clamp(24px, 3vw, 48px);
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .conveyor-belt {
+            position: absolute;
+            top: 0;
+            right: 10%;
+            width: 80px;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    #1a1a1a 0px,
+                    #1a1a1a 20px,
+                    #2a2a2a 20px,
+                    #2a2a2a 40px);
+            border-left: 4px solid var(--primary);
+            border-right: 4px solid var(--primary);
+        }
+
+        .conveyor-belt::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    transparent 0px, transparent 20px,
+                    rgba(0, 102, 204, 0.08) 20px, rgba(0, 102, 204, 0.08) 40px);
+            animation: conveyorMove var(--conveyor-speed) linear infinite;
+        }
+
+        @keyframes conveyorMove {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(40px);
+            }
+        }
+
+        /* Conveyor Stations */
+        .station-wrapper {
+            position: absolute;
+            right: 10%;
+            width: 80px;
+            z-index: 5;
+        }
+
+        .station-scanner {
+            position: absolute;
+            left: 0;
+            width: 130px;
+            height: 90px;
+            background: linear-gradient(90deg, #091540 0%, #1f3b99 30%, #1f3b99 70%, #091540 100%);
+            border-radius: 6px;
+            border: 3px solid #000;
+            box-shadow: inset 0 0 15px rgba(0, 102, 204, 0.4), 0 10px 25px rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            z-index: 2;
+        }
+
+        .station-scanner::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 30px;
+            height: 60px;
+            background: #050505;
+            border: 2px solid #222;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px #000;
+        }
+
+        .station-scanner::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 20px;
+            width: 20px;
+            height: 40px;
+            background: repeating-linear-gradient(0deg, transparent, transparent 4px, var(--primary) 4px, var(--primary) 6px);
+            opacity: 0.8;
+            animation: dataPulse 1s infinite alternate;
+        }
+
+        .scanner-panel {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            width: 40px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scanner-lights {
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .scanner-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #555;
+        }
+
+        .scanner-light.active {
+            background: #00ffcc;
+            box-shadow: 0 0 10px #00ffcc;
+            animation: blinkFast 0.5s infinite;
+        }
+
+        .scanner-light.active-2 {
+            background: #ff4444;
+            box-shadow: 0 0 10px #ff4444;
+            animation: blinkFast 1.2s infinite;
+        }
+
+        @keyframes dataPulse {
+            0% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes blinkFast {
+
+            0%,
+            49% {
+                opacity: 1;
+            }
+
+            50%,
+            100% {
+                opacity: 0.2;
+            }
+        }
+
+        .scanner-wires {
+            position: absolute;
+            left: 110px;
+            top: 25px;
+            width: 50vw;
+            height: 40px;
+            z-index: -1;
+        }
+
+        .wire {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #111;
+            border-bottom: 1px solid #333;
+        }
+
+        .wire:nth-child(1) {
+            top: 0;
+            background: #2a2a2a;
+            transform-origin: left center;
+            transform: rotate(2deg);
+        }
+
+        .wire:nth-child(2) {
+            top: 15px;
+            background: #151515;
+            height: 4px;
+        }
+
+        .wire:nth-child(3) {
+            top: 30px;
+            background: #ff3333;
+            height: 2px;
+            border-bottom: none;
+            opacity: 0.7;
+            transform-origin: left center;
+            transform: rotate(-1.5deg);
+        }
+
+        /* Conveyor Item Container */
+        .conveyor-item {
+            position: absolute;
+            right: calc(10% + 20px);
+            top: -100px;
+            width: 40px;
+            height: 55px;
+            z-index: 1;
+        }
+
+        .stage {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .stage.active {
+            display: block;
+        }
+
+        /* — Stage 0: Messy Papers — */
+        .messy-papers .sheet {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+        }
+
+        .messy-papers .sheet:nth-child(1) {
+            transform: rotate(-12deg) translate(-5px, 4px);
+            background: #f0ece4;
+        }
+
+        .messy-papers .sheet:nth-child(2) {
+            transform: rotate(8deg) translate(4px, -3px);
+            background: #ede8df;
+        }
+
+        .messy-papers .sheet:nth-child(3) {
+            transform: rotate(-4deg) translate(-2px, -5px);
+            background: #e8e3d9;
+        }
+
+        .messy-papers .sheet:nth-child(4) {
+            transform: rotate(15deg) translate(3px, 2px);
+            background: #f5f0e8;
+        }
+
+        .messy-papers .sheet:nth-child(5) {
+            transform: rotate(-2deg);
+            background: #fff;
+            z-index: 2;
+        }
+
+        /* — Stage 1: Sorted Sheets — */
+        .sorted-sheets .sheet {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            box-sizing: border-box;
+        }
+
+        .sorted-sheets .sheet:nth-child(1) {
+            transform: translate(-1px, 2px);
+            background: #f5f5f5;
+        }
+
+        .sorted-sheets .sheet:nth-child(2) {
+            transform: translate(1px, 1px);
+            background: #fafafa;
+        }
+
+        .sorted-sheets .sheet:nth-child(3) {
+            transform: none;
+            z-index: 2;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 5px;
+            gap: 4px;
+        }
+
+        .sorted-sheets .line {
+            height: 3px;
+            background: #ccc;
+            border-radius: 1px;
+        }
+
+        .sorted-sheets .line:nth-child(1) {
+            width: 60%;
+        }
+
+        .sorted-sheets .line:nth-child(2) {
+            width: 90%;
+        }
+
+        .sorted-sheets .line:nth-child(3) {
+            width: 75%;
+        }
+
+        .sorted-sheets .line:nth-child(4) {
+            width: 50%;
+        }
+
+        /* — Stage 2: Clipped Report — */
+        .clipped-report {
+            position: relative;
+        }
+
+        .clipped-report .cover {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 1.5px solid #bbb;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 5px;
+            gap: 3px;
+            border-radius: 1px;
+        }
+
+        .clipped-report .clip {
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 10px;
+            background: linear-gradient(180deg, #888 0%, #aaa 100%);
+            border-radius: 2px 2px 0 0;
+            border: 1px solid #666;
+            border-bottom: none;
+            z-index: 3;
+        }
+
+        .clipped-report .rline {
+            height: 2px;
+            background: #aaa;
+            border-radius: 1px;
+        }
+
+        .clipped-report .rline:nth-child(1) {
+            width: 45%;
+            background: #777;
+            height: 3px;
+            margin-bottom: 2px;
+        }
+
+        .clipped-report .rline:nth-child(2) {
+            width: 95%;
+        }
+
+        .clipped-report .rline:nth-child(3) {
+            width: 80%;
+        }
+
+        .clipped-report .rline:nth-child(4) {
+            width: 60%;
+        }
+
+        .clipped-report .rline:nth-child(5) {
+            width: 90%;
+        }
+
+        /* — Stage 3: Polished Book — */
+        .polished-book {
+            position: relative;
+        }
+
+        .polished-book .book-cover {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a5e 0%, #2a4080 100%);
+            border: 2px solid #0f1a3a;
+            border-radius: 2px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .polished-book .book-spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(180deg, #0f1a3a 0%, #1a2a5e 50%, #0f1a3a 100%);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2px 0 0 2px;
+        }
+
+        .polished-book .book-pages {
+            position: absolute;
+            right: -2px;
+            top: 3px;
+            bottom: 3px;
+            width: 4px;
+            background: repeating-linear-gradient(180deg, #f5f5f0 0px, #f5f5f0 1px, #e8e8e0 1px, #e8e8e0 2px);
+            border-radius: 0 1px 1px 0;
+            border: 1px solid #ccc;
+            border-left: none;
+        }
+
+        .polished-book .book-title-band {
+            position: absolute;
+            top: 30%;
+            left: 10px;
+            right: 6px;
+            height: 3px;
+            background: rgba(255, 215, 0, 0.5);
+        }
+
+        .polished-book .book-title-band-2 {
+            position: absolute;
+            top: calc(30% + 6px);
+            left: 10px;
+            right: 10px;
+            height: 2px;
+            background: rgba(255, 215, 0, 0.3);
+        }
+
+        /* — Stage 4: Sealed Cardboard Box — */
+        .sealed-box {
+            position: relative;
+        }
+
+        .sealed-box .box {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #c8a97e 0%, #a8854a 100%);
+            border: 2px solid #8b6c3f;
+            border-radius: 3px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .sealed-box .flap-top {
+            position: absolute;
+            top: 0;
+            left: 3px;
+            right: 3px;
+            height: 35%;
+            border-bottom: 2px dashed #8b6c3f;
+        }
+
+        .sealed-box .tape {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 100%;
+            background: rgba(200, 180, 140, 0.6);
+            border-left: 1px solid rgba(139, 108, 63, 0.5);
+            border-right: 1px solid rgba(139, 108, 63, 0.5);
+        }
+
+        .sealed-box .box-label {
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+        }
+
+        .sealed-box .box-label::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            height: 1.5px;
+            background: #aaa;
+        }
+
+        /* â”€â”€ Stage 0: Messy Papers â”€â”€ */
+        .messy-papers .sheet {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+        }
+
+        .messy-papers .sheet:nth-child(1) {
+            transform: rotate(-12deg) translate(-5px, 4px);
+            background: #f0ece4;
+        }
+
+        .messy-papers .sheet:nth-child(2) {
+            transform: rotate(8deg) translate(4px, -3px);
+            background: #ede8df;
+        }
+
+        .messy-papers .sheet:nth-child(3) {
+            transform: rotate(-4deg) translate(-2px, -5px);
+            background: #e8e3d9;
+        }
+
+        .messy-papers .sheet:nth-child(4) {
+            transform: rotate(15deg) translate(3px, 2px);
+            background: #f5f0e8;
+        }
+
+        .messy-papers .sheet:nth-child(5) {
+            transform: rotate(-2deg);
+            background: #fff;
+            z-index: 2;
+        }
+
+        /* â”€â”€ Stage 1: Sorted Sheets â”€â”€ */
+        .sorted-sheets .sheet {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            box-sizing: border-box;
+        }
+
+        .sorted-sheets .sheet:nth-child(1) {
+            transform: translate(-1px, 2px);
+            background: #f5f5f5;
+        }
+
+        .sorted-sheets .sheet:nth-child(2) {
+            transform: translate(1px, 1px);
+            background: #fafafa;
+        }
+
+        .sorted-sheets .sheet:nth-child(3) {
+            transform: none;
+            z-index: 2;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 5px;
+            gap: 4px;
+        }
+
+        .sorted-sheets .line {
+            height: 3px;
+            background: #ccc;
+            border-radius: 1px;
+        }
+
+        .sorted-sheets .line:nth-child(1) {
+            width: 60%;
+        }
+
+        .sorted-sheets .line:nth-child(2) {
+            width: 90%;
+        }
+
+        .sorted-sheets .line:nth-child(3) {
+            width: 75%;
+        }
+
+        .sorted-sheets .line:nth-child(4) {
+            width: 50%;
+        }
+
+        /* â”€â”€ Stage 2: Clipped Report â”€â”€ */
+        .clipped-report {
+            position: relative;
+        }
+
+        .clipped-report .cover {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border: 1.5px solid #bbb;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            padding: 8px 5px;
+            gap: 3px;
+            border-radius: 1px;
+        }
+
+        .clipped-report .clip {
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 10px;
+            background: linear-gradient(180deg, #888 0%, #aaa 100%);
+            border-radius: 2px 2px 0 0;
+            border: 1px solid #666;
+            border-bottom: none;
+            z-index: 3;
+        }
+
+        .clipped-report .rline {
+            height: 2px;
+            background: #aaa;
+            border-radius: 1px;
+        }
+
+        .clipped-report .rline:nth-child(1) {
+            width: 45%;
+            background: #777;
+            height: 3px;
+            margin-bottom: 2px;
+        }
+
+        .clipped-report .rline:nth-child(2) {
+            width: 95%;
+        }
+
+        .clipped-report .rline:nth-child(3) {
+            width: 80%;
+        }
+
+        .clipped-report .rline:nth-child(4) {
+            width: 60%;
+        }
+
+        .clipped-report .rline:nth-child(5) {
+            width: 90%;
+        }
+
+        /* â”€â”€ Stage 3: Polished Book â”€â”€ */
+        .polished-book {
+            position: relative;
+        }
+
+        .polished-book .book-cover {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a5e 0%, #2a4080 100%);
+            border: 2px solid #0f1a3a;
+            border-radius: 2px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .polished-book .book-spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(180deg, #0f1a3a 0%, #1a2a5e 50%, #0f1a3a 100%);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2px 0 0 2px;
+        }
+
+        .polished-book .book-pages {
+            position: absolute;
+            right: -2px;
+            top: 3px;
+            bottom: 3px;
+            width: 4px;
+            background: repeating-linear-gradient(180deg, #f5f5f0 0px, #f5f5f0 1px, #e8e8e0 1px, #e8e8e0 2px);
+            border-radius: 0 1px 1px 0;
+            border: 1px solid #ccc;
+            border-left: none;
+        }
+
+        .polished-book .book-title-band {
+            position: absolute;
+            top: 30%;
+            left: 10px;
+            right: 6px;
+            height: 3px;
+            background: rgba(255, 215, 0, 0.5);
+        }
+
+        .polished-book .book-title-band-2 {
+            position: absolute;
+            top: calc(30% + 6px);
+            left: 10px;
+            right: 10px;
+            height: 2px;
+            background: rgba(255, 215, 0, 0.3);
+        }
+
+        /* â”€â”€ Stage 4: Sealed Cardboard Box â”€â”€ */
+        .sealed-box {
+            position: relative;
+        }
+
+        .sealed-box .box {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #c8a97e 0%, #a8854a 100%);
+            border: 2px solid #8b6c3f;
+            border-radius: 3px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .sealed-box .flap-top {
+            position: absolute;
+            top: 0;
+            left: 3px;
+            right: 3px;
+            height: 35%;
+            border-bottom: 2px dashed #8b6c3f;
+        }
+
+        .sealed-box .tape {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 100%;
+            background: rgba(200, 180, 140, 0.6);
+            border-left: 1px solid rgba(139, 108, 63, 0.5);
+            border-right: 1px solid rgba(139, 108, 63, 0.5);
+        }
+
+        .sealed-box .box-label {
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+        }
+
+        .sealed-box .box-label::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            height: 1.5px;
+            background: #aaa;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            max-width: 1150px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 40px 0 100px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(32px, 5.4vw, 82px);
+            line-height: 0.95;
+            text-align: center;
+            margin-bottom: 24px;
+            letter-spacing: normal;
+            color: var(--dark);
+            text-transform: none;
+        }
+
+        .comparison-intro {
+            max-width: 620px;
+            margin: 0 auto 48px;
+            font-size: 18px;
+            line-height: 1.7;
+            text-align: center;
+            color: rgba(9, 45, 83, 0.72);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        .comparison-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 248, 255, 0.94) 100%);
+            border: 1px solid rgba(9, 45, 83, 0.12);
+            padding: 28px 26px 34px;
+            border-radius: 28px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 24px 50px rgba(9, 45, 83, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .comparison-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(52, 98, 252, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .comparison-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 28px 70px rgba(52, 98, 252, 0.18);
+        }
+
+        .comparison-card:hover::before {
+            opacity: 1;
+        }
+
+        .comparison-card.old {
+            border-color: rgba(255, 68, 68, 0.2);
+        }
+
+        .comparison-card.new {
+            border-color: var(--primary);
+            background: rgba(52, 98, 252, 0.05);
+        }
+
+        .comparison-visual {
+            width: 100%;
+            aspect-ratio: 21 / 9;
+            object-fit: cover;
+            border-radius: 22px;
+            border: 1px solid rgba(9, 45, 83, 0.1);
+            margin-bottom: 26px;
+            background: #f5f7fb;
+        }
+
+        .card-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 0.12em;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .comparison-card.old .card-label {
+            color: #ff4444;
+        }
+
+        .card-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(28px, 3vw, 42px);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--dark);
+            min-height: 2.5em;
+        }
+
+        .rotating-feature-wrapper {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .rotating-item {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--dark);
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .rotating-item.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .rotating-item.exit {
+            opacity: 0;
+            transform: translateY(-15px);
+        }
+
+        @media (max-width: 768px) {
+            .rotating-feature-wrapper {
+                height: 80px;
+            }
+
+            .rotating-item {
+                font-size: 16px;
+            }
+        }
+
+        .feature-icon {
+            font-size: 22px;
+            line-height: 1;
+            width: 30px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .card-features li {
+                padding: 15px;
+                min-height: auto;
+                font-size: 15px;
+                gap: 10px;
+            }
+
+            .feature-icon {
+                font-size: 18px;
+                width: 20px;
+            }
+        }
+
+        .comparison-card.old .feature-icon {
+            color: #ff4444;
+        }
+
+        .comparison-card.new .feature-icon {
+            color: var(--primary);
+        }
+
+        .feature-text {
+            display: block;
+        }
+
+        /* Problem Section */
+        .problem-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 40px;
+            position: relative;
+            z-index: 0;
+        }
+
+        .problem-card {
+            background: linear-gradient(135deg, rgba(255, 68, 68, 0.05) 0%, rgba(52, 98, 252, 0.05) 100%);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 80px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '!';
+            position: absolute;
+            right: -20px;
+            top: -40px;
+            font-family: 'Anton', sans-serif;
+            font-size: 400px;
+            color: rgba(52, 98, 252, 0.05);
+            line-height: 1;
+        }
+
+        .problem-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(36px, 6vw, 72px);
+            margin-bottom: 40px;
+            color: var(--primary);
+        }
+
+        .problem-text {
+            font-size: 22px;
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Anton', sans-serif;
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Team Section */
+        .team-section {
+            background: var(--white);
+            color: var(--dark);
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(52, 98, 252, 0.08), transparent 28%),
+                radial-gradient(circle at 85% 18%, rgba(9, 45, 83, 0.08), transparent 30%),
+                linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(244, 248, 255, 1) 100%);
+            pointer-events: none;
+        }
+
+        .team-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-header {
+            max-width: 780px;
+            margin: 0 auto 42px;
+            text-align: center;
+        }
+
+        .team-kicker {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 0.16em;
+            color: var(--primary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .team-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(42px, 6vw, 82px);
+            line-height: 0.95;
+            margin-bottom: 18px;
+            color: var(--dark);
+        }
+
+        .team-intro {
+            font-size: 19px;
+            line-height: 1.75;
+            color: rgba(9, 45, 83, 0.74);
+        }
+
+        .team-gallery-shell {
+            position: relative;
+            border-radius: 36px;
+            padding: 36px;
+            min-height: 680px;
+            background:
+                radial-gradient(circle at top, rgba(52, 98, 252, 0.22), transparent 38%),
+                linear-gradient(145deg, #0b2b57 0%, #081f3c 100%);
+            border: 1px solid rgba(52, 98, 252, 0.22);
+            box-shadow: 0 32px 90px rgba(9, 45, 83, 0.2);
+            overflow: hidden;
+        }
+
+        .team-gallery-shell::before {
+            content: '';
+            position: absolute;
+            inset: 14px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+        }
+
+        .team-gallery-note {
+            position: absolute;
+            top: 26px;
+            right: 30px;
+            z-index: 2;
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.78);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+        }
+
+        .team-gallery {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        .team-gallery:active {
+            cursor: grabbing;
+        }
+
+        .team-gallery canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* LIGHT THEME TIMELINE DIAGNOSTIC */
+        .diagnostic-system {
+            width: 100%;
+            margin: 0 0 120px 0;
+            padding: 20px 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            position: relative;
+            z-index: 25;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+
+
+        /* CTA Section */
+        .cta {
+            background: var(--white);
+            text-align: center;
+            padding: 150px 40px;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            color: var(--dark);
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--primary) 0%, transparent 70%);
+            opacity: 0.1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.2;
+            }
+        }
+
+        .cta-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(48px, 10vw, 120px);
+            margin-bottom: 40px;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            color: var(--dark);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 25px 60px;
+            background: var(--primary);
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 0.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--white);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s 0.1s;
+        }
+
+        .cta-button:hover span {
+            color: var(--primary);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 60px rgba(52, 98, 252, 0.5);
+        }
+
+        /* Parallax Elements */
+        .parallax-element {
+            position: absolute;
+            color: var(--dark);
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .parallax-1 {
+            top: 10%;
+            left: 5%;
+            font-size: 200px;
+            animation-delay: 0s;
+        }
+
+        .parallax-2 {
+            top: 40%;
+            right: 5%;
+            font-size: 150px;
+            animation-delay: -5s;
+        }
+
+        .parallax-3 {
+            bottom: 20%;
+            left: 10%;
+            font-size: 180px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                cursor: auto !important;
+                /* Disable custom cursor on mobile for better usability */
+            }
+
+            .cursor {
+                display: none !important;
+            }
+
+            /* Global Spacing */
+            section {
+                padding: 60px 20px !important;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .conveyor-belt,
+            .conveyor-item,
+            .station-wrapper {
+                display: none !important;
+            }
+
+            .conveyor-container {
+                padding-right: 0 !important;
+            }
+
+            .comparison {
+                width: calc(100% - 40px) !important;
+                max-width: 100% !important;
+                margin: 40px 20px !important;
+                padding: 0 0 60px !important;
+                display: block !important;
+                /* Ensure it is visible */
+            }
+
+            .section-title {
+                margin-bottom: 24px;
+            }
+
+            .comparison-intro {
+                margin-bottom: 30px;
+                font-size: 16px;
+            }
+
+            .team-section {
+                padding: 80px 20px 40px !important;
+            }
+
+            .team-header {
+                margin-bottom: 24px;
+            }
+
+            .team-intro {
+                font-size: 16px;
+            }
+
+            .team-gallery-shell {
+                display: none !important;
+            }
+
+            .team-mobile-gallery {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                margin-top: 30px;
+            }
+
+            .team-member-card {
+                background: rgba(9, 45, 83, 0.03);
+                border: 1px solid rgba(9, 45, 83, 0.08);
+                border-radius: 15px;
+                padding: 10px 5px;
+                text-align: center;
+                transition: transform 0.3s;
+            }
+
+            .team-member-card img {
+                width: 90%;
+                aspect-ratio: 1;
+                object-fit: cover;
+                border-radius: 50%;
+                margin-bottom: 8px;
+                border: 1.5px solid var(--primary);
+            }
+
+            .member-name {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 36px;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+                text-transform: none;
+                color: var(--dark);
+                line-height: 1.2;
+            }
+
+            /* Center the last member if they are alone in the 3-column grid */
+            .team-mobile-gallery .team-member-card:last-child:nth-child(3n+1) {
+                grid-column: 2;
+            }
+
+            .conveyor-belt {
+                width: 40px;
+                right: 4%;
+            }
+
+            .conveyor-item {
+                right: calc(4% + 10px);
+                width: 30px;
+                height: 40px;
+            }
+
+            .problem-section {
+                padding: 60px 20px;
+            }
+
+            .problem-card {
+                padding: 40px 20px;
+            }
+
+            .problem-card::before {
+                font-size: 200px;
+                right: -10px;
+                top: -20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .stat-number {
+                font-size: 48px;
+            }
+
+            .cta {
+                padding: 100px 20px;
+            }
+
+            .cta-title {
+                font-size: 40px;
+            }
+
+            .cta-button {
+                padding: 18px 36px;
+                font-size: 20px;
+                width: 100%;
+            }
+
+            /* Navbar Mobile Styles */
+            .navbar {
+                width: calc(100% - 30px);
+                padding: 8px 20px;
+                border-radius: 50px;
+                top: 15px;
+            }
+
+            .nav-links {
+                display: none !important;
+            }
+
+            .mobile-menu-btn {
+                display: none !important;
+            }
+
+            .nav-cta {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .mobile-menu-btn {
+                display: none !important;
+            }
+
+            .logo {
+                order: 1;
+                max-width: 100px;
+            }
+
+            .logo img {
+                height: 30px;
+            }
+
+            .nav-cta {
+                order: 3;
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+
+            .navbar.sticky {
+                padding: 6px 15px;
+            }
+
+            /* Very small screen navbar optimization */
+            @media (max-width: 380px) {
+                .logo img {
+                    height: 24px;
+                }
+
+                .nav-cta {
+                    padding: 6px 12px;
+                    font-size: 11px;
+                }
+
+                .navbar {
+                    padding: 8px 12px;
+                }
+            }
+
+            /* Hero Section Mobile */
+            .hero {
+                height: 100vh;
+                min-height: 100svh;
+                padding: 0 16px;
+                background-attachment: scroll;
+                overflow: hidden;
+            }
+
+            .hero-text {
+                width: min(70vw, 360px);
+                padding: 0 12px;
+                z-index: 12;
+            }
+
+            .hate-text {
+                font-size: clamp(40px, 12vw, 70px);
+            }
+
+            .hero-paper {
+                max-width: none !important;
+            }
+
+            .hero--mobile-optimized .hero-paper {
+                width: var(--mobile-paper-width, 90px) !important;
+                max-width: none !important;
+                opacity: var(--mobile-paper-opacity, 1) !important;
+                will-change: transform, opacity;
+            }
+
+            .hero--mobile-optimized .hero-paper[data-depth="background"] {
+                filter: saturate(0.95);
+            }
+
+            /* Footer Mobile */
+            footer {
+                padding: 20px !important;
+                flex-direction: column !important;
+                gap: 15px !important;
+                text-align: center !important;
+            }
+
+            footer div {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+        }
+
+
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        @keyframes fadeInTop {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            white-space: nowrap;
+        }
+
+
+        .nav-cta {
+            background: var(--primary);
+            color: var(--white);
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(52, 98, 252, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 98, 252, 0.4);
+            background: #2549d4;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .navbar {
+                width: 100%;
+                padding: 12px 20px;
+                transform: translateY(-100%);
+            }
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: #f8fafc;
+            padding: 100px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+
+        .testimonials-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(36px, 5vw, 64px);
+            color: var(--dark);
+            line-height: 1.1;
+            margin-bottom: 15px;
+        }
+
+        .testimonials-marquee {
+            display: flex;
+            width: fit-content;
+            animation: marquee 30s linear infinite;
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .testimonials-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Who We Are */
+        /* Partners Section */
+        .partners-section {
+            padding: 100px 50px;
+            background: #fff;
+            position: relative;
+        }
+        .partners-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .partners-inner .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .partners-heading {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 48px;
+        }
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 36px;
+        }
+        .partner-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 36px;
+            border: 1px solid rgba(9, 45, 83, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .partner-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 16px 48px rgba(52, 98, 252, 0.1);
+        }
+        .partner-logo-wrap {
+            width: 100%;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            background: #f8f9fc;
+            border-radius: 12px;
+            border: 1px solid rgba(9, 45, 83, 0.06);
+        }
+        .partner-logo-wrap img,
+        .partner-logo-wrap svg {
+            max-height: 52px;
+            max-width: 180px;
+            object-fit: contain;
+        }
+        .partner-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+        .partner-type {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .partner-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        .partner-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+        .partner-cta:hover {
+            gap: 12px;
+        }
+        .partner-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: auto;
+        }
+        .partner-cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            background: var(--primary);
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .partner-cta-secondary:hover {
+            background: #1a3f8a;
+            gap: 12px;
+        }
+        @media (max-width: 768px) {
+            .partners-section { padding: 60px 24px; }
+            .partners-heading { font-size: 26px; margin-bottom: 32px; }
+            .partners-grid { grid-template-columns: 1fr; gap: 24px; }
+            .partner-card { padding: 28px; }
+        }
+
+        /* Founders Section */
+        .founder-section {
+            padding: 100px 50px;
+            background: #061c33;
+            position: relative;
+        }
+        .founder-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(52, 98, 252, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 50%, rgba(52, 98, 252, 0.08), transparent 40%);
+            pointer-events: none;
+        }
+        .founder-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .founder-card {
+            background: #fff;
+            border-radius: 28px;
+            padding: 50px 60px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+        }
+        .founder-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .founder-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+        }
+        .founder-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 1.25;
+            margin-bottom: 16px;
+        }
+        .founder-desc {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #555;
+            max-width: 540px;
+        }
+        .founder-credit {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(9, 45, 83, 0.08);
+        }
+        .founder-credit-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .founder-credit-role {
+            font-size: 13px;
+            color: #888;
+            font-weight: 500;
+        }
+        .founder-image-wrap {
+            flex-shrink: 0;
+            width: 300px;
+            height: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            box-shadow: 0 8px 30px rgba(52, 98, 252, 0.25);
+        }
+        .founder-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .founder-section { padding: 60px 24px; }
+            .founder-card { flex-direction: column-reverse; padding: 36px 28px; gap: 30px; text-align: center; }
+            .founder-title { font-size: 24px; }
+            .founder-desc { font-size: 15px; max-width: 100%; }
+            .founder-image-wrap { width: 200px; height: 250px; }
+            .founder-credit { justify-content: center; }
+            .founder-content { text-align: center; }
+            .founder-desc { margin: 0 auto; }
+        }
+
+        /* How We Can Help - 3 Layer Interactive */
+        .our-services {
+            padding: 100px 50px;
+            background: #f8f9fc;
+        }
+        .hwh-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hwh-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .hwh-heading {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 48px;
+        }
+        /* Layer 1 - Main service cards */
+        .hwh-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .hwh-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 24px;
+            border: 2px solid rgba(9, 45, 83, 0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .hwh-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 32px rgba(52, 98, 252, 0.1);
+        }
+        .hwh-card.active {
+            border-color: var(--primary);
+            background: rgba(52, 98, 252, 0.05);
+            box-shadow: 0 0 0 3px rgba(52, 98, 252, 0.12), 0 12px 32px rgba(52, 98, 252, 0.1);
+        }
+        .hwh-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+        .hwh-card .hwh-card-arrow {
+            display: inline-block;
+            margin-left: 6px;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+        .hwh-card.active .hwh-card-arrow {
+            transform: rotate(90deg);
+        }
+        /* Layer 2+3 - Detail panel */
+        .hwh-detail {
+            display: none;
+            margin-top: 32px;
+            gap: 28px;
+            align-items: stretch;
+        }
+        .hwh-detail.open {
+            display: flex;
+        }
+        .hwh-subs {
+            flex: 0 0 340px;
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid rgba(9, 45, 83, 0.08);
+            padding: 24px 0;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+        .hwh-sub-item {
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hwh-sub-item:hover {
+            background: rgba(52, 98, 252, 0.04);
+            color: var(--dark);
+        }
+        .hwh-sub-item.active {
+            background: rgba(52, 98, 252, 0.06);
+            border-left-color: var(--primary);
+            color: var(--dark);
+            font-weight: 600;
+        }
+        .hwh-sub-item .hwh-sub-badge {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #fff;
+            background: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+        .hwh-sub-popular-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            padding: 8px 24px 4px;
+            opacity: 0.7;
+        }
+        .hwh-sub-other {
+            border-top: 1px solid rgba(9, 45, 83, 0.08);
+            margin-top: 8px;
+            padding-top: 8px;
+        }
+        .hwh-sub-other-toggle {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+        .hwh-sub-other-toggle:hover {
+            color: #2549d4;
+        }
+        .hwh-sub-other-items {
+            display: none;
+        }
+        .hwh-sub-other-items.open {
+            display: block;
+        }
+        .hwh-sub-other-items .hwh-sub-item {
+            padding-left: 36px;
+            font-size: 14px;
+        }
+        /* Layer 3 - Content panel */
+        .hwh-content {
+            flex: 1;
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid rgba(9, 45, 83, 0.08);
+            padding: 32px;
+        }
+        .hwh-content-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .hwh-content-main {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 24px;
+        }
+        .hwh-content-main strong {
+            color: var(--dark);
+        }
+        .hwh-content-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 12px;
+        }
+        .hwh-content-list li {
+            padding-left: 28px;
+            position: relative;
+            font-size: 16px;
+            color: #444;
+            line-height: 1.6;
+        }
+        .hwh-content-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .our-services { padding: 60px 24px; }
+            .hwh-heading { font-size: 26px; }
+            .hwh-grid { grid-template-columns: 1fr; gap: 14px; }
+            .hwh-detail.open { flex-direction: column; }
+            .hwh-subs { flex: none; max-height: none; }
+            .hwh-content { }
+            .hwh-card { padding: 20px 18px; }
+            .hwh-card-title { font-size: 16px; }
+        }
+
+        .testimonial-card {
+            width: 450px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(9, 45, 83, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            flex-shrink: 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 45px rgba(52, 98, 252, 0.1);
+        }
+
+        .quote-icon {
+            font-size: 40px;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: blur(4px);
+            border: 2px solid var(--primary);
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 16px;
+        }
+
+        .author-pos {
+            font-size: 14px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-br {
+                display: inline !important;
+            }
+
+            .desktop-br {
+                display: none !important;
+            }
+
+            .testimonials {
+                padding: 60px 0;
+            }
+
+            .testimonial-card {
+                width: 300px;
+                padding: 25px;
+                gap: 15px;
+            }
+
+            .testimonial-text {
+                font-size: 15px;
+            }
+
+            .author-img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+        /* ── DIAGNOSTIC QUESTIONNAIRE ── */
+        #diagnostic-system {
+            position: relative;
+            transition: opacity 0.2s ease;
+        }
+        .diag-panel {
+            background: #fff;
+            border-radius: 28px;
+            padding: 40px 36px 44px;
+            border: 1px solid rgba(9,45,83,0.08);
+            box-shadow: 0 24px 60px rgba(9,45,83,0.06);
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        /* ── Progress Bar ── */
+        .diag-progress {
+            margin-bottom: 36px;
+            padding: 0 4px;
+        }
+        .diag-progress-track {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 14px;
+        }
+        .diag-progress-track::before {
+            content: '';
+            position: absolute;
+            top: 17px;
+            left: 14px;
+            right: 14px;
+            height: 2px;
+            background: #e8ecf2;
+            transform: translateY(-50%);
+            z-index: 0;
+            border-radius: 1px;
+        }
+        .diag-progress-fill {
+            position: absolute;
+            top: 17px;
+            left: 14px;
+            height: 2px;
+            background: var(--primary);
+            transform: translateY(-50%);
+            z-index: 1;
+            border-radius: 1px;
+            transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+        .diag-progress-step {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-rows: 34px auto;
+            align-items: center;
+            justify-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+        .diag-progress-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border: 2px solid #d0d6e0;
+            background: #fff;
+            color: #b0b8c4;
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+        }
+        .diag-progress-step.done .diag-progress-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-size: 10px;
+        }
+        .diag-progress-step.active .diag-progress-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            font-size: 13px;
+            box-shadow: 0 0 0 5px rgba(52,98,252,0.15), 0 4px 12px rgba(52,98,252,0.3);
+        }
+        .diag-progress-step.active .diag-progress-label {
+            color: var(--dark);
+            font-weight: 700;
+        }
+        .diag-progress-step.done .diag-progress-label {
+            color: var(--primary);
+        }
+        .diag-progress-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #b0b8c4;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: color 0.3s;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .diag-progress-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 4px;
+        }
+        .diag-progress-current {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .diag-progress-pct {
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(9,45,83,0.35);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* ── Question ── */
+        .diag-question {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(26px, 3.4vw, 40px);
+            color: var(--dark);
+            line-height: 1.15;
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: -0.01em;
+        }
+        .diag-question-sub {
+            font-size: 15px;
+            color: rgba(9,45,83,0.5);
+            text-align: center;
+            margin-bottom: 28px;
+            margin-top: -16px;
+            font-weight: 400;
+        }
+
+        /* ── Option Cards ── */
+        .diag-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .diag-option {
+            background: #fff;
+            border: 1.5px solid rgba(9,45,83,0.1);
+            border-radius: 16px;
+            padding: 18px 22px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175,0.885,0.32,1.275);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .diag-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(52,98,252,0.1);
+            background: rgba(52,98,252,0.02);
+        }
+        .diag-option:active {
+            transform: translateY(0);
+        }
+        .diag-option .fa-chevron-right {
+            margin-left: auto;
+            color: rgba(9,45,83,0.15);
+            font-size: 12px;
+            transition: all 0.25s;
+        }
+        .diag-option:hover .fa-chevron-right {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+        .diag-option.selected {
+            border-color: var(--primary);
+            background: rgba(52,98,252,0.06);
+            box-shadow: 0 0 0 3px rgba(52,98,252,0.08), 0 10px 28px rgba(52,98,252,0.1);
+        }
+        .diag-option.selected .diag-option-dot {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+        .diag-option.selected .diag-option-dot::after {
+            opacity: 1;
+        }
+        .diag-option-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #d0d6e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.25s;
+            position: relative;
+        }
+        .diag-option-dot::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 10px;
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .diag-option-text {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        /* ── Text Areas ── */
+        .diag-text-wrap {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .diag-textarea {
+            width: 100%;
+            min-height: 130px;
+            padding: 20px 22px;
+            border: 2px solid rgba(9,45,83,0.12);
+            border-radius: 16px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            color: var(--dark);
+            resize: vertical;
+            transition: border-color 0.25s, box-shadow 0.25s;
+            background: #fff;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+        .diag-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(52,98,252,0.08);
+        }
+        .diag-textarea::placeholder {
+            color: rgba(9,45,83,0.3);
+        }
+
+        /* ── Navigation ── */
+        .diag-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 28px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            gap: 12px;
+        }
+        .diag-btn-back {
+            background: transparent;
+            border: 1.5px solid rgba(9,45,83,0.12);
+            border-radius: 12px;
+            padding: 12px 22px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(9,45,83,0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .diag-btn-back:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(52,98,252,0.04);
+        }
+        .diag-btn-next {
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            padding: 13px 30px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.01em;
+        }
+        .diag-btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(52,98,252,0.3);
+        }
+        .diag-btn-next:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ── Landing ── */
+        .diag-landing {
+            text-align: center;
+            padding: 30px 0 10px;
+        }
+        .diag-landing-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: rgba(52,98,252,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 26px;
+            color: var(--primary);
+        }
+        .diag-landing-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(34px, 4.8vw, 58px);
+            color: var(--dark);
+            line-height: 1.05;
+            margin-bottom: 14px;
+        }
+        .diag-landing-sub {
+            font-size: 17px;
+            color: rgba(9,45,83,0.55);
+            line-height: 1.7;
+            max-width: 480px;
+            margin: 0 auto 28px;
+            font-weight: 400;
+        }
+        .diag-btn-start {
+            background: var(--primary);
+            border: none;
+            border-radius: 50px;
+            padding: 16px 48px;
+            font-family: 'Anton', sans-serif;
+            font-size: 20px;
+            letter-spacing: 0.04em;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 28px rgba(52,98,252,0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .diag-btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(52,98,252,0.35);
+        }
+
+        /* ── Summary ── */
+        .diag-summary {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .diag-summary-item {
+            background: #fff;
+            border: 1px solid rgba(9,45,83,0.08);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 6px;
+            transition: border-color 0.2s;
+        }
+        .diag-summary-item:hover {
+            border-color: rgba(52,98,252,0.2);
+        }
+        .diag-summary-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(9,45,83,0.35);
+            flex-shrink: 0;
+        }
+        .diag-summary-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark);
+            text-align: left;
+            line-height: 1.4;
+        }
+        .diag-summary-cta {
+            margin-top: 32px;
+            text-align: center;
+        }
+        .diag-summary-cta p {
+            font-size: 15px;
+            color: rgba(9,45,83,0.55);
+            margin-bottom: 22px;
+            line-height: 1.7;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── Animations ── */
+        .diag-fade {
+            animation: diagFadeIn 0.35s ease forwards;
+        }
+        @keyframes diagFadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .diag-slide-up {
+            animation: diagSlideUp 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+        }
+        @keyframes diagSlideUp {
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ── Text Input (for Other) ── */
+        .diag-text-hint {
+            font-size: 13px;
+            color: rgba(9,45,83,0.4);
+            margin-top: 6px;
+        }
+        .diag-text-input {
+            width: 100%;
+            padding: 16px 18px;
+            border: 2px solid rgba(9,45,83,0.12);
+            border-radius: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            color: var(--dark);
+            transition: border-color 0.25s;
+            background: #fff;
+            box-sizing: border-box;
+        }
+        .diag-text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(52,98,252,0.08);
+        }
+        .diag-text-input::placeholder {
+            color: rgba(9,45,83,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .diag-options, .diag-summary {
+                grid-template-columns: 1fr;
+            }
+            .diag-panel {
+                padding: 24px 14px 28px;
+                border-radius: 18px;
+                box-shadow: none;
+                border: none;
+            }
+            .diag-option {
+                padding: 14px 16px;
+                font-size: 15px;
+                border-radius: 14px;
+            }
+            .diag-question {
+                font-size: 22px;
+            }
+            .diag-nav {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .diag-btn-back, .diag-btn-next {
+                flex: 1;
+                justify-content: center;
+                text-align: center;
+            }
+            .diag-landing-title {
+                font-size: 28px;
+            }
+            .diag-progress-circle {
+                width: 22px; height: 22px;
+                font-size: 9px;
+            }
+            .diag-progress-step.active .diag-progress-circle {
+                width: 28px; height: 28px;
+                font-size: 11px;
+            }
+            .diag-progress-label {
+                font-size: 8px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 48px;
+            }
+            .diag-progress-step.active .diag-progress-label {
+                max-width: none;
+            }
+            .diag-progress-track::before {
+                left: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+  <script type="module" crossorigin src="/assets/index-cuJUPC8x.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><img src="/assets/logo-Daz97ldJ.png" alt="UpForge"></div>
+        <ul class="nav-links">
+            <li><a href="#who-we-are">Who We Are</a></li>
+            <li><a href="#our-services">Our Services</a></li>
+            <li><a href="#partners">Partners</a></li>
+            <li><a href="#diagnostic-system">How We Can Help</a></li>
+            <li><a href="#team">Our Team</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="case-studies/">Case Studies</a></li>
+        </ul>
+
+        <button class="nav-cta" onclick="window.open('https://calendly.com/shardulsingh166/30min', '_blank')">Book a Free Call</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="grid-bg"></div>
+
+        <!-- Scattered Papers -->
+        <img src="/assets/1-BSYsFsHE.png" class="hero-paper" style="width:160px; top:2%; left:2%; transform:rotate(-10deg)">
+        <img src="/assets/2-4IQU80ud.png" class="hero-paper" style="width:140px; top:2%; right:2%; transform:rotate(10deg)">
+        <img src="/assets/3-DSWwMJU6.png" class="hero-paper" style="width:180px; bottom:2%; left:2%; transform:rotate(12deg)">
+        <img src="/assets/4-B2GTDZpQ.png" class="hero-paper" style="width:150px; bottom:2%; right:2%; transform:rotate(-12deg)">
+        <img src="/assets/5-BsLV8Y_B.png" class="hero-paper" style="width:130px; top:20%; left:14%; transform:rotate(-18deg)">
+        <img src="/assets/6-CdXNER7I.png" class="hero-paper" style="width:170px; top:20%; right:14%; transform:rotate(18deg)">
+        <img src="/assets/7-CwNhGqu2.png" class="hero-paper" style="width:120px; bottom:35%; left:18%; transform:rotate(5deg)">
+        <img src="/assets/8-ZdikqAkZ.png" class="hero-paper" style="width:160px; bottom:20%; right:18%; transform:rotate(-5deg)">
+        <img src="/assets/9-BlEvA6mh.png" class="hero-paper" style="width:150px; top:38%; left:4%; transform:rotate(-14deg)">
+        <img src="/assets/10-DNhgmT0t.png" class="hero-paper" style="width:140px; top:38%; right:4%; transform:rotate(14deg)">
+        <img src="/assets/11-BHpLB3JZ.png" class="hero-paper" style="width:240px; top:8%; left:25%; transform:rotate(-8deg)">
+        <img src="/assets/12-BoK_nT_G.png" class="hero-paper" style="width:240px; top:8%; right:25%; transform:rotate(8deg)">
+        <img src="/assets/13-CfXfmiiO.png" class="hero-paper" style="width:230px; bottom:8%; left:15%; transform:rotate(4deg)">
+        <img src="/assets/14-D_r-yClt.png" class="hero-paper" style="width:230px; bottom:4%; right:18%; transform:rotate(-4deg)">
+
+        <div class="hero-text">
+            <div class="hate-text we-hate">We Hate</div>
+            <div class="hate-text traditional">Traditional</div>
+            <div class="hate-text consulting">Consulting</div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg width="30" height="50" viewBox="0 0 30 50">
+                <rect x="5" y="5" width="20" height="40" rx="10" fill="none" stroke="var(--primary)" stroke-width="2" />
+                <circle cx="15" cy="15" r="3" fill="var(--primary)">
+                    <animate attributeName="cy" from="15" to="35" dur="1.5s" repeatCount="indefinite" />
+                </circle>
+            </svg>
+        </div>
+    </section>
+
+
+
+    <!-- Conveyor Belt Section -->
+    <div class="conveyor-container">
+
+        <!-- Our Services Section -->
+        <section class="our-services" id="our-services">
+        <div class="hwh-inner">
+            <span class="hwh-label">How We Can Help</span>
+            <h2 class="hwh-heading">Explore our expertise.</h2>
+            <div class="hwh-grid" id="hwh-grid"></div>
+            <div class="hwh-detail" id="hwh-detail">
+                <div class="hwh-subs" id="hwh-subs"></div>
+                <div class="hwh-content" id="hwh-content"></div>
+            </div>
+        </div>
+    </section>
+
+        <div class="conveyor-belt"></div>
+
+        <!-- Conveyor Item (transforms through stations) -->
+        <div class="conveyor-item">
+            <!-- Stage 0: Messy Papers -->
+            <div class="stage messy-papers active">
+                <div class="sheet"></div>
+                <div class="sheet"></div>
+                <div class="sheet"></div>
+                <div class="sheet"></div>
+                <div class="sheet"></div>
+            </div>
+            <!-- Stage 1: Sorted Sheets -->
+            <div class="stage sorted-sheets">
+                <div class="sheet"></div>
+                <div class="sheet"></div>
+                <div class="sheet">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <!-- Stage 2: Clipped Report -->
+            <div class="stage clipped-report">
+                <div class="clip"></div>
+                <div class="cover">
+                    <div class="rline"></div>
+                    <div class="rline"></div>
+                    <div class="rline"></div>
+                    <div class="rline"></div>
+                    <div class="rline"></div>
+                </div>
+            </div>
+            <!-- Stage 3: Polished Book -->
+            <div class="stage polished-book">
+                <div class="book-cover">
+                    <div class="book-spine"></div>
+                    <div class="book-title-band"></div>
+                    <div class="book-title-band-2"></div>
+                </div>
+                <div class="book-pages"></div>
+            </div>
+            <!-- Stage 4: Sealed Cardboard Box -->
+            <div class="stage sealed-box">
+                <div class="box">
+                    <div class="flap-top"></div>
+                    <div class="tape"></div>
+                    <div class="box-label"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Automated Stations -->
+        <div class="station-wrapper" style="top: 10%;">
+            <div class="station-scanner">
+                <div class="scanner-panel"></div>
+                <div class="scanner-lights">
+                    <div class="scanner-light active"></div>
+                    <div class="scanner-light active-2"></div>
+                    <div class="scanner-light"></div>
+                </div>
+                <div class="scanner-wires">
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="station-wrapper" style="top: 35%;">
+            <div class="station-scanner">
+                <div class="scanner-panel"></div>
+                <div class="scanner-lights">
+                    <div class="scanner-light active"></div>
+                    <div class="scanner-light active-2"></div>
+                    <div class="scanner-light"></div>
+                </div>
+                <div class="scanner-wires">
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="station-wrapper" style="top: 60%;">
+            <div class="station-scanner">
+                <div class="scanner-panel"></div>
+                <div class="scanner-lights">
+                    <div class="scanner-light active"></div>
+                    <div class="scanner-light active-2"></div>
+                    <div class="scanner-light"></div>
+                </div>
+                <div class="scanner-wires">
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="station-wrapper" style="top: 85%;">
+            <div class="station-scanner">
+                <div class="scanner-panel"></div>
+                <div class="scanner-lights">
+                    <div class="scanner-light active"></div>
+                    <div class="scanner-light active-2"></div>
+                    <div class="scanner-light"></div>
+                </div>
+                <div class="scanner-wires">
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Section -->
+        <section class="comparison" id="difference">
+            <!-- STARTUP DIAGNOSTIC QUESTIONNAIRE -->
+            <div class="diagnostic-system" id="diagnostic-system"></div>
+
+
+
+            <div class="comparison-grid" id="comparison-boxes">
+                <article class="comparison-card old">
+                    <img class="comparison-visual" src="/assets/tradconsultant2-VALvckRX.jpeg" alt="Traditional consultant at work">
+                    <div class="card-label">Traditional Consultant</div>
+                    <div class="rotating-feature-wrapper" id="trad-rotator-1">
+                        <div class="rotating-item active">Long discovery cycles before anything practical ships</div>
+                        <div class="rotating-item">Generic recommendations handed off for your team to figure out</div>
+                        <div class="rotating-item">Momentum slows down after the presentation deck is delivered</div>
+                        <div class="rotating-item">Spews off jargon when approached with a business problem</div>
+                        <div class="rotating-item">Focuses on 'transformation' without touching reality</div>
+                        <div class="rotating-item">Uses frameworks that don't apply to your specific context</div>
+                    </div>
+                </article>
+                <article class="comparison-card new">
+                    <img class="comparison-visual" src="/assets/ourconsultant2-DiXMGY28.jpeg" alt="Our consultant working with a client">
+                    <div class="card-label">Our Consultant</div>
+                    <div class="rotating-feature-wrapper" id="our-rotator-1">
+                        <div class="rotating-item active">Fast diagnosis paired with a concrete plan tied to business
+                            priorities</div>
+                        <div class="rotating-item">Strategic guidance plus direct execution support to move work forward
+                        </div>
+                        <div class="rotating-item">Clear deliverables, tighter communication, and measurable progress
+                        </div>
+                        <div class="rotating-item">Devise a strategy tied to actual business goals</div>
+                        <div class="rotating-item">Draft a day-to-day plan for your team to follow</div>
+                        <div class="rotating-item">Directly contribute in operations to ensure execution</div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Row 2 Header -->
+
+        </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section" id="partners">
+        <div class="partners-inner">
+            <span class="section-label">Our Partners</span>
+            <h2 class="partners-heading">Trusted collaborations that extend our reach.</h2>
+            <div class="partners-grid">
+                <div class="partner-card">
+                    <div class="partner-logo-wrap">
+                        <img src="/assets/scoutline-4i7VW8R8.png" alt="Scoutline Capital">
+                    </div>
+                    <h3 class="partner-name">Scoutline Capital</h3>
+                    <span class="partner-type">Startup Advisory &bull; Fundraising</span>
+                    <p class="partner-desc">Our exclusive startup advisory partner for fundraising, financial modelling, and investor outreach. Together we deliver a 12-week joint programme that runs strategy and capital raising in parallel.</p>
+                    <div class="partner-actions">
+                        <a href="partners/scoutline-capital/index.html" class="partner-cta partner-cta-secondary">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="https://www.scoutlinecapital.in/" target="_blank" rel="noopener noreferrer" class="partner-cta">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-logo-wrap">
+                        <img src="/assets/bmm-logo-2-BrcPkZ7l.png" alt="Brown Men Marketing">
+                    </div>
+                    <h3 class="partner-name">Brown Men Marketing</h3>
+                    <span class="partner-type">Growth Marketing &bull; Brand Strategy</span>
+                    <p class="partner-desc">Our trusted marketing partner helping startups and growing businesses with performance marketing, brand positioning, content strategy, and customer acquisition to accelerate sustainable growth.</p>
+                    <a href="https://brownmenmarketing.com/about-bmm/" target="_blank" rel="noopener noreferrer" class="partner-cta">Visit Website <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+
+    <section class="team-section" id="team">
+        <div class="team-inner">
+            <div class="team-header">
+                <h2 class="team-title">Meet Your Consultants</h2>
+            </div>
+            <div class="team-gallery-shell">
+                <div class="team-gallery-note">Drag or Scroll to Explore</div>
+                <div class="team-gallery" id="team-gallery"></div>
+            </div>
+
+            <div class="team-mobile-gallery" style="display: none;">
+                <div class="team-member-card">
+                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
+                    <a href="https://www.linkedin.com/in/shardul-singh-b06671312/" target="_blank" class="member-name">Shardul Singh</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/zaara-s-9l6WeW.jpeg" alt="Zaara Zaidi">
+                    <a href="https://www.linkedin.com/in/zaarazaidi/" target="_blank" class="member-name">Zaara Zaidi</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/gaurav-EXv0WHD7.jpeg" alt="Gaurav Kalal">
+                    <a href="https://www.linkedin.com/in/-gauravkalal-/" target="_blank" class="member-name">Gaurav Kalal</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/samar-EhR63goM.jpeg" alt="Samar Nasir">
+                    <a href="https://www.linkedin.com/in/samar-nasir-/" target="_blank" class="member-name">Samar Nasir</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/ojas-CFzveMO7.jpeg" alt="Ojas Srivastava">
+                    <a href="https://www.linkedin.com/in/ojasri/" target="_blank" class="member-name">Ojas Srivastava</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/tirth-HvDQWvtJ.jpeg" alt="Tirth Virkar">
+                    <a href="https://www.linkedin.com/in/tirthvirkar/" target="_blank" class="member-name">Tirth Virkar</a>
+                </div>
+                <div class="team-member-card">
+                    <img src="/assets/ajeet-75sbNhbw.jpeg" alt="Ajeet Verma">
+                    <a href="https://www.linkedin.com/in/ajeet-vermai/" target="_blank" class="member-name">Ajeet Verma</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonials-header">
+            <h2 class="testimonials-title">Words of praise from <br class="mobile-br">others<br class="desktop-br">
+                about our <br class="mobile-br">presence.</h2>
+        </div>
+
+        <div class="testimonials-marquee">
+            <!-- First set of items -->
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"UpForge changed how we look at our consumers, they allowed us to position
+                    our business for higher brand trust and more conversions."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/veda-BHCnO4oJ.png" alt="Veda" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Founder, Finland-Based Jewellery Company</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"Gen Z doesn't move like any other generation. Instead of trying to decode
+                    them from the outside, UpForge gave us helpful insights that we could apply to our business."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/zubair-CeVS_5z0.png" alt="Zubair" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Founder, Dubai-Based B2B Services Firm</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"I admire what your team is building, rare clarity and execution at this
+                    stage."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/excfo-BwR1nKez.png" alt="Ex-CFO" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Former CFO, Leading FMCG Brand</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"They helped us lean into new tech and diversify before we got left behind.
+                    UpForge basically futureproofed our business so we're ready for whatever comes next."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/security_founder-CsRJ-zPN.png" alt="Founder" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Founder, Security & Logistics Firm</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duplicate set for infinite marquee loop -->
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"UpForge changed how we look at our consumers, they allowed us to position
+                    our business for higher brand trust and more conversions."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/veda-BHCnO4oJ.png" alt="Veda" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Founder, Finland-Based Jewellery Company</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"Gen Z doesn't move like any other generation. Instead of trying to decode
+                    them from the outside, UpForge gave us helpful insights that we could apply to our business."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/zubair-CeVS_5z0.png" alt="Zubair" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Founder, Dubai-Based B2B Services Firm</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"I admire what your team is building, rare clarity and execution at this
+                    stage."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/excfo-BwR1nKez.png" alt="Ex-CFO" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Former CFO, Leading FMCG Brand</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                <p class="testimonial-text">"They helped us lean into new tech and diversify before we got left behind.
+                    UpForge basically futureproofed our business so we're ready for whatever comes next."</p>
+                <div class="testimonial-author">
+                    <img src="/assets/security_founder-CsRJ-zPN.png" alt="Founder" class="author-img">
+                    <div class="author-info">
+                        <span class="author-name">Founder, Security & Logistics Firm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <h2 class="cta-title">READY TO STOP WASTING MONEY?</h2>
+        <button class="cta-button" onclick="window.location.href='https://calendly.com/shardulsingh166/30min'">
+            <span>LET'S BUILD TOGETHER</span>
+        </button>
+    </section>
+
+    <!-- Founders Section -->
+    <section class="founder-section" id="who-we-are">
+        <div class="founder-inner">
+            <div class="founder-card">
+                <div class="founder-content">
+                    <h2 class="founder-label">Founder's Message</h2>
+                    <p class="founder-title">A consulting firm built for how business actually works today.</p>
+                    <p class="founder-desc">UpForge was founded on a simple belief: strategy without execution is just a deck. We combine sharp strategic thinking with hands-on delivery to help brands enter new markets, launch products, and grow with confidence — without the ego, the jargon, or the endless discovery cycles.</p>
+                    <div class="founder-credit">
+                        <span class="founder-credit-name">Shardul Singh</span>
+                        <span class="founder-credit-role">Founder</span>
+                    </div>
+                </div>
+                <div class="founder-image-wrap">
+                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Strip -->
+    <footer
+        style="background: #fff; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #666; width: 100%;">
+        <div>&copy;2026 UpForge. All rights reserved</div>
+        <div style="display: flex; gap: 30px;">
+            <a href="#" style="color: #666; text-decoration: none; font-weight: 500;">Privacy & Policy</a>
+            <a href="#" style="color: #666; text-decoration: none; font-weight: 500;">Terms & Condition</a>
+        </div>
+    </footer>
+
+    <!-- Script Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+
+    <script>
+        const isMobile = window.innerWidth <= 768;
+
+        // GSAP Initialization
+        gsap.registerPlugin(ScrollTrigger);
+
+        const hero = document.querySelector('.hero');
+        const heroText = document.querySelector('.hero-text');
+        const papers = Array.from(document.querySelectorAll('.hero-paper'));
+        let heroTimeline;
+
+        const heroPaperConfigs = [
+            { baseWidth: 160, rotation: -10 },
+            { baseWidth: 140, rotation: 10 },
+            { baseWidth: 180, rotation: 12 },
+            { baseWidth: 150, rotation: -12 },
+            { baseWidth: 130, rotation: -18 },
+            { baseWidth: 170, rotation: 18 },
+            { baseWidth: 120, rotation: 5 },
+            { baseWidth: 160, rotation: -5 },
+            { baseWidth: 150, rotation: -14 },
+            { baseWidth: 140, rotation: 14 },
+            { baseWidth: 240, rotation: -8 },
+            { baseWidth: 240, rotation: 8 },
+            { baseWidth: 230, rotation: 4 },
+            { baseWidth: 230, rotation: -4 }
+        ];
+
+        const heroMobileLayouts = {
+            small: {
+                safePadding: 20,
+                edgePadding: 8,
+                topPadding: 8,
+                bottomReserve: 84,
+                cards: [
+                    { paperIndex: 0, anchorX: 0.11, anchorY: 0.11, scale: 1.1, depth: 'foreground', zone: 'top' },
+                    { paperIndex: 10, anchorX: 0.38, anchorY: 0.16, scale: 0.9, depth: 'background', zone: 'top' },
+                    { paperIndex: 11, anchorX: 0.63, anchorY: 0.16, scale: 0.9, depth: 'background', zone: 'top' },
+                    { paperIndex: 1, anchorX: 0.89, anchorY: 0.11, scale: 1.08, depth: 'foreground', zone: 'top' },
+                    { paperIndex: 4, anchorX: 0.12, anchorY: 0.35, scale: 1.04, depth: 'foreground', zone: 'left' },
+                    { paperIndex: 9, anchorX: 0.88, anchorY: 0.35, scale: 0.98, depth: 'foreground', zone: 'right' },
+                    { paperIndex: 12, anchorX: 0.20, anchorY: 0.82, scale: 0.9, depth: 'background', zone: 'bottom' },
+                    { paperIndex: 6, anchorX: 0.50, anchorY: 0.74, scale: 0.92, depth: 'background', zone: 'bottom' },
+                    { paperIndex: 13, anchorX: 0.81, anchorY: 0.83, scale: 0.92, depth: 'background', zone: 'bottom' }
+                ]
+            },
+            standard: {
+                safePadding: 22,
+                edgePadding: 12,
+                topPadding: 12,
+                bottomReserve: 86,
+                cards: [
+                    { paperIndex: 0, anchorX: 0.11, anchorY: 0.11, scale: 1.1, depth: 'foreground', zone: 'top' },
+                    { paperIndex: 10, anchorX: 0.35, anchorY: 0.16, scale: 0.92, depth: 'background', zone: 'top' },
+                    { paperIndex: 11, anchorX: 0.65, anchorY: 0.16, scale: 0.92, depth: 'background', zone: 'top' },
+                    { paperIndex: 1, anchorX: 0.89, anchorY: 0.11, scale: 1.1, depth: 'foreground', zone: 'top' },
+                    { paperIndex: 4, anchorX: 0.16, anchorY: 0.33, scale: 1.06, depth: 'foreground', zone: 'left' },
+                    { paperIndex: 9, anchorX: 0.84, anchorY: 0.34, scale: 1.02, depth: 'foreground', zone: 'right' },
+                    { paperIndex: 8, anchorX: 0.14, anchorY: 0.66, scale: 0.92, depth: 'background', zone: 'left' },
+                    { paperIndex: 6, anchorX: 0.82, anchorY: 0.67, scale: 0.96, depth: 'background', zone: 'right' },
+                    { paperIndex: 12, anchorX: 0.20, anchorY: 0.82, scale: 0.94, depth: 'background', zone: 'bottom' },
+                    { paperIndex: 3, anchorX: 0.50, anchorY: 0.86, scale: 0.92, depth: 'background', zone: 'bottom' },
+                    { paperIndex: 13, anchorX: 0.80, anchorY: 0.84, scale: 0.94, depth: 'background', zone: 'bottom' }
+                ]
+            },
+            large: {
+                safePadding: 26,
+                edgePadding: 16,
+                topPadding: 14,
+                bottomReserve: 92,
+                cards: [
+                    { paperIndex: 0, anchorX: 0.11, anchorY: 0.11, scale: 1.08, depth: 'foreground', zone: 'top' },
+                    { paperIndex: 10, anchorX: 0.33, anchorY: 0.16, scale: 0.96, depth: 'background', zone: 'top' },
+                    { paperIndex: 11, anchorX: 0.67, anchorY: 0.16, scale: 0.96, depth: 'background', zone: 'top' },
+                    { paperIndex: 1, anchorX: 0.89, anchorY: 0.11, scale: 1.08, depth: 'foreground', zone: 'top' },
+                    { paperIndex: 4, anchorX: 0.16, anchorY: 0.33, scale: 1.08, depth: 'foreground', zone: 'left' },
+                    { paperIndex: 9, anchorX: 0.84, anchorY: 0.33, scale: 1.04, depth: 'foreground', zone: 'right' },
+                    { paperIndex: 8, anchorX: 0.15, anchorY: 0.64, scale: 0.96, depth: 'background', zone: 'left' },
+                    { paperIndex: 6, anchorX: 0.84, anchorY: 0.65, scale: 0.98, depth: 'background', zone: 'right' },
+                    { paperIndex: 12, anchorX: 0.20, anchorY: 0.82, scale: 0.98, depth: 'background', zone: 'bottom' },
+                    { paperIndex: 3, anchorX: 0.50, anchorY: 0.85, scale: 0.95, depth: 'background', zone: 'bottom' },
+                    { paperIndex: 13, anchorX: 0.80, anchorY: 0.84, scale: 0.98, depth: 'background', zone: 'bottom' }
+                ]
+            }
+        };
+
+        papers.forEach((paper, index) => {
+            paper.dataset.desktopStyle = paper.getAttribute('style') || '';
+            paper.dataset.baseRotation = String(heroPaperConfigs[index]?.rotation ?? 0);
+            paper.setAttribute('aria-hidden', 'true');
+            paper.setAttribute('decoding', 'async');
+        });
+
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        function intersectsRect(a, b) {
+            return a.x < b.x + b.width &&
+                a.x + a.width > b.x &&
+                a.y < b.y + b.height &&
+                a.y + a.height > b.y;
+        }
+
+        function getHeroMobilePreset(width) {
+            if (width <= 375) return heroMobileLayouts.small;
+            if (width <= 480) return heroMobileLayouts.standard;
+            return heroMobileLayouts.large;
+        }
+
+        function getMobileScale(width) {
+            const interpolated = 0.54 + ((width - 320) / 448) * 0.12;
+            return clamp(interpolated, 0.52, 0.65);
+        }
+
+        function resolveSafeZone(rect, safeZone, zone, bounds) {
+            const next = { ...rect };
+
+            if (!intersectsRect(next, safeZone)) {
+                return next;
+            }
+
+            if (zone === 'top') {
+                next.y = safeZone.y - next.height - bounds.safeGap;
+            } else if (zone === 'bottom') {
+                next.y = safeZone.y + safeZone.height + bounds.safeGap;
+            } else if (zone === 'left') {
+                next.x = safeZone.x - next.width - bounds.safeGap;
+            } else if (zone === 'right') {
+                next.x = safeZone.x + safeZone.width + bounds.safeGap;
+            }
+
+            if ((zone === 'top' || zone === 'bottom') && intersectsRect(next, safeZone)) {
+                const cardCenter = next.x + next.width / 2;
+                const safeCenter = safeZone.x + safeZone.width / 2;
+                const direction = cardCenter < safeCenter ? -1 : 1;
+                next.x += direction * Math.max(bounds.safeGap, next.width * 0.4);
+            }
+
+            if ((zone === 'left' || zone === 'right') && intersectsRect(next, safeZone)) {
+                const cardCenter = next.y + next.height / 2;
+                const safeCenter = safeZone.y + safeZone.height / 2;
+                const direction = cardCenter < safeCenter ? -1 : 1;
+                next.y += direction * Math.max(bounds.safeGap, next.height * 0.25);
+            }
+
+            next.x = clamp(next.x, bounds.edgePadding, bounds.maxWidth - next.width - bounds.edgePadding);
+            next.y = clamp(next.y, bounds.topPadding, bounds.maxHeight - next.height - bounds.bottomReserve);
+            return next;
+        }
+
+        function resolveCardCollisions(rect, placedRects, zone, bounds) {
+            const next = { ...rect };
+
+            for (let pass = 0; pass < 4; pass += 1) {
+                let moved = false;
+
+                placedRects.forEach((other) => {
+                    if (!intersectsRect(next, other)) {
+                        return;
+                    }
+
+                    const overlapX = Math.min(next.x + next.width, other.x + other.width) - Math.max(next.x, other.x);
+                    const overlapY = Math.min(next.y + next.height, other.y + other.height) - Math.max(next.y, other.y);
+
+                    if (zone === 'top' || zone === 'bottom') {
+                        const direction = next.x + next.width / 2 < other.x + other.width / 2 ? -1 : 1;
+                        next.x += direction * (overlapX + 12);
+                    } else {
+                        const direction = next.y + next.height / 2 < other.y + other.height / 2 ? -1 : 1;
+                        next.y += direction * (overlapY + 12);
+                    }
+
+                    next.x = clamp(next.x, bounds.edgePadding, bounds.maxWidth - next.width - bounds.edgePadding);
+                    next.y = clamp(next.y, bounds.topPadding, bounds.maxHeight - next.height - bounds.bottomReserve);
+                    moved = true;
+                });
+
+                if (!moved) {
+                    break;
+                }
+            }
+
+            return next;
+        }
+
+        function resetHeroPaperLayout() {
+            if (!hero) return;
+
+            hero.classList.remove('hero--mobile-optimized');
+
+            papers.forEach((paper) => {
+                paper.classList.remove('hero-paper-mobile-hidden');
+                paper.dataset.depth = 'desktop';
+                paper.setAttribute('style', paper.dataset.desktopStyle || '');
+            });
+        }
+
+        function applyMobileHeroLayout() {
+            if (!hero || !heroText) return;
+
+            const heroRect = hero.getBoundingClientRect();
+            const textRect = heroText.getBoundingClientRect();
+            const preset = getHeroMobilePreset(window.innerWidth);
+            const mobileScale = getMobileScale(heroRect.width);
+            const safeWidth = Math.min(
+                textRect.width + preset.safePadding * 2,
+                heroRect.width - preset.edgePadding * 2
+            );
+            const safeHeight = Math.min(
+                textRect.height + preset.safePadding * 2,
+                heroRect.height - preset.topPadding - preset.bottomReserve
+            );
+            const safeZone = {
+                x: clamp(
+                    textRect.left - heroRect.left - preset.safePadding,
+                    preset.edgePadding,
+                    heroRect.width - safeWidth - preset.edgePadding
+                ),
+                y: clamp(
+                    textRect.top - heroRect.top - preset.safePadding,
+                    preset.topPadding,
+                    heroRect.height - safeHeight - preset.bottomReserve
+                ),
+                width: safeWidth,
+                height: safeHeight
+            };
+
+            const bounds = {
+                edgePadding: preset.edgePadding,
+                topPadding: preset.topPadding,
+                bottomReserve: preset.bottomReserve,
+                safeGap: preset.safePadding,
+                maxWidth: heroRect.width,
+                maxHeight: heroRect.height
+            };
+
+            const placedRects = [];
+
+            papers.forEach((paper) => {
+                paper.classList.add('hero-paper-mobile-hidden');
+                paper.dataset.depth = 'hidden';
+            });
+
+            preset.cards.forEach((slot) => {
+                const paper = papers[slot.paperIndex];
+                const config = heroPaperConfigs[slot.paperIndex];
+
+                if (!paper || !config) {
+                    return;
+                }
+
+                const aspectRatio = paper.naturalWidth && paper.naturalHeight
+                    ? paper.naturalHeight / paper.naturalWidth
+                    : 1.45;
+                const depthScale = slot.depth === 'foreground' ? 1.12 : 0.97;
+                const width = Math.round(config.baseWidth * mobileScale * slot.scale * depthScale);
+                const height = Math.round(width * aspectRatio);
+
+                let rect = {
+                    x: heroRect.width * slot.anchorX - width / 2,
+                    y: heroRect.height * slot.anchorY - height / 2,
+                    width,
+                    height
+                };
+
+                rect.x = clamp(rect.x, preset.edgePadding, heroRect.width - width - preset.edgePadding);
+                rect.y = clamp(rect.y, preset.topPadding, heroRect.height - height - preset.bottomReserve);
+                rect = resolveSafeZone(rect, safeZone, slot.zone, bounds);
+                rect = resolveCardCollisions(rect, placedRects, slot.zone, bounds);
+                rect = resolveSafeZone(rect, safeZone, slot.zone, bounds);
+
+                placedRects.push(rect);
+
+                paper.classList.remove('hero-paper-mobile-hidden');
+                paper.dataset.depth = slot.depth;
+                paper.style.width = `${width}px`;
+                paper.style.top = `${rect.y}px`;
+                paper.style.left = `${rect.x}px`;
+                paper.style.right = 'auto';
+                paper.style.bottom = 'auto';
+                paper.style.opacity = slot.depth === 'background' ? '0.85' : '0.98';
+                paper.style.zIndex = slot.depth === 'background' ? '4' : '6';
+                paper.style.setProperty('--mobile-paper-width', `${width}px`);
+                paper.style.setProperty('--mobile-paper-opacity', slot.depth === 'background' ? '0.85' : '0.98');
+                paper.style.transform = `translateZ(0) rotate(${config.rotation}deg)`;
+            });
+        }
+
+        function applyHeroPaperLayout() {
+            if (!hero) return;
+
+            if (window.innerWidth <= 768) {
+                hero.classList.add('hero--mobile-optimized');
+                applyMobileHeroLayout();
+                return;
+            }
+
+            resetHeroPaperLayout();
+        }
+
+        function buildHeroTimeline() {
+            if (!hero) return;
+
+            if (heroTimeline) {
+                heroTimeline.scrollTrigger.kill();
+                heroTimeline.kill();
+            }
+
+            const visiblePapers = papers.filter((paper) => !paper.classList.contains('hero-paper-mobile-hidden'));
+            gsap.set(visiblePapers, { x: 0, y: 0, opacity: 1 });
+
+            heroTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: '+=100%',
+                    pin: true,
+                    scrub: 1,
+                }
+            });
+
+            const vWidth = window.innerWidth;
+            const vHeight = window.innerHeight;
+            const centerX = vWidth / 2;
+            const centerY = vHeight / 2;
+
+            visiblePapers.forEach((paper) => {
+                const rect = paper.getBoundingClientRect();
+                const pX = rect.left + rect.width / 2;
+                const pY = rect.top + rect.height / 2;
+                const dx = pX - centerX;
+                const dy = pY - centerY;
+                let flyX;
+                let flyY;
+
+                if (window.innerWidth <= 768) {
+                    const side = pX < centerX ? -1 : 1;
+                    const horizontalForce = Math.max(window.innerWidth * 1.2, 520);
+                    flyX = side * (horizontalForce + Math.abs(dx) * 0.9);
+                    flyY = clamp(dy * 0.16, -72, 72);
+                } else {
+                    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                    const force = 1600;
+                    flyX = (dx / dist) * force;
+                    flyY = (dy / dist) * force;
+                }
+
+                heroTimeline.to(paper, {
+                    x: flyX,
+                    y: flyY,
+                    rotation: (Math.random() - 0.5) * 450,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power2.inOut'
+                }, 0);
+            });
+        }
+
+        function rebuildHeroScene() {
+            applyHeroPaperLayout();
+            buildHeroTimeline();
+            ScrollTrigger.refresh();
+        }
+
+        rebuildHeroScene();
+        window.addEventListener('load', rebuildHeroScene, { once: true });
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(rebuildHeroScene);
+        }
+
+        let heroResizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(heroResizeTimer);
+            heroResizeTimer = setTimeout(rebuildHeroScene, 120);
+        });
+
+        // Navbar reveal logic: Only after scrolling away from Hero
+        ScrollTrigger.create({
+            trigger: '.hero',
+            start: 'bottom top',
+            onEnter: () => document.querySelector('.navbar').classList.add('visible'),
+            onLeaveBack: () => document.querySelector('.navbar').classList.remove('visible')
+        });
+
+        // Remove the old navbar scrollTrigger to prevent conflict
+        /* gsap.to('.navbar', {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'bottom 80%',
+                toggleActions: 'play none none reverse'
+            }
+        }); */
+
+        // Initialize Lenis Smooth Scrolling
+        const lenis = new Lenis({
+            autoRaf: false,
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+
+        // Parallax effect on scroll
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const parallaxElements = document.querySelectorAll('.parallax-element');
+
+                    parallaxElements.forEach((el, index) => {
+                        const speed = 0.5 + (index * 0.2);
+                        el.style.transform = `translateY(${scrolled * speed}px)`;
+                    });
+
+                    ticking = false;
+                });
+
+                ticking = true;
+            }
+        });
+
+        // Smooth scroll for nav links with Lenis
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    lenis.scrollTo(target);
+                    // Close mobile menu if open
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                const icon = menuBtn.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.replace('fa-bars', 'fa-xmark');
+                } else {
+                    icon.classList.replace('fa-xmark', 'fa-bars');
+                }
+            });
+        }
+
+
+        // ── HOW WE CAN HELP - 3 LAYER SERVICE EXPLORER ──
+        const serviceData = [
+            {
+                id: 'commercial-strategy',
+                title: 'Commercial Strategy<br>&amp; Market Entry',
+                subs: [
+                    { title: '12-Step Market Entry Framework', content: '<strong>Our proprietary 12-Step Market Entry Framework</strong> has been used across 7+ industries in India, SEA, and the Middle East. We guide you through market sizing (TAM/SAM/SOM), regulatory mapping, localisation strategy, channel scouting, and launch sequencing — cutting time-to-market by an average of 40%. <br><br><strong>Framework used:</strong> PESTEL + Porter\'s Five Forces + Custom Localisation Matrix.<br><strong>Track record:</strong> 85% of clients achieved first sale within 6 months of entry.', popular: true },
+                    { title: 'Competitive Mapping &amp; Landscape Analysis', content: '<strong>We don\'t just list competitors — we expose their weak points.</strong> Using a structured Competitive Vulnerability Matrix, we map market share distribution, pricing gaps, positioning blind spots, and customer sentiment gaps. <br><br><strong>Data points:</strong> Market share splits, G2/Capterra review sentiment analysis, pricing tier comparison.<br><strong>Outcome:</strong> A prioritized attack plan showing where you can win within 90 days.', popular: true },
+                    { title: 'Customer Segmentation &amp; Persona Design', content: '<strong>90% of early-stage companies target too broadly.</strong> We use a Behavioural Segmentation Framework that clusters buyers by intent, willingness-to-pay, and decision velocity — not just demographics. <br><br><strong>Methodology:</strong> JTBD (Jobs To Be Done) + RFM modeling + psychographic clustering.<br><strong>Typical result:</strong> 3-5 high-yield segments with estimated CAC and LTV for each.', popular: true },
+                    { title: 'Pricing Architecture &amp; Revenue Modeling', content: '<strong>Price wrong and you leave millions on the table.</strong> We build pricing models using Van Westendorp Price Sensitivity Meter and Conjoint Analysis to find the optimal price point that maximizes both conversion and margin. <br><br><strong>Output:</strong> Tiered pricing table, discount architecture, bundling strategy, and a 3-year revenue projection under 3 scenarios (conservative/base/aggressive).<br><strong>Impact:</strong> Clients typically see 15-25% revenue uplift from pricing optimization alone.', popular: true },
+                    { title: 'Strategic Differentiation &amp; Positioning', content: '<strong>If you sound like everyone else, you lose.</strong> We craft a positioning strategy using the Golden Circle (Sinek), Category Creation framework, and a custom Differentiation Audit. <br><br><strong>Deliverable:</strong> Positioning statement, messaging hierarchy, brand personality guidelines, and competitive war-room playbook.<br><strong>Benchmark:</strong> 10 key competitor positioning maps analysed.', popular: true },
+                    { title: 'Risk Assessment &amp; Crisis Management', content: 'We map regulatory, operational, reputational, and market risks using a custom Risk Heat Map framework. Each risk is scored on probability x impact, with a concrete mitigation playbook for top-tier risks. <br><br><strong>Compliance scope:</strong> GDPR, DPDP Act, SEC, SEBI, industry-specific regulations covered across 12+ jurisdictions.' },
+                    { title: 'Gen-Z Alignment &amp; Future-Proofing Strategy', content: 'Gen Z controls $360B+ in spending power globally. We redesign your value proposition through a Gen-Z Trust Audit: assessing authenticity, social impact alignment, digital-native UX expectations, and community-driven brand appeal.<br><br><strong>Research base:</strong> Survey data from 2,000+ Gen-Z respondents across metro and tier-2 cities in India.' }
+                ]
+            },
+            {
+                id: 'gtm-sales',
+                title: 'GTM, Sales<br>&amp; Personal Branding',
+                subs: [
+                    { title: 'Ideal Customer Profile (ICP) Definition', content: '<strong>Most B2B startups waste 60% of their sales efforts on the wrong prospects.</strong> We build a data-backed ICP using firmographic, technographic, and intent-signal analysis — not gut feel. <br><br><strong>Framework:</strong> TAM → SAM → ICP pyramid, layered with Buyer Persona Canvas.<br><strong>Output:</strong> A scored account list of 100-500 companies with direct stakeholder contacts.', popular: true },
+                    { title: 'Founder Personal Branding &amp; Authority Building', content: '<strong>LinkedIn creators with 5K+ followers generate 3x more inbound leads.</strong> We build a full personal brand engine: narrative development, content pillar strategy (3-5 authority topics), weekly posting calendar, and ghostwritten thought leadership. <br><br><strong>Platforms:</strong> LinkedIn, Twitter/X, Instagram, and newsletter.<br><strong>Typical outcome:</strong> 10-15K followers in 6 months + consistent inbound DM pipeline.', popular: true },
+                    { title: 'Social Media Content Strategy &amp; Distribution', content: '<strong>Brands that post 14+ times per month generate 2x the engagement.</strong> We create a turnkey content system: short-form video scripts (Reels/Shorts), carousel posts, thought leadership articles, and community management guidelines. <br><br><strong>Format mix:</strong> 40% educational, 30% social proof, 20% personality, 10% promotional.<br><strong>Analytics:</strong> Monthly performance reports with engagement rate benchmarks by industry.', popular: true },
+                    { title: 'Outbound Playbooks &amp; Campaign Execution', content: '<strong>Personalized cold outreach gets 6x higher reply rates.</strong> We build multi-channel sequences (email + LinkedIn + phone) with researched triggers and stepped follow-ups. Each campaign is A/B tested with 3 message variants. <br><br><strong>Metrics:</strong> Industry benchmark reply rates of 15-25%, meeting booking rate of 5-10%.<br><strong>Tech stack:</strong> Apollo, Lemlist, Sales Navigator, Instantly.', popular: true },
+                    { title: 'High-Converting Sales Scripts &amp; Playbooks', content: '<strong>Top sales teams convert at 2-3x the average because they follow a script.</strong> We write objection-handling scripts, demo flows, discovery call frameworks, and closing sequences customized to your product and buyer personas. <br><br><strong>Included:</strong> Common objection cheatsheet (20+ objections), value prop one-liner, battle cards for competitor positioning.', popular: true },
+                    { title: 'Targeted Lead List Generation', content: 'We build curated, verified B2B lead lists with direct email and phone contacts for decision-makers. Lists include company size, revenue range, tech stack, and recent growth signals.<br><br><strong>Coverage:</strong> 15+ filters (industry, title, location, company size, funding stage). Typical list: 500-5,000 leads per campaign.' },
+                    { title: 'CRM Architecture &amp; Pipeline Setup', content: 'We set up HubSpot, Pipedrive, or Salesforce with automated workflows, lead scoring, deal stage mapping, and clean analytics. <br><br><strong>Deliverable:</strong> Full CRM configuration, 10+ automated workflows, pipeline dashboard, and team training session.<br><strong>Timeline:</strong> 2-3 weeks to go live with zero data loss.' }
+                ]
+            },
+            {
+                id: 'consumer-psychology',
+                title: 'Consumer Psychology<br>&amp; Research',
+                subs: [
+                    { title: 'Behavioral Audits &amp; Friction Mapping', content: '<strong>68% of users abandon a purchase due to psychological friction.</strong> We run a systematic Behavioral Friction Audit across your digital touchpoints — identifying micro-obstacles in navigation, copy, checkout flow, trust signals, and decision architecture. <br><br><strong>Framework:</strong> Cialdini\'s Principles + Fogg Behavior Model + Custom Friction Heat Map.<br><strong>Impact:</strong> Clients typically see 20-40% improvement in key conversion metrics.', popular: true },
+                    { title: 'Conversion Psychology Research', content: '<strong>We apply behavioral economics to your growth funnel.</strong> Using cognitive bias frameworks (scarcity, social proof, reciprocity, anchoring) and qualitative user interviews, we surface the specific psychological triggers that drive your audience to act. <br><br><strong>Research methods:</strong> 15-20 user depth interviews, 500+ survey responses, heatmap analysis, and session recording review.<br><strong>Output:</strong> A prioritized list of psychology-backed growth experiments ranked by potential impact.', popular: true },
+                    { title: 'Decision Mapping &amp; Persuasion Frameworks', content: '<strong>Buyers don\'t buy features — they buy decisions.</strong> We map your customer\'s decision journey using the DECIDE framework (Define, Explore, Compare, Identify, Decide, Evaluate) and create persuasive messaging for each stage. <br><br><strong>Deliverable:</strong> Decision journey map, persuasion message matrix (20+ touchpoints), and a messaging playbook for sales + marketing.<br><strong>Research base:</strong> Primary interviews + established decision science literature.', popular: true },
+                    { title: 'A/B Messaging &amp; Copywriting Tests', content: '<strong>We test 4-8 copy variants per campaign</strong> to find what truly resonates. Using statistically significant A/B tests on headlines, CTAs, value props, and social proof placement. <br><br><strong>Methodology:</strong> Sequential testing with 95% confidence intervals.<br><strong>Track record:</strong> Average 35% improvement in CTR and conversion rate across tested campaigns.', popular: true },
+                    { title: 'Consumer Case Studies &amp; Trust Assets', content: '<strong>Case studies increase conversion rates by 35% on average.</strong> We write deep-dive customer success stories with before/after metrics, ROI calculations, and narrative arcs that build institutional trust. <br><br><strong>Format:</strong> Long-form (1,500-2,500 words) + micro versions for sales one-pagers + video script outlines.<br><strong>Volume:</strong> 3-5 case studies per engagement, distributed across website, pitch deck, and sales collateral.' }
+                ]
+            },
+            {
+                id: 'tech-solutions',
+                title: 'Tech Solutions<br>&amp; Digital Experience',
+                subs: [
+                    { title: 'Premium Website Redesign &amp; Development', content: '<strong>A 1-second delay in page load reduces conversions by 7%.</strong> We rebuild slow, outdated websites into fast, responsive digital flagships using modern stacks (Next.js, Astro, Webflow). Every site scores 90+ on Lighthouse and loads under 2 seconds. <br><br><strong>Includes:</strong> Custom design system, responsive across all devices, CMS integration, SEO foundation, and analytics setup. <br><strong>Timeline:</strong> 4-8 weeks from kickoff to launch.', popular: true },
+                    { title: 'UX/UI Audits &amp; Interface Optimization', content: '<strong>88% of users won\'t return after a bad experience.</strong> We run a comprehensive UX audit using heuristic evaluation (Nielsen\'s 10 principles), accessibility checks (WCAG 2.1 AA), and usability testing with real users. <br><br><strong>Output:</strong> Prioritized issue list with severity scores, Figma redesign mockups for top-20 issues, and a UX roadmap for the next quarter.', popular: true },
+                    { title: 'Website Conversion Rate Optimization (CRO)', content: '<strong>The average website converts at just 2.35% — top 10% convert at 11%+.</strong> We run systematic CRO: heatmap + session recording analysis, funnel audit, landing page A/B tests, and psychological copy rewrite. <br><br><strong>Methodology:</strong> Research → Hypothesis → Design → Test → Implement → Measure (repeat).<br><strong>Typical impact:</strong> 30-80% improvement in conversion rate over 3 months.', popular: true },
+                    { title: 'High-Converting Landing Pages', content: '<strong>Dedicated landing pages convert 2-3x better than sending traffic to your homepage.</strong> We design and build single-focus landing pages optimized for specific campaigns — with headline variants, social proof stacking, urgency triggers, and streamlined forms. <br><br><strong>Stack:</strong> Custom-built or Webflow/Carrd/Unbounce depending on your needs.<br><strong>Timeline:</strong> 5-10 days per landing page, including 2 revision rounds.', popular: true },
+                    { title: 'SEO Strategy &amp; Topical Authority Mapping', content: '<strong>68% of all online experiences begin with a search engine.</strong> We build a topical authority map (pillar pages + cluster content) around high-intent keywords. Includes technical SEO audit, on-page optimization, and a 6-month content calendar. <br><br><strong>Tools:</strong> Ahrefs, Semrush, Screaming Frog.<br><strong>Benchmark:</strong> Target top-10 rankings for 20+ high-intent keywords within 6-8 months.', popular: true },
+                    { title: 'Advanced Analytics Setup &amp; Attribution', content: 'Clean Google Analytics 4, Mixpanel, or Amplitude setup with event tracking, funnel visualization, and multi-touch attribution modeling. We identify which channels actually drive revenue — not just vanity metrics.<br><br><strong>Deliverables:</strong> Tracking implementation, custom dashboard, 3 attribution models (first-touch, last-touch, linear).' },
+                    { title: 'Lifecycle Marketing &amp; Retention Funnels', content: 'Email + SMS automation sequences for cart abandonment, onboarding nurture, re-engagement, and upsell — built in Klaviyo or similar. <br><br><strong>Benchmark:</strong> Well-built lifecycle flows generate 20-40% of total e-commerce revenue.<br><strong>Deliverable:</strong> 5-8 automated flows, 20+ emails, A/B tested subject lines, and a monthly performance review cadence.' }
+                ]
+            },
+            {
+                id: 'fundraising',
+                title: 'Fundraising<br>&amp; Capital Advisory',
+                subs: [
+                    { title: 'Investor Pitch Deck Architecture', content: '<strong>Investors spend an average of 2 minutes 30 seconds on a pitch deck.</strong> We build narrative-driven decks that communicate problem, solution, market size, traction, and ask — in that order. Each deck is designed to get you to the next meeting, not close the round. <br><br><strong>Track record:</strong> Our decks have helped raise $12M+ in angel and seed rounds across SaaS, D2C, and fintech.<br><strong>Includes:</strong> Design (keynote/PPT), narrative workshop, 3 revision rounds, and an investor feedback tracker.', popular: true },
+                    { title: 'Fundraising Strategy &amp; Pacing Roadmap', content: '<strong>Raising at the wrong time or wrong size kills your valuation.</strong> We build a 12-18 month fundraising roadmap: milestone mapping, round sizing (based on 18-24 month runway), investor tier strategy, and timing optimization. <br><br><strong>Framework:</strong> Capital Efficiency Score + Runway-Based Pacing Model.<br><strong>Data:</strong> Benchmarks from 500+ rounds in your sector and stage.', popular: true },
+                    { title: 'GTM Investor Narratives', content: '<strong>The best companies don\'t pitch features — they pitch a worldview.</strong> We craft a bulletproof macro-thesis: the market shift that makes your company inevitable, the timing advantage, and the unit economics that prove scalability. <br><br><strong>Deliverable:</strong> Master narrative document (3,000+ words), 3-minute verbal pitch, 15 key Q&A answers with supporting data.<br><strong>Stress-test:</strong> We simulate a 45-minute investor Q&A session.', popular: true },
+                    { title: 'Curated Investor Lists &amp; Target Matrix', content: '<strong>Cold emailing 500 VCs is less effective than warm introductions to 30.</strong> We build hyper-targeted investor lists filtered by sector focus, check size, stage preference, geographic mandate, and recent activity. Each list includes partner names, warm introduction paths, and past portfolio analysis. <br><br><strong>Coverage:</strong> 2,000+ VC funds, family offices, and angel networks across India, SEA, US, and Middle East.', popular: true },
+                    { title: 'Investor Data Room Setup', content: 'We build a structured, secure virtual data room (using Notion, Dropbox, or dedicated platforms like DealRoom) with organized sections: company overview, financials, legal, cap table, product roadmap, and customer traction. <br><br><strong>Includes:</strong> Data room checklist (60+ items), template documents, and access tracking for investor engagement analytics.', popular: true },
+                    { title: 'Direct Outreach Support &amp; Warm Intros', content: 'Active management of investor outreach — we draft personalized emails, track follow-ups, manage scheduling, and leverage our network for warm introductions to partner-level investors at 100+ funds.' },
+                    { title: 'Mock Pitch Sessions &amp; Q&A Prep', content: '<strong>We stress-test founders against the toughest investor questions.</strong> 90-minute mock pitch sessions with feedback on narrative, body language, slide flow, and objection handling. Includes a 50+ question bank covering financials, market, competition, team, and exit scenarios.' }
+                ]
+            },
+            {
+                id: 'fpa',
+                title: 'FP&amp;A<br>&amp; Strategic Finance',
+                subs: [
+                    { title: 'Strategic Financial Modelling', content: '<strong>90% of early-stage financial models have fundamental errors.</strong> We build institutional-grade 3-statement models (P&L, Balance Sheet, Cash Flow) with scenario toggles, driver-based projections, and investor-ready formatting. <br><br><strong>Framework:</strong> Driver-based modeling with sensitivity analysis.<br><strong>Deliverable:</strong> Fully linked Excel/Google Sheets model, 3-year monthly projections, 12-page documentation, and a 2-hour training session for your team.', popular: true },
+                    { title: 'Runway Planning &amp; Burn Rate Optimization', content: '<strong>29% of startups fail because they run out of cash.</strong> We build scenario-planning models that map runway under optimistic, base, and conservative revenue cases — with specific cost-reduction triggers and hiring freezes at defined cash thresholds. <br><br><strong>Output:</strong> Runway dashboard, monthly burn report template, and optimization recommendations (typical savings: 15-30% of monthly burn).', popular: true },
+                    { title: 'Unit Economics Optimization', content: '<strong>Unprofitable unit economics destroy even high-growth companies.</strong> We deep-dive into LTV-to-CAC ratio, gross margin trends, contribution margin per channel, payback period, and churn analysis. <br><br><strong>Benchmarks:</strong> Healthy SaaS LTV/CAC > 3x, payback period < 12 months, gross margin > 70%.<br><strong>Impact:</strong> We\'ve helped clients improve unit economics by 40-60% within one quarter.', popular: true },
+                    { title: 'Company Valuation Frameworks', content: '<strong>Valuation isn\'t magic — it\'s math backed by narrative.</strong> We calculate defendable valuation ranges using DCF, comparable company analysis, precedent transactions, and the Venture Capital method. Each range is stress-tested across 5 scenarios. <br><br><strong>Market data:</strong> Comps from 200+ relevant M&A and funding transactions in your sector.<br><strong>Output:</strong> Valuation memo (15+ pages) ready for investor discussion.', popular: true },
+                    { title: 'Board Packs &amp; Investor Reporting Templates', content: 'Monthly and quarterly board pack templates with executive summary, KPI dashboard, financial review, milestones vs plan, and forward-looking guidance. Designed to build investor confidence and streamline board meetings.<br><br><strong>Includes:</strong> 10-slide deck template, 5-page report template, and a KPI definition guide with 30+ metrics.' },
+                    { title: 'Automated KPI Dashboards', content: 'Real-time executive dashboards via Looker Studio, Power BI, or Metabase — tracking revenue, CAC, burn rate, runway, gross margin, ARR/MRR, and cohort retention. Refreshed automatically from your data sources.<br><br><strong>Timeline:</strong> 2-3 weeks to first dashboard. Includes 3 months of maintenance.' },
+                    { title: 'Fund Incorporation &amp; Structuring Advisory', content: 'Strategic guidance on fund entity setup, domicile selection (India, Singapore, Mauritius, Delaware), SEBI/IFSCA compliance, fund document structuring, and tax optimization for cross-border fund architectures.' }
+                ]
+            }
+        ];
+
+        function initServiceExplorer() {
+            const grid = document.getElementById('hwh-grid');
+            const detail = document.getElementById('hwh-detail');
+            const subsEl = document.getElementById('hwh-subs');
+            const contentEl = document.getElementById('hwh-content');
+            let activeService = null;
+            let activeSub = null;
+
+            serviceData.forEach((svc, idx) => {
+                const card = document.createElement('div');
+                card.className = 'hwh-card';
+                card.innerHTML = `<div class="hwh-card-title">${svc.title} <span class="hwh-card-arrow"><i class="fa-solid fa-chevron-right"></i></span></div>`;
+                card.addEventListener('click', () => selectService(idx));
+                grid.appendChild(card);
+            });
+
+            function selectService(idx) {
+                const cards = grid.querySelectorAll('.hwh-card');
+                cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+                activeService = idx;
+                activeSub = null;
+                renderSubs();
+                detail.classList.add('open');
+            }
+
+            function renderSubs() {
+                const svc = serviceData[activeService];
+                if (!svc) return;
+                let html = '';
+                const popular = svc.subs.filter(s => s.popular);
+                const other = svc.subs.filter(s => !s.popular);
+                if (popular.length) {
+                    html += `<div class="hwh-sub-popular-label">Popular</div>`;
+                }
+                popular.forEach((sub, i) => {
+                    html += `<div class="hwh-sub-item" data-sub="${i}"><span>${sub.title}</span></div>`;
+                });
+                if (other.length) {
+                    html += `<div class="hwh-sub-other"><div class="hwh-sub-other-toggle" data-toggle="other"><i class="fa-solid fa-chevron-right"></i> Other Services</div><div class="hwh-sub-other-items" id="hwh-other-items">`;
+                    other.forEach((sub, i) => {
+                        const realIdx = popular.length + i;
+                        html += `<div class="hwh-sub-item" data-sub="${realIdx}"><span>${sub.title}</span></div>`;
+                    });
+                    html += `</div></div>`;
+                }
+                subsEl.innerHTML = html;
+
+                subsEl.querySelectorAll('.hwh-sub-item').forEach(el => {
+                    el.addEventListener('click', () => {
+                        const idx = parseInt(el.dataset.sub);
+                        selectSub(idx);
+                    });
+                });
+                const toggle = subsEl.querySelector('.hwh-sub-other-toggle');
+                if (toggle) {
+                    toggle.addEventListener('click', () => {
+                        const items = document.getElementById('hwh-other-items');
+                        items.classList.toggle('open');
+                        const icon = toggle.querySelector('i');
+                        if (icon) icon.style.transform = items.classList.contains('open') ? 'rotate(90deg)' : '';
+                    });
+                }
+
+                if (popular.length) selectSub(0);
+                else if (other.length) selectSub(popular.length);
+            }
+
+            function selectSub(idx) {
+                activeSub = idx;
+                subsEl.querySelectorAll('.hwh-sub-item').forEach(el => {
+                    el.classList.toggle('active', parseInt(el.dataset.sub) === idx);
+                });
+                const svc = serviceData[activeService];
+                const sub = svc.subs[idx];
+                if (!sub) return;
+                contentEl.innerHTML = `<div class="hwh-content-title">${sub.title}</div><div class="hwh-content-main">${sub.content}</div>`;
+            }
+
+            subsEl.addEventListener('wheel', (e) => {
+                const { scrollTop, scrollHeight, clientHeight } = subsEl;
+                const atTop = scrollTop === 0;
+                const atBottom = scrollTop + clientHeight >= scrollHeight;
+                if ((e.deltaY < 0 && atTop) || (e.deltaY > 0 && atBottom)) return;
+                e.preventDefault();
+                subsEl.scrollTop += e.deltaY;
+            }, { passive: false });
+        }
+
+        document.addEventListener('DOMContentLoaded', initServiceExplorer);
+
+        // ── STARTUP DIAGNOSTIC QUESTIONNAIRE ──
+
+        const DIAG_STEP_NAMES = ['Stage', 'Problem', 'Roadblock', 'Your Goal', 'Book Call'];
+
+        let diagQ = null;
+        let diagHistory = [-1];
+        let diagAnswers = { stage: null, problem: null, roadblock: null, customAnswer: '' };
+        let diagCustomInputs = {};
+
+        function initDiagnostic() {
+            fetch('questionnaire.json')
+                .then(r => { if (!r.ok) throw new Error('Failed to load'); return r.json(); })
+                .then(data => { diagQ = data; renderScreen(); })
+                .catch(() => {
+                    document.getElementById('diagnostic-system').innerHTML =
+                        '<p style="text-align:center;color:rgba(9,45,83,0.5);padding:40px">Could not load questionnaire.</p>';
+                });
+        }
+
+        function navigateTo(screen) {
+            diagHistory.push(screen);
+            renderScreen();
+        }
+
+        function goBack() {
+            if (diagHistory.length > 1) diagHistory.pop();
+            renderScreen();
+        }
+
+        function currentScreen() {
+            return diagHistory[diagHistory.length - 1];
+        }
+
+        function renderScreen() {
+            const container = document.getElementById('diagnostic-system');
+            const step = currentScreen();
+            container.style.opacity = '0';
+            setTimeout(() => {
+                if (step < 0) renderLanding();
+                else if (step === 0) renderStages();
+                else if (step === 1) renderProblems();
+                else if (step === 2) renderRoadblocks();
+                else if (step === 3) renderTextQ();
+                else if (step === 4) renderSummary();
+                container.style.opacity = '1';
+            }, 150);
+        }
+
+        /* ── Progress Bar ── */
+        function progressBar(stepIdx) {
+            const total = DIAG_STEP_NAMES.length;
+            const pct = Math.round(((stepIdx + 1) / total) * 100);
+            const fillPct = total > 1 ? ((stepIdx + 0.5) / total) * 100 : 50;
+            let h = '<div class="diag-progress">';
+            h += '<div class="diag-progress-track">';
+            h += '<div class="diag-progress-fill" style="width:' + fillPct + '%"></div>';
+            for (let i = 0; i < total; i++) {
+                const c = i < stepIdx ? 'done' : i === stepIdx ? 'active' : '';
+                h += '<div class="diag-progress-step ' + c + '">';
+                if (i < stepIdx) {
+                    h += '<div class="diag-progress-circle"><i class="fa-solid fa-check"></i></div>';
+                } else {
+                    h += '<div class="diag-progress-circle">' + (i + 1) + '</div>';
+                }
+                h += '<span class="diag-progress-label">' + DIAG_STEP_NAMES[i] + '</span>';
+                h += '</div>';
+            }
+            h += '</div>';
+            h += '<div class="diag-progress-meta">';
+            h += '<span class="diag-progress-current">' + DIAG_STEP_NAMES[stepIdx] + '</span>';
+            h += '<span class="diag-progress-pct">' + pct + '%</span>';
+            h += '</div></div>';
+            return h;
+        }
+
+        function navRow(showBack) {
+            return '<div class="diag-nav">' +
+                (showBack ? '<button class="diag-btn-back" data-diag-action="back"><i class="fa-solid fa-arrow-left"></i> Back</button>' : '<div></div>') +
+                '</div>';
+        }
+
+        function renderOptions(opts, selectedId) {
+            let h = '<div class="diag-options">';
+            opts.forEach(o => {
+                const sel = o.id === selectedId ? ' selected' : '';
+                const isText = o.type === 'text_input';
+                h += '<div class="diag-option' + sel + '" data-id="' + o.id + '">' +
+                    '<span class="diag-option-dot"></span>' +
+                    '<span class="diag-option-text">' + o.label + '</span>' +
+                    (isText ? '' : '<i class="fa-solid fa-chevron-right"></i>') +
+                    '</div>';
+            });
+            return h + '</div>';
+        }
+
+        function bindOptions(clickFn) {
+            document.querySelectorAll('.diag-option').forEach(el => {
+                el.addEventListener('click', () => clickFn(el.dataset.id));
+            });
+        }
+
+        /* ── Delegated Navigation ── */
+        (function initNav() {
+            const navRoot = document.getElementById('diagnostic-system');
+            if (!navRoot) return;
+            navRoot.addEventListener('click', function(e) {
+                const btn = e.target.closest('[data-diag-action]');
+                if (!btn) return;
+                const action = btn.dataset.diagAction;
+                if (action === 'back') { goBack(); return; }
+                if (action === 'start') { navigateTo(0); return; }
+                if (action === 'book') {
+                    const a = diagAnswers;
+                    const params = new URLSearchParams({
+                        stage: a.stage?.label || '',
+                        problem: (a.problem?.label || '') + (a.problem?.customText ? ': ' + a.problem.customText : ''),
+                        roadblock: (a.roadblock?.label || '') + (a.roadblock?.customText ? ': ' + a.roadblock.customText : ''),
+                        goal: a.customAnswer || ''
+                    });
+                    window.open('https://calendly.com/shardulsingh/30min?' + params.toString(), '_blank');
+                    return;
+                }
+                if (action === 'next-text') {
+                    const textarea = document.getElementById('diag-text-custom');
+                    const val = textarea.value.trim();
+                    if (!val) { textarea.style.borderColor = '#ff4444'; return; }
+                    diagAnswers.customAnswer = val;
+                    navigateTo(4);
+                    return;
+                }
+                if (action === 'custom-submit') {
+                    const level = btn.dataset.diagLevel;
+                    const id = btn.dataset.diagId;
+                    const textarea = document.getElementById('diag-custom-text');
+                    const val = textarea.value.trim();
+                    if (!val) { textarea.style.borderColor = '#ff4444'; return; }
+                    diagCustomInputs[id] = val;
+                    if (level === 'problem') diagAnswers.problem.customText = val;
+                    else diagAnswers.roadblock.customText = val;
+                    navigateTo(3);
+                    return;
+                }
+            });
+        })();
+
+        /* ── Landing ── */
+        function renderLanding() {
+            const c = document.getElementById('diagnostic-system');
+            c.innerHTML = '<div class="diag-panel diag-slide-up"><div class="diag-landing">' +
+                '<div class="diag-landing-icon"><i class="fa-solid fa-compass"></i></div>' +
+                '<h2 class="diag-landing-title">' + (diagQ?.flowTitle || 'Find Out How We Can Help') + '</h2>' +
+                '<p class="diag-landing-sub">Answer a few quick questions, and we\'ll identify the biggest opportunities and challenges in your business.</p>' +
+                '<button class="diag-btn-start" data-diag-action="start">Start Assessment <i class="fa-solid fa-arrow-right"></i></button>' +
+                '</div></div>';
+        }
+
+        /* ── Stage Select ── */
+        function renderStages() {
+            const options = diagQ?.questions?.stage?.options || [];
+            const label = diagQ?.questions?.stage?.label || 'Where are you right now?';
+            let h = '<div class="diag-panel diag-slide-up">';
+            h += progressBar(0);
+            h += '<div class="diag-question diag-fade">' + label + '</div>';
+            h += renderOptions(options, diagAnswers.stage?.id);
+            h += '</div>';
+            document.getElementById('diagnostic-system').innerHTML = h;
+            bindOptions(selectStage);
+        }
+
+        function selectStage(id) {
+            const opt = diagQ.questions.stage.options.find(o => o.id === id);
+            if (!opt) return;
+            diagAnswers.stage = { id: opt.id, label: opt.label };
+            diagAnswers.problem = null; diagAnswers.roadblock = null; diagCustomInputs = {};
+            document.querySelectorAll('.diag-option').forEach(el => el.classList.remove('selected'));
+            const el = document.querySelector('.diag-option[data-id="' + id + '"]');
+            if (el) el.classList.add('selected');
+            const problems = opt.problems || [];
+            setTimeout(() => {
+                if (problems.length === 0) navigateTo(3);
+                else navigateTo(1);
+            }, 250);
+        }
+
+        /* ── Problem Select ── */
+        function renderProblems() {
+            const stageOpt = diagQ?.questions?.stage?.options?.find(o => o.id === diagAnswers.stage?.id);
+            const problems = stageOpt?.problems || [];
+            let h = '<div class="diag-panel diag-slide-up">';
+            h += progressBar(1);
+            h += '<div class="diag-question diag-fade">What\'s your biggest challenge right now?</div>';
+            h += renderOptions(problems, diagAnswers.problem?.id);
+            h += navRow(true);
+            h += '</div>';
+            document.getElementById('diagnostic-system').innerHTML = h;
+            bindOptions(selectProblem);
+
+            // Auto-render custom text input if the selected problem is a text input option
+            if (diagAnswers.problem) {
+                const selectedOpt = problems.find(p => p.id === diagAnswers.problem.id);
+                if (selectedOpt && selectedOpt.type === 'text_input') {
+                    showCustomInput('problem', selectedOpt.id);
+                }
+            }
+        }
+
+        function selectProblem(id) {
+            const stageOpt = diagQ?.questions?.stage?.options?.find(o => o.id === diagAnswers.stage?.id);
+            const problem = stageOpt?.problems?.find(p => p.id === id);
+            if (!problem) return;
+            diagAnswers.problem = { id: problem.id, label: problem.label };
+            diagAnswers.roadblock = null;
+            document.querySelectorAll('.diag-option').forEach(el => el.classList.remove('selected'));
+            const el = document.querySelector('.diag-option[data-id="' + id + '"]');
+            if (el) el.classList.add('selected');
+            const isText = problem.type === 'text_input';
+            const rbs = problem.roadblocks || [];
+
+            // Remove any existing custom input element from the DOM
+            const existingInput = document.querySelector('.diag-text-wrap');
+            if (existingInput) existingInput.remove();
+
+            setTimeout(() => {
+                if (isText) { showCustomInput('problem', id); return; }
+                if (rbs.length === 0) navigateTo(3);
+                else navigateTo(2);
+            }, 250);
+        }
+
+        /* ── Roadblock Select ── */
+        function renderRoadblocks() {
+            const stageOpt = diagQ?.questions?.stage?.options?.find(o => o.id === diagAnswers.stage?.id);
+            const problem = stageOpt?.problems?.find(p => p.id === diagAnswers.problem?.id);
+            const roadblocks = problem?.roadblocks || [];
+            let h = '<div class="diag-panel diag-slide-up">';
+            h += progressBar(2);
+            h += '<div class="diag-question diag-fade">What\'s the main thing causing that challenge?</div>';
+            h += renderOptions(roadblocks, diagAnswers.roadblock?.id);
+            h += navRow(true);
+            h += '</div>';
+            document.getElementById('diagnostic-system').innerHTML = h;
+            bindOptions(selectRoadblock);
+
+            // Auto-render custom text input if the selected roadblock is a text input option
+            if (diagAnswers.roadblock) {
+                const selectedOpt = roadblocks.find(r => r.id === diagAnswers.roadblock.id);
+                if (selectedOpt && selectedOpt.type === 'text_input') {
+                    showCustomInput('roadblock', selectedOpt.id);
+                }
+            }
+        }
+
+        function selectRoadblock(id) {
+            const stageOpt = diagQ?.questions?.stage?.options?.find(o => o.id === diagAnswers.stage?.id);
+            const problem = stageOpt?.problems?.find(p => p.id === diagAnswers.problem?.id);
+            const roadblock = problem?.roadblocks?.find(r => r.id === id);
+            if (!roadblock) return;
+            diagAnswers.roadblock = { id: roadblock.id, label: roadblock.label };
+            document.querySelectorAll('.diag-option').forEach(el => el.classList.remove('selected'));
+            const el = document.querySelector('.diag-option[data-id="' + id + '"]');
+            if (el) el.classList.add('selected');
+            const isText = roadblock.type === 'text_input';
+
+            // Remove any existing custom input element from the DOM
+            const existingInput = document.querySelector('.diag-text-wrap');
+            if (existingInput) existingInput.remove();
+
+            setTimeout(() => {
+                if (isText) showCustomInput('roadblock', id);
+                else navigateTo(3);
+            }, 250);
+        }
+
+        /* ── Custom Text Input (for "Other" options) ── */
+        function showCustomInput(level, id) {
+            // Remove any existing custom input first to avoid duplicate fields
+            const existingInput = document.querySelector('.diag-text-wrap');
+            if (existingInput) existingInput.remove();
+
+            const existing = diagCustomInputs[id] || '';
+            const placeholder = level === 'problem'
+                ? 'Tell us about your challenge in a bit more detail...'
+                : 'Describe your situation...';
+            
+            const container = document.getElementById('diagnostic-system');
+            const panel = container.querySelector('.diag-panel') || container;
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'diag-text-wrap diag-fade';
+            wrapper.style.marginTop = '16px';
+            wrapper.innerHTML = 
+                '<textarea class="diag-textarea" id="diag-custom-text" placeholder="' + placeholder + '">' + existing + '</textarea>' +
+                '<p class="diag-text-hint">Please describe your situation so we can give you the most relevant guidance.</p>' +
+                '<div style="display:flex;justify-content:flex-end;margin-top:12px">' +
+                '<button class="diag-btn-next" data-diag-action="custom-submit" data-diag-level="' + level + '" data-diag-id="' + id + '">Continue <i class="fa-solid fa-arrow-right"></i></button>' +
+                '</div>';
+            
+            // Insert before the back button/nav row if present, otherwise append to panel
+            const navRowEl = panel.querySelector('.diag-nav');
+            if (navRowEl) {
+                panel.insertBefore(wrapper, navRowEl);
+            } else {
+                panel.appendChild(wrapper);
+            }
+
+            const textEl = document.getElementById('diag-custom-text');
+            if (textEl) textEl.focus();
+        }
+
+        /* ── Scenario-Specific Text Question ── */
+        function renderTextQ() {
+            const stageOpt = diagQ?.questions?.stage?.options?.find(o => o.id === diagAnswers.stage?.id);
+            const q = stageOpt?.customQuestion;
+            if (!q) { navigateTo(4); return; }
+            const existing = diagAnswers.customAnswer || '';
+            let h = '<div class="diag-panel diag-slide-up">';
+            h += progressBar(3);
+            h += '<div class="diag-question diag-fade">' + q.label + '</div>';
+            h += '<div class="diag-text-wrap diag-fade">';
+            h += '<textarea class="diag-textarea" id="diag-text-custom" placeholder="' + (q.placeholder || 'Type your answer...') + '">' + existing + '</textarea>';
+            h += '</div><div class="diag-nav">';
+            h += '<button class="diag-btn-back" data-diag-action="back"><i class="fa-solid fa-arrow-left"></i> Back</button>';
+            h += '<button class="diag-btn-next" data-diag-action="next-text">Next <i class="fa-solid fa-arrow-right"></i></button>';
+            h += '</div></div>';
+            document.getElementById('diagnostic-system').innerHTML = h;
+            document.getElementById('diag-text-custom').focus();
+        }
+
+        /* ── Summary & CTA ── */
+        function renderSummary() {
+            const a = diagAnswers;
+            let h = '<div class="diag-panel diag-slide-up">';
+            h += progressBar(4);
+            h += '<div class="diag-question diag-fade">Your Assessment Is Ready</div>';
+            h += '<div class="diag-summary diag-fade">';
+            const items = [
+                ['Stage', a.stage?.label || ''],
+                ['Problem', (a.problem?.label || '') + (a.problem?.customText ? ': ' + a.problem.customText : '')],
+                ['Roadblock', (a.roadblock?.label || '') + (a.roadblock?.customText ? ': ' + a.roadblock.customText : '')],
+                ['Your Goal', a.customAnswer || '']
+            ];
+            items.forEach(item => {
+                if (!item[1]) return;
+                h += '<div class="diag-summary-item"><span class="diag-summary-label">' + item[0] + '</span><span class="diag-summary-value">' + item[1] + '</span></div>';
+            });
+            h += '</div>';
+            
+            const escapeHTML = str => str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            // Build Calendly URL with dynamic parameters for the submission and redirect
+            const params = new URLSearchParams({
+                stage: items[0][1] || '',
+                problem: items[1][1] || '',
+                roadblock: items[2][1] || '',
+                goal: items[3][1] || ''
+            });
+            const calendlyUrl = 'https://calendly.com/shardulsingh/30min?' + params.toString();
+
+            h += '<div class="diag-summary-cta diag-fade">' +
+                '<p>Based on your responses, we\'d like to offer a free diagnostic session to help identify your biggest opportunities, bottlenecks, and next steps.</p>' +
+                
+                '<form action="https://formspree.io/f/xlgkpryn" method="POST">' +
+                '<input type="hidden" name="_next" value="' + escapeHTML(calendlyUrl) + '">' +
+                '<input type="hidden" name="_subject" value="New Diagnostic Assessment Submission!">' +
+                '<input type="hidden" name="Stage" value="' + escapeHTML(items[0][1] || 'N/A') + '">' +
+                '<input type="hidden" name="Problem" value="' + escapeHTML(items[1][1] || 'N/A') + '">' +
+                '<input type="hidden" name="Roadblock" value="' + escapeHTML(items[2][1] || 'N/A') + '">' +
+                '<input type="hidden" name="Goal" value="' + escapeHTML(items[3][1] || 'N/A') + '">' +
+                
+                '<div style="max-width: 480px; margin: 0 auto 24px;">' +
+                '<input type="text" name="name" required class="diag-text-input" placeholder="Your Name" style="margin-bottom: 12px; width: 100%; box-sizing: border-box;">' +
+                '<input type="email" name="email" required class="diag-text-input" placeholder="Your Work Email" style="width: 100%; box-sizing: border-box;">' +
+                '</div>' +
+                
+                '<button type="submit" class="diag-btn-start">Submit & Book Call <i class="fa-solid fa-arrow-right"></i></button>' +
+                '</form>' +
+                
+                '<div style="margin-top:16px"><button class="diag-btn-back" data-diag-action="back"><i class="fa-solid fa-arrow-left"></i> Review Answers</button></div>' +
+                '</div></div>';
+            document.getElementById('diagnostic-system').innerHTML = h;
+        }
+
+        initDiagnostic();
+
+        /* Removed glitch effect to keep text clean as requested */
+        /* setInterval(() => {
+            const traditional = document.querySelector('.traditional');
+            traditional.style.textShadow = `
+                ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 80px rgba(52, 98, 252, 0.8),
+                ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 40px rgba(52, 98, 252, 0.6)
+            `;
+        }, 3000); */
+
+        // Typing effect for stats (when in view)
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    entry.target.classList.add('counted');
+                    const target = entry.target;
+                    const text = target.textContent;
+
+                    // Animate number if it contains digits
+                    if (/\d/.test(text)) {
+                        let current = 0;
+                        const end = parseInt(text.replace(/\D/g, ''));
+                        const increment = end / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= end) {
+                                target.textContent = text;
+                                clearInterval(timer);
+                            } else {
+                                target.textContent = Math.floor(current) + text.replace(/\d+/g, '').trim();
+                            }
+                        }, 30);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            statsObserver.observe(stat);
+        });
+
+        // Conveyor Item Animation with Stage Transformation (Disable on Mobile)
+        if (!isMobile) {
+            const conveyorContainer = document.querySelector('.conveyor-container');
+            const conveyorItem = document.querySelector('.conveyor-item');
+            const stages = document.querySelectorAll('.conveyor-item .stage');
+            const stations = conveyorContainer.querySelectorAll('.station-wrapper');
+            const itemStart = -100;
+            let currentStage = 0;
+
+            function computeThresholds() {
+                const h = conveyorContainer.offsetHeight;
+                const totalTravel = h + 200;
+                return Array.from(stations).map(st => {
+                    const stTop = st.offsetTop;
+                    // Mathematically aligned centering: centers the 55px item within the 90px scanner height relative to the initial offset
+                    return (stTop + 117.5) / totalTravel;
+                });
+            }
+
+            function setStage(index) {
+                if (index === currentStage) return;
+                stages[currentStage].classList.remove('active');
+                stages[index].classList.add('active');
+                currentStage = index;
+            }
+
+            gsap.to(conveyorItem, {
+                y: () => conveyorContainer.offsetHeight + 200,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: conveyorContainer,
+                    start: 'top+=120 top',
+                    end: 'bottom+=1000 top',
+                    scrub: true,
+                    invalidateOnRefresh: true,
+                    onUpdate: (self) => {
+                        const thresholds = computeThresholds();
+                        const p = self.progress;
+                        if (p >= thresholds[3]) setStage(4);
+                        else if (p >= thresholds[2]) setStage(3);
+                        else if (p >= thresholds[1]) setStage(2);
+                        else if (p >= thresholds[0]) setStage(1);
+                        else setStage(0);
+                    }
+                }
+            });
+
+            // Dynamically refresh ScrollTrigger when the conveyor container is resized/expanded
+            if (typeof ResizeObserver !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                const resizeObserver = new ResizeObserver(() => {
+                    ScrollTrigger.refresh();
+                });
+                resizeObserver.observe(conveyorContainer);
+            }
+        }
+    </script>
+    <style>
+        .circular-gallery {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        .circular-gallery:active {
+            cursor: grabbing;
+        }
+    </style>
+</body>
+
+</html>
