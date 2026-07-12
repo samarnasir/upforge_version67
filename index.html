@@ -3029,19 +3029,10 @@
             opacity: 0 !important;
             pointer-events: none;
         }
-        body.loading-active .we-hate {
-            transform: translateY(90px);
-        }
-        body.loading-active .consulting {
-            transform: translateY(-90px);
-        }
     </style>
 </head>
 
 <body class="loading-active">
-
-    <!-- ─── LOADER OVERLAY ─── -->
-    <div id="loader-overlay"></div>
 
     <script>
         (function() {
@@ -3074,13 +3065,26 @@
 
                 // 2. Measure sizes after fonts are ready for pixel-perfect alignment
                 const initAnimation = () => {
+                    // Temporarily remove loading-active to measure the natural coordinates correctly
+                    document.body.classList.remove('loading-active');
+                    
+                    // Clear overrides to get actual coordinates
+                    weHate.style.transform = 'none';
+                    consulting.style.transform = 'none';
+                    traditional.style.transform = 'none';
+
+                    // Force repaint to make sure browser applies the layout without transforms
+                    weHate.offsetHeight;
+
                     const hateRect = weHate.getBoundingClientRect();
                     const tradRect = traditional.getBoundingClientRect();
                     const consRect = consulting.getBoundingClientRect();
                     
                     const tradCenterY = tradRect.top + tradRect.height / 2;
-                    const weHateOffsetY = tradCenterY - (hateRect.top + hateRect.height / 2);
-                    const consultingOffsetY = tradCenterY - (consRect.top + consRect.height / 2);
+                    
+                    // Calculate offsets to align them touch-to-touch at the center Y of traditional
+                    const weHateOffsetY = tradCenterY - hateRect.bottom;
+                    const consultingOffsetY = tradCenterY - consRect.top;
 
                     // Position them closed together
                     weHate.style.transform = `translateY(${weHateOffsetY}px)`;
@@ -3089,11 +3093,8 @@
                     weHate.style.transition = 'none';
                     consulting.style.transition = 'none';
 
-                    // Force repaint
+                    // Force repaint to register the initial closed position
                     weHate.offsetHeight;
-
-                    // Remove locking classes to enable transition logic
-                    document.body.classList.remove('loading-active');
 
                     // 3. Run animation sequence
                     setTimeout(() => {
@@ -3163,6 +3164,8 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <!-- ─── LOADER OVERLAY ─── -->
+        <div id="loader-overlay"></div>
         <div class="grid-bg"></div>
 
         <!-- Scattered Papers -->
@@ -3186,6 +3189,25 @@
             <div class="hate-text traditional">Traditional</div>
             <div class="hate-text consulting">Consulting</div>
         </div>
+        <script>
+            (function() {
+                const weHate = document.querySelector('.we-hate');
+                const traditional = document.querySelector('.traditional');
+                const consulting = document.querySelector('.consulting');
+                if (weHate && traditional && consulting) {
+                    const hateRect = weHate.getBoundingClientRect();
+                    const tradRect = traditional.getBoundingClientRect();
+                    const consRect = consulting.getBoundingClientRect();
+                    const tradCenterY = tradRect.top + tradRect.height / 2;
+                    const weHateOffsetY = tradCenterY - hateRect.bottom;
+                    const consultingOffsetY = tradCenterY - consRect.top;
+                    weHate.style.transform = 'translateY(' + weHateOffsetY + 'px)';
+                    consulting.style.transform = 'translateY(' + consultingOffsetY + 'px)';
+                    traditional.style.opacity = '0';
+                    traditional.style.transform = 'scale(0.98)';
+                }
+            })();
+        </script>
 
         <div class="scroll-indicator">
             <svg width="30" height="50" viewBox="0 0 30 50">
