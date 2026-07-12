@@ -3006,228 +3006,143 @@
         }
 
         /* ─── LOADER ───────────────────────────────────────────── */
-        #loader {
+        #loader-overlay {
             position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100vh;
-            background: var(--dark);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            overflow: hidden;
-            font-family: 'Anton', sans-serif;
-        }
-
-        .word-wrap {
-            text-align: center;
-            width: 100%;
-            padding: 0 24px;
-            line-height: 1;
-        }
-
-        .word {
-            display: block;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            opacity: 0;
-            will-change: transform, opacity, filter;
-            line-height: 0.88;
-        }
-
-        #w-we-hate {
-            font-size: clamp(48px, 10vw, 120px);
-            color: #ffffff;
-            transform: translateY(-40px) scale(2.2);
-            filter: blur(8px);
-        }
-        #w-traditional {
-            font-size: clamp(36px, 8vw, 96px);
-            color: var(--primary);
-            transform: scale(0.15) rotate(-6deg);
-            filter: blur(6px);
-        }
-        #w-consulting {
-            font-size: clamp(48px, 10vw, 120px);
-            color: #ffffff;
-            transform: translateY(40px) scale(2.2);
-            filter: blur(8px);
-        }
-
-        .word.in { opacity: 1; filter: blur(0); }
-        #w-we-hate.in     { transform: translateY(-6px); }
-        #w-traditional.in { transform: scale(1) rotate(0deg); }
-        #w-consulting.in  { transform: translateY(6px); }
-
-        .shake     { animation: sk-top 0.16s cubic-bezier(.36,.07,.19,.97) both; }
-        .shake-mid { animation: sk-mid 0.18s cubic-bezier(.36,.07,.19,.97) both; }
-        .shake-bot { animation: sk-bot 0.16s cubic-bezier(.36,.07,.19,.97) both; }
-
-        @keyframes sk-top {
-            20%,80% { transform: translateY(-6px) translateX( 5px); }
-            40%,60% { transform: translateY(-6px) translateX(-5px); }
-            100%    { transform: translateY(-6px); }
-        }
-        @keyframes sk-mid {
-            20%,80% { transform: scale(1) translateX(-5px) rotate(-1.5deg); }
-            40%,60% { transform: scale(1) translateX( 5px) rotate( 1.5deg); }
-            100%    { transform: scale(1) rotate(0deg); }
-        }
-        @keyframes sk-bot {
-            20%,80% { transform: translateY(6px) translateX(-5px); }
-            40%,60% { transform: translateY(6px) translateX( 5px); }
-            100%    { transform: translateY(6px); }
-        }
-
-        /* Progress bar */
-        .bar-wrap {
-            position: absolute;
-            bottom: 48px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(360px, 70vw);
-        }
-        .bar-meta {
-            display: flex;
-            justify-content: space-between;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 10px;
-            letter-spacing: 0.25em;
-            color: rgba(255,255,255,0.4);
-            text-transform: uppercase;
-            margin-bottom: 9px;
-        }
-        .bar-track {
-            width: 100%;
-            height: 2px;
-            background: rgba(255,255,255,0.1);
-            overflow: hidden;
-            border-radius: 99px;
-        }
-        .bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        /* Exit fade */
-        #loader.exiting {
-            transition: opacity 0.55s ease;
-            opacity: 0;
+            inset: -20px;
+            width: calc(100% + 40px);
+            height: calc(100vh + 40px);
+            background: url('assets/images/hero/hero.jpeg') center/cover no-repeat;
+            filter: blur(15px);
+            z-index: 8;
+            opacity: 1;
+            transition: opacity 0.5s ease, filter 0.5s ease;
             pointer-events: none;
+        }
+
+        body.loading-active .traditional {
+            opacity: 0 !important;
+        }
+        body.loading-active .hero-paper {
+            opacity: 0 !important;
+        }
+        body.loading-active .navbar {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+        body.loading-active .we-hate {
+            transform: translateY(90px);
+        }
+        body.loading-active .consulting {
+            transform: translateY(-90px);
         }
     </style>
 </head>
 
-<body>
+<body class="loading-active">
 
-    <!-- ─── LOADER ─── -->
-    <div id="loader">
-        <div class="word-wrap">
-            <span class="word" id="w-we-hate">We Hate</span>
-            <span class="word" id="w-traditional">Traditional</span>
-            <span class="word" id="w-consulting">Consulting</span>
-        </div>
-
-        <div class="bar-wrap">
-            <div class="bar-meta">
-                <span id="bar-status">Loading</span>
-                <span id="bar-pct">0%</span>
-            </div>
-            <div class="bar-track">
-                <div class="bar-fill" id="bar-fill"></div>
-            </div>
-        </div>
-    </div>
+    <!-- ─── LOADER OVERLAY ─── -->
+    <div id="loader-overlay"></div>
 
     <script>
         (function() {
-            const wh        = document.getElementById('w-we-hate');
-            const wt        = document.getElementById('w-traditional');
-            const wc        = document.getElementById('w-consulting');
-            const barFill   = document.getElementById('bar-fill');
-            const barPct    = document.getElementById('bar-pct');
-            const barStatus = document.getElementById('bar-status');
-            const loader    = document.getElementById('loader');
+            document.addEventListener('DOMContentLoaded', () => {
+                const weHate = document.querySelector('.we-hate');
+                const traditional = document.querySelector('.traditional');
+                const consulting = document.querySelector('.consulting');
+                const papers = document.querySelectorAll('.hero-paper');
+                const navbar = document.querySelector('.navbar');
 
-            function setBar(pct, label) {
-                const v = Math.min(100, Math.round(pct));
-                if (barFill) barFill.style.width = v + '%';
-                if (barPct) barPct.textContent  = v + '%';
-                if (label && barStatus) barStatus.textContent = label;
-            }
+                if (!weHate || !traditional || !consulting) return;
 
-            function slam(el, shakeClass) {
-                return new Promise(res => {
-                    if (!el) { res(); return; }
-                    el.style.transition = 'opacity 0.14s ease, transform 0.24s cubic-bezier(0.22,1,0.36,1), filter 0.22s ease';
-                    el.classList.add('in');
-                    el.addEventListener('transitionend', () => {
-                        el.classList.add(shakeClass);
-                        setTimeout(() => el.classList.remove(shakeClass), 200);
-                        res();
-                    }, { once: true });
+                // 1. Prepare initial states and overrides
+                traditional.style.opacity = '0';
+                traditional.style.transform = 'scale(0.98)';
+                traditional.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+
+                papers.forEach(paper => {
+                    paper.style.opacity = '0';
+                    paper.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                    const currentTransform = paper.style.transform || '';
+                    paper.dataset.originalTransform = currentTransform;
+                    paper.style.transform = currentTransform + ' scale(0.95) translateY(20px)';
                 });
-            }
 
-            const wait = ms => new Promise(r => setTimeout(r, ms));
-
-            async function animate() {
-                await wait(200);
-                await slam(wh, 'shake');      setBar(33);            await wait(280);
-                await slam(wc, 'shake-bot');  setBar(55);            await wait(240);
-                await slam(wt, 'shake-mid');  setBar(72);
-            }
-
-            function waitForPageLoad() {
-                return new Promise(res => {
-                    if (document.readyState === 'complete') { res(); return; }
-                    window.addEventListener('load', res, { once: true });
-                });
-            }
-
-            function trackResources() {
-                return new Promise(res => {
-                    const loadDone = waitForPageLoad();
-
-                    if (!window.PerformanceObserver) { loadDone.then(res); return; }
-
-                    const observer = new PerformanceObserver(list => {
-                        const all = performance.getEntriesByType('resource').filter(
-                            r => ['img','css','script','fetch','xmlhttprequest','other'].includes(r.initiatorType)
-                        );
-                        if (!all.length) return;
-                        const done = all.filter(r => r.responseEnd > 0).length;
-                        const pct  = 72 + Math.round((done / all.length) * 25);
-                        setBar(Math.min(97, pct), 'Loading assets');
-                    });
-
-                    try { observer.observe({ type: 'resource', buffered: true }); } catch(e) {}
-                    loadDone.then(() => { observer.disconnect(); res(); });
-                });
-            }
-
-            async function run() {
-                const animDone  = animate();
-                const loadDone  = trackResources();
-
-                await Promise.all([animDone, loadDone]);
-
-                setBar(100, 'Ready');
-                await wait(380);
-
-                if (loader) {
-                    loader.classList.add('exiting');
-                    await wait(600);
-                    loader.style.display = 'none';
+                if (navbar) {
+                    navbar.style.opacity = '0';
+                    navbar.style.pointerEvents = 'none';
                 }
-            }
 
-            run();
+                // 2. Measure sizes after fonts are ready for pixel-perfect alignment
+                const initAnimation = () => {
+                    const hateRect = weHate.getBoundingClientRect();
+                    const tradRect = traditional.getBoundingClientRect();
+                    const consRect = consulting.getBoundingClientRect();
+                    
+                    const tradCenterY = tradRect.top + tradRect.height / 2;
+                    const weHateOffsetY = tradCenterY - (hateRect.top + hateRect.height / 2);
+                    const consultingOffsetY = tradCenterY - (consRect.top + consRect.height / 2);
+
+                    // Position them closed together
+                    weHate.style.transform = `translateY(${weHateOffsetY}px)`;
+                    consulting.style.transform = `translateY(${consultingOffsetY}px)`;
+                    
+                    weHate.style.transition = 'none';
+                    consulting.style.transition = 'none';
+
+                    // Force repaint
+                    weHate.offsetHeight;
+
+                    // Remove locking classes to enable transition logic
+                    document.body.classList.remove('loading-active');
+
+                    // 3. Run animation sequence
+                    setTimeout(() => {
+                        // Slide apart: 700ms (smooth ease-in-out curve)
+                        weHate.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
+                        consulting.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
+                        
+                        weHate.style.transform = 'translateY(0)';
+                        consulting.style.transform = 'translateY(0)';
+
+                        // Reveal TRADITIONAL, papers, and fade out overlay: 300-400ms
+                        setTimeout(() => {
+                            traditional.style.opacity = '1';
+                            traditional.style.transform = 'scale(1)';
+                            
+                            const overlay = document.getElementById('loader-overlay');
+                            if (overlay) {
+                                overlay.style.opacity = '0';
+                                overlay.style.filter = 'blur(0px)';
+                                setTimeout(() => overlay.remove(), 500);
+                            }
+
+                            // Stagger reveal of papers (50-80ms)
+                            papers.forEach((paper, i) => {
+                                setTimeout(() => {
+                                    paper.style.opacity = '1';
+                                    paper.style.transform = paper.dataset.originalTransform || '';
+                                    // Remove transitions after they finish to avoid GSAP scroll lag
+                                    setTimeout(() => {
+                                        paper.style.transition = '';
+                                    }, 600);
+                                }, i * 65);
+                            });
+
+                            if (navbar) {
+                                navbar.style.transition = 'opacity 0.6s ease';
+                                navbar.style.opacity = '1';
+                                navbar.style.pointerEvents = 'auto';
+                            }
+                        }, 250); // Start revealing mid-slide
+                    }, 200); // 200ms initial hold
+                };
+
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(initAnimation);
+                } else {
+                    setTimeout(initAnimation, 300);
+                }
+            });
         })();
     </script>
 
