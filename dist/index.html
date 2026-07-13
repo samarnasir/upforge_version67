@@ -2183,6 +2183,123 @@
             .founder-desc { margin: 0 auto; }
         }
 
+        /* Insights / Research Section */
+        .insights-section {
+            padding: 100px 50px;
+            background: #f8f9fc;
+            position: relative;
+        }
+        .insights-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .insights-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .insights-heading {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 48px;
+        }
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+        .insight-card {
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid rgba(9, 45, 83, 0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        .insight-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 16px 48px rgba(52, 98, 252, 0.12);
+        }
+        .insight-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, var(--primary), #1a3f9e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .insight-thumb svg {
+            width: 80px;
+            height: 80px;
+            opacity: 0.3;
+        }
+        .insight-body {
+            padding: 28px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .insight-tag {
+            display: inline-block;
+            background: rgba(52, 98, 252, 0.08);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 50px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            align-self: flex-start;
+        }
+        .insight-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 10px;
+            line-height: 1.3;
+        }
+        .insight-card p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.65;
+            margin: 0 0 16px;
+            flex: 1;
+        }
+        .insight-read {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.3s ease;
+        }
+        .insight-card:hover .insight-read {
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .insights-section { padding: 60px 24px; }
+            .insights-heading { font-size: 26px; margin-bottom: 32px; }
+            .insights-grid { grid-template-columns: 1fr; gap: 20px; }
+            .insight-body { padding: 20px; }
+            .insight-card h3 { font-size: 18px; }
+        }
+
         /* How We Can Help - 3 Layer Interactive */
         .our-services {
             padding: 100px 50px;
@@ -2209,7 +2326,7 @@
         /* Layer 1 - Main service cards */
         .hwh-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
         .hwh-card {
@@ -3030,7 +3147,7 @@
             pointer-events: none;
         }
     </style>
-  <script type="module" crossorigin src="/assets/index-cuJUPC8x.js"></script>
+  <script type="module" crossorigin src="/assets/index-CAbMDTfy.js"></script>
 </head>
 
 <body class="loading-active">
@@ -3157,7 +3274,7 @@
             <li><a href="#diagnostic-system">How We Can Help</a></li>
             <li><a href="#team">Our Team</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="case-studies/">Case Studies</a></li>
+            <li><a href="#insights">Insights</a></li>
         </ul>
 
         <button class="nav-cta" onclick="window.open('https://calendly.com/shardulsingh166/30min', '_blank')">Book a Free Call</button>
@@ -3610,13 +3727,38 @@
         </div>
     </section>
 
+    <!-- Insights Section -->
+    <section class="insights-section" id="insights">
+        <div class="insights-inner">
+            <span class="insights-label">Latest Research</span>
+            <h2 class="insights-heading">Insights &amp; Analysis from our team.</h2>
+            <div class="insights-grid">
+                <a href="case-studies/kpmg-anthropic-alliance/" class="insight-card">
+                    <div class="insight-thumb">
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="8" width="64" height="64" rx="16" stroke="white" stroke-width="3"/>
+                            <path d="M28 44 L40 32 L52 44" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="40" cy="28" r="6" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="insight-body">
+                        <span class="insight-tag">Partnership Analysis</span>
+                        <h3>KPMG–Anthropic Alliance: Strategic Partnership Analysis</h3>
+                        <p>A comprehensive dashboard exploring the KPMG-Anthropic global alliance and KPMG Digital Gateway Powered by Claude — covering deal structure, market rationale, competitive landscape, and risk assessment.</p>
+                        <span class="insight-read">Read the full analysis <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer Strip -->
     <footer
         style="background: #fff; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #666; width: 100%;">
         <div>&copy;2026 UpForge. All rights reserved</div>
         <div style="display: flex; gap: 30px;">
-            <a href="#" style="color: #666; text-decoration: none; font-weight: 500;">Privacy & Policy</a>
-            <a href="#" style="color: #666; text-decoration: none; font-weight: 500;">Terms & Condition</a>
+            <a href="legal/privacy-policy.html" style="color: #666; text-decoration: none; font-weight: 500;">Privacy Policy</a>
+            <a href="legal/terms-conditions.html" style="color: #666; text-decoration: none; font-weight: 500;">Terms &amp; Conditions</a>
         </div>
     </footer>
 
@@ -3987,6 +4129,7 @@
         function rebuildHeroScene() {
             applyHeroPaperLayout();
             buildHeroTimeline();
+            ScrollTrigger.sort();
             ScrollTrigger.refresh();
         }
 
@@ -4093,79 +4236,48 @@
         // ── HOW WE CAN HELP - 3 LAYER SERVICE EXPLORER ──
         const serviceData = [
             {
-                id: 'commercial-strategy',
-                title: 'Commercial Strategy<br>&amp; Market Entry',
+                id: 'market-entry',
+                title: 'Market Entry<br>&amp; Commercial Strategy',
                 subs: [
-                    { title: '12-Step Market Entry Framework', content: '<strong>Our proprietary 12-Step Market Entry Framework</strong> has been used across 7+ industries in India, SEA, and the Middle East. We guide you through market sizing (TAM/SAM/SOM), regulatory mapping, localisation strategy, channel scouting, and launch sequencing — cutting time-to-market by an average of 40%. <br><br><strong>Framework used:</strong> PESTEL + Porter\'s Five Forces + Custom Localisation Matrix.<br><strong>Track record:</strong> 85% of clients achieved first sale within 6 months of entry.', popular: true },
-                    { title: 'Competitive Mapping &amp; Landscape Analysis', content: '<strong>We don\'t just list competitors — we expose their weak points.</strong> Using a structured Competitive Vulnerability Matrix, we map market share distribution, pricing gaps, positioning blind spots, and customer sentiment gaps. <br><br><strong>Data points:</strong> Market share splits, G2/Capterra review sentiment analysis, pricing tier comparison.<br><strong>Outcome:</strong> A prioritized attack plan showing where you can win within 90 days.', popular: true },
-                    { title: 'Customer Segmentation &amp; Persona Design', content: '<strong>90% of early-stage companies target too broadly.</strong> We use a Behavioural Segmentation Framework that clusters buyers by intent, willingness-to-pay, and decision velocity — not just demographics. <br><br><strong>Methodology:</strong> JTBD (Jobs To Be Done) + RFM modeling + psychographic clustering.<br><strong>Typical result:</strong> 3-5 high-yield segments with estimated CAC and LTV for each.', popular: true },
-                    { title: 'Pricing Architecture &amp; Revenue Modeling', content: '<strong>Price wrong and you leave millions on the table.</strong> We build pricing models using Van Westendorp Price Sensitivity Meter and Conjoint Analysis to find the optimal price point that maximizes both conversion and margin. <br><br><strong>Output:</strong> Tiered pricing table, discount architecture, bundling strategy, and a 3-year revenue projection under 3 scenarios (conservative/base/aggressive).<br><strong>Impact:</strong> Clients typically see 15-25% revenue uplift from pricing optimization alone.', popular: true },
-                    { title: 'Strategic Differentiation &amp; Positioning', content: '<strong>If you sound like everyone else, you lose.</strong> We craft a positioning strategy using the Golden Circle (Sinek), Category Creation framework, and a custom Differentiation Audit. <br><br><strong>Deliverable:</strong> Positioning statement, messaging hierarchy, brand personality guidelines, and competitive war-room playbook.<br><strong>Benchmark:</strong> 10 key competitor positioning maps analysed.', popular: true },
-                    { title: 'Risk Assessment &amp; Crisis Management', content: 'We map regulatory, operational, reputational, and market risks using a custom Risk Heat Map framework. Each risk is scored on probability x impact, with a concrete mitigation playbook for top-tier risks. <br><br><strong>Compliance scope:</strong> GDPR, DPDP Act, SEC, SEBI, industry-specific regulations covered across 12+ jurisdictions.' },
-                    { title: 'Gen-Z Alignment &amp; Future-Proofing Strategy', content: 'Gen Z controls $360B+ in spending power globally. We redesign your value proposition through a Gen-Z Trust Audit: assessing authenticity, social impact alignment, digital-native UX expectations, and community-driven brand appeal.<br><br><strong>Research base:</strong> Survey data from 2,000+ Gen-Z respondents across metro and tier-2 cities in India.' }
+                    { title: 'Competitor &amp; Market Sizing Research', content: '<strong>We map who else is selling this, where they\'re weak, and where there\'s actual room to take share.</strong> Market size is worked out two ways — from industry data, and from your real unit economics — then cross-checked, because industry numbers alone are easy to inflate. We split "the whole industry" from what\'s realistically winnable in the next 1-2 years, benchmarked against 2-3 real competitors, not a hypothetical field.', popular: true },
+                    { title: 'Positioning &amp; Customer Segmentation', content: '<strong>We find out what customers are actually trying to get done — often different from the feature they say they want.</strong> "Everyone" gets narrowed down to the specific group worth going after first. We check that what you\'re offering actually matches what that group needs fixed or improved. End result: one sentence your whole team can say the same way, every time — not a moodboard.', popular: true },
+                    { title: 'Market Entry Roadmap', content: '<strong>A phased plan — test, pilot, scale — with a clear stop/go call at each stage before more money goes in.</strong> Pricing is decided here too: charge based on cost, on value delivered, or price low to grab share fast — tested against what people will actually pay, not guessed. A quick check on local rules, licensing, and partnership requirements is built into the timeline rather than billed separately.' }
                 ]
             },
             {
-                id: 'gtm-sales',
-                title: 'GTM, Sales<br>&amp; Personal Branding',
+                id: 'gtm-branding',
+                title: 'GTM, Branding<br>&amp; Digital Experience',
                 subs: [
-                    { title: 'Ideal Customer Profile (ICP) Definition', content: '<strong>Most B2B startups waste 60% of their sales efforts on the wrong prospects.</strong> We build a data-backed ICP using firmographic, technographic, and intent-signal analysis — not gut feel. <br><br><strong>Framework:</strong> TAM → SAM → ICP pyramid, layered with Buyer Persona Canvas.<br><strong>Output:</strong> A scored account list of 100-500 companies with direct stakeholder contacts.', popular: true },
-                    { title: 'Founder Personal Branding &amp; Authority Building', content: '<strong>LinkedIn creators with 5K+ followers generate 3x more inbound leads.</strong> We build a full personal brand engine: narrative development, content pillar strategy (3-5 authority topics), weekly posting calendar, and ghostwritten thought leadership. <br><br><strong>Platforms:</strong> LinkedIn, Twitter/X, Instagram, and newsletter.<br><strong>Typical outcome:</strong> 10-15K followers in 6 months + consistent inbound DM pipeline.', popular: true },
-                    { title: 'Social Media Content Strategy &amp; Distribution', content: '<strong>Brands that post 14+ times per month generate 2x the engagement.</strong> We create a turnkey content system: short-form video scripts (Reels/Shorts), carousel posts, thought leadership articles, and community management guidelines. <br><br><strong>Format mix:</strong> 40% educational, 30% social proof, 20% personality, 10% promotional.<br><strong>Analytics:</strong> Monthly performance reports with engagement rate benchmarks by industry.', popular: true },
-                    { title: 'Outbound Playbooks &amp; Campaign Execution', content: '<strong>Personalized cold outreach gets 6x higher reply rates.</strong> We build multi-channel sequences (email + LinkedIn + phone) with researched triggers and stepped follow-ups. Each campaign is A/B tested with 3 message variants. <br><br><strong>Metrics:</strong> Industry benchmark reply rates of 15-25%, meeting booking rate of 5-10%.<br><strong>Tech stack:</strong> Apollo, Lemlist, Sales Navigator, Instantly.', popular: true },
-                    { title: 'High-Converting Sales Scripts &amp; Playbooks', content: '<strong>Top sales teams convert at 2-3x the average because they follow a script.</strong> We write objection-handling scripts, demo flows, discovery call frameworks, and closing sequences customized to your product and buyer personas. <br><br><strong>Included:</strong> Common objection cheatsheet (20+ objections), value prop one-liner, battle cards for competitor positioning.', popular: true },
-                    { title: 'Targeted Lead List Generation', content: 'We build curated, verified B2B lead lists with direct email and phone contacts for decision-makers. Lists include company size, revenue range, tech stack, and recent growth signals.<br><br><strong>Coverage:</strong> 15+ filters (industry, title, location, company size, funding stage). Typical list: 500-5,000 leads per campaign.' },
-                    { title: 'CRM Architecture &amp; Pipeline Setup', content: 'We set up HubSpot, Pipedrive, or Salesforce with automated workflows, lead scoring, deal stage mapping, and clean analytics. <br><br><strong>Deliverable:</strong> Full CRM configuration, 10+ automated workflows, pipeline dashboard, and team training session.<br><strong>Timeline:</strong> 2-3 weeks to go live with zero data loss.' }
+                    { title: 'Founder Branding &amp; Content Strategy', content: '<strong>3-4 topics the founder actually knows, repeated often — not random posts chasing trends.</strong> Each platform gets its own format — LinkedIn posts, X threads, Instagram behind-the-scenes — matched to where your actual buyers spend time. The first line is written to stop the scroll, because that\'s what decides whether the rest gets read. Delivered with a monthly calendar, so this doesn\'t stop after week two.', popular: true },
+                    { title: 'Paid Media &amp; Ads (via Brown Men Marketing)', content: '<strong>Separate campaigns for people who don\'t know you, people considering you, and people ready to buy — not one campaign trying to do everything.</strong> Google catches people already searching. Meta catches people who aren\'t searching yet but fit your audience. We run both with fast testing — kill what\'s not working, push budget behind what is. Run through our ad partner BMM, who also bring Shopify/e-commerce and D2C ad experience. Reporting tracks pipeline and revenue, not just clicks.', popular: true },
+                    { title: 'Website, Landing Pages &amp; CRO', content: '<strong>Can a stranger tell what you do and why it matters in the first few seconds? If not, that\'s the first thing we fix.</strong> We test the changes most likely to move the needle first, not whatever\'s easiest to ship. One landing page per campaign, one call-to-action — sending ad traffic to a generic homepage wastes money. Site speed is fixed as part of the same work, since slow pages lose customers before they even see your offer.', popular: true },
+                    { title: 'Sales Enablement &amp; Outbound', content: '<strong>Lead lists built off who you actually convert, not a generic scrape.</strong> Outreach across email, LinkedIn, and calls — spaced out and varied, not one blast to everyone. Scripts are built around the objections your team actually hears, not a generic template. We put in a simple way to tell a winnable deal from a waste of time, so reps stop chasing everything that comes in.' },
+                    { title: 'Community Setup &amp; Engagement', content: '<strong>We pick the platform your people already use — Discord, WhatsApp, Slack — not whatever\'s trending.</strong> A recurring reason to show up every week, so it doesn\'t go quiet a month after launch. New members get to their first real interaction fast, since that\'s what decides whether they stay.' }
                 ]
             },
             {
                 id: 'consumer-psychology',
                 title: 'Consumer Psychology<br>&amp; Research',
                 subs: [
-                    { title: 'Behavioral Audits &amp; Friction Mapping', content: '<strong>68% of users abandon a purchase due to psychological friction.</strong> We run a systematic Behavioral Friction Audit across your digital touchpoints — identifying micro-obstacles in navigation, copy, checkout flow, trust signals, and decision architecture. <br><br><strong>Framework:</strong> Cialdini\'s Principles + Fogg Behavior Model + Custom Friction Heat Map.<br><strong>Impact:</strong> Clients typically see 20-40% improvement in key conversion metrics.', popular: true },
-                    { title: 'Conversion Psychology Research', content: '<strong>We apply behavioral economics to your growth funnel.</strong> Using cognitive bias frameworks (scarcity, social proof, reciprocity, anchoring) and qualitative user interviews, we surface the specific psychological triggers that drive your audience to act. <br><br><strong>Research methods:</strong> 15-20 user depth interviews, 500+ survey responses, heatmap analysis, and session recording review.<br><strong>Output:</strong> A prioritized list of psychology-backed growth experiments ranked by potential impact.', popular: true },
-                    { title: 'Decision Mapping &amp; Persuasion Frameworks', content: '<strong>Buyers don\'t buy features — they buy decisions.</strong> We map your customer\'s decision journey using the DECIDE framework (Define, Explore, Compare, Identify, Decide, Evaluate) and create persuasive messaging for each stage. <br><br><strong>Deliverable:</strong> Decision journey map, persuasion message matrix (20+ touchpoints), and a messaging playbook for sales + marketing.<br><strong>Research base:</strong> Primary interviews + established decision science literature.', popular: true },
-                    { title: 'A/B Messaging &amp; Copywriting Tests', content: '<strong>We test 4-8 copy variants per campaign</strong> to find what truly resonates. Using statistically significant A/B tests on headlines, CTAs, value props, and social proof placement. <br><br><strong>Methodology:</strong> Sequential testing with 95% confidence intervals.<br><strong>Track record:</strong> Average 35% improvement in CTR and conversion rate across tested campaigns.', popular: true },
-                    { title: 'Consumer Case Studies &amp; Trust Assets', content: '<strong>Case studies increase conversion rates by 35% on average.</strong> We write deep-dive customer success stories with before/after metrics, ROI calculations, and narrative arcs that build institutional trust. <br><br><strong>Format:</strong> Long-form (1,500-2,500 words) + micro versions for sales one-pagers + video script outlines.<br><strong>Volume:</strong> 3-5 case studies per engagement, distributed across website, pitch deck, and sales collateral.' }
-                ]
-            },
-            {
-                id: 'tech-solutions',
-                title: 'Tech Solutions<br>&amp; Digital Experience',
-                subs: [
-                    { title: 'Premium Website Redesign &amp; Development', content: '<strong>A 1-second delay in page load reduces conversions by 7%.</strong> We rebuild slow, outdated websites into fast, responsive digital flagships using modern stacks (Next.js, Astro, Webflow). Every site scores 90+ on Lighthouse and loads under 2 seconds. <br><br><strong>Includes:</strong> Custom design system, responsive across all devices, CMS integration, SEO foundation, and analytics setup. <br><strong>Timeline:</strong> 4-8 weeks from kickoff to launch.', popular: true },
-                    { title: 'UX/UI Audits &amp; Interface Optimization', content: '<strong>88% of users won\'t return after a bad experience.</strong> We run a comprehensive UX audit using heuristic evaluation (Nielsen\'s 10 principles), accessibility checks (WCAG 2.1 AA), and usability testing with real users. <br><br><strong>Output:</strong> Prioritized issue list with severity scores, Figma redesign mockups for top-20 issues, and a UX roadmap for the next quarter.', popular: true },
-                    { title: 'Website Conversion Rate Optimization (CRO)', content: '<strong>The average website converts at just 2.35% — top 10% convert at 11%+.</strong> We run systematic CRO: heatmap + session recording analysis, funnel audit, landing page A/B tests, and psychological copy rewrite. <br><br><strong>Methodology:</strong> Research → Hypothesis → Design → Test → Implement → Measure (repeat).<br><strong>Typical impact:</strong> 30-80% improvement in conversion rate over 3 months.', popular: true },
-                    { title: 'High-Converting Landing Pages', content: '<strong>Dedicated landing pages convert 2-3x better than sending traffic to your homepage.</strong> We design and build single-focus landing pages optimized for specific campaigns — with headline variants, social proof stacking, urgency triggers, and streamlined forms. <br><br><strong>Stack:</strong> Custom-built or Webflow/Carrd/Unbounce depending on your needs.<br><strong>Timeline:</strong> 5-10 days per landing page, including 2 revision rounds.', popular: true },
-                    { title: 'SEO Strategy &amp; Topical Authority Mapping', content: '<strong>68% of all online experiences begin with a search engine.</strong> We build a topical authority map (pillar pages + cluster content) around high-intent keywords. Includes technical SEO audit, on-page optimization, and a 6-month content calendar. <br><br><strong>Tools:</strong> Ahrefs, Semrush, Screaming Frog.<br><strong>Benchmark:</strong> Target top-10 rankings for 20+ high-intent keywords within 6-8 months.', popular: true },
-                    { title: 'Advanced Analytics Setup &amp; Attribution', content: 'Clean Google Analytics 4, Mixpanel, or Amplitude setup with event tracking, funnel visualization, and multi-touch attribution modeling. We identify which channels actually drive revenue — not just vanity metrics.<br><br><strong>Deliverables:</strong> Tracking implementation, custom dashboard, 3 attribution models (first-touch, last-touch, linear).' },
-                    { title: 'Lifecycle Marketing &amp; Retention Funnels', content: 'Email + SMS automation sequences for cart abandonment, onboarding nurture, re-engagement, and upsell — built in Klaviyo or similar. <br><br><strong>Benchmark:</strong> Well-built lifecycle flows generate 20-40% of total e-commerce revenue.<br><strong>Deliverable:</strong> 5-8 automated flows, 20+ emails, A/B tested subject lines, and a monthly performance review cadence.' }
+                    { title: 'Case Studies &amp; Trust Assets', content: '<strong>People trust people like them more than they trust your marketing — so we pick customers your prospects will actually recognize themselves in.</strong> Every case study covers the real problem, the real fix, and a real result — "we grew a lot" convinces no one. Short quotes and logos for early trust, full stories for the people doing real diligence later in the funnel.', popular: true },
+                    { title: 'Conversion Psychology Research', content: '<strong>We find out exactly why people hesitate, then rewrite the message to remove that specific hesitation — not guess and hope.</strong> Focused hardest on pricing pages and checkout, where small wording changes move the most money. Grounded in real conversations with your actual customers, not theory borrowed from somewhere else.', popular: true },
+                    { title: 'Friction &amp; Decision Mapping', content: '<strong>We walk your real customer journey and find exactly where people drop off.</strong> For each drop-off we ask: do they not want it, can\'t figure it out, or nobody told them what to do next? Each needs a different fix. Ranked by how many people it\'s actually costing you — not by what feels important.', popular: true },
+                    { title: 'A/B/C/D Message Testing', content: '<strong>We test several versions at once instead of one guess at a time — faster, clearer answers.</strong> Each version changes one thing on purpose, so you know exactly what worked and why. We wait for enough real traffic before calling a winner — no declaring victory after two days.' },
+                    { title: 'Ideal Customer Profile', content: '<strong>Who to go after, defined by industry, size, and location — and how they actually behave, not just a label.</strong> Built by looking at your best customers — the ones who stick around, pay more, convert fastest — and working backward from there.' },
+                    { title: 'Retention &amp; Lifecycle Marketing', content: '<strong>We map exactly where, in the customer\'s life with you, they\'re actually falling off.</strong> Looked at group by group, not as one blended average — averages hide who\'s really leaving. Win-back messages triggered by real behavior (gone quiet, left something in cart) — not a generic monthly blast.' }
                 ]
             },
             {
                 id: 'fundraising',
-                title: 'Fundraising<br>&amp; Capital Advisory',
+                title: 'Fundraising &amp; Financial<br>Planning <em>(with Scoutline Capital)</em>',
                 subs: [
-                    { title: 'Investor Pitch Deck Architecture', content: '<strong>Investors spend an average of 2 minutes 30 seconds on a pitch deck.</strong> We build narrative-driven decks that communicate problem, solution, market size, traction, and ask — in that order. Each deck is designed to get you to the next meeting, not close the round. <br><br><strong>Track record:</strong> Our decks have helped raise $12M+ in angel and seed rounds across SaaS, D2C, and fintech.<br><strong>Includes:</strong> Design (keynote/PPT), narrative workshop, 3 revision rounds, and an investor feedback tracker.', popular: true },
-                    { title: 'Fundraising Strategy &amp; Pacing Roadmap', content: '<strong>Raising at the wrong time or wrong size kills your valuation.</strong> We build a 12-18 month fundraising roadmap: milestone mapping, round sizing (based on 18-24 month runway), investor tier strategy, and timing optimization. <br><br><strong>Framework:</strong> Capital Efficiency Score + Runway-Based Pacing Model.<br><strong>Data:</strong> Benchmarks from 500+ rounds in your sector and stage.', popular: true },
-                    { title: 'GTM Investor Narratives', content: '<strong>The best companies don\'t pitch features — they pitch a worldview.</strong> We craft a bulletproof macro-thesis: the market shift that makes your company inevitable, the timing advantage, and the unit economics that prove scalability. <br><br><strong>Deliverable:</strong> Master narrative document (3,000+ words), 3-minute verbal pitch, 15 key Q&A answers with supporting data.<br><strong>Stress-test:</strong> We simulate a 45-minute investor Q&A session.', popular: true },
-                    { title: 'Curated Investor Lists &amp; Target Matrix', content: '<strong>Cold emailing 500 VCs is less effective than warm introductions to 30.</strong> We build hyper-targeted investor lists filtered by sector focus, check size, stage preference, geographic mandate, and recent activity. Each list includes partner names, warm introduction paths, and past portfolio analysis. <br><br><strong>Coverage:</strong> 2,000+ VC funds, family offices, and angel networks across India, SEA, US, and Middle East.', popular: true },
-                    { title: 'Investor Data Room Setup', content: 'We build a structured, secure virtual data room (using Notion, Dropbox, or dedicated platforms like DealRoom) with organized sections: company overview, financials, legal, cap table, product roadmap, and customer traction. <br><br><strong>Includes:</strong> Data room checklist (60+ items), template documents, and access tracking for investor engagement analytics.', popular: true },
-                    { title: 'Direct Outreach Support &amp; Warm Intros', content: 'Active management of investor outreach — we draft personalized emails, track follow-ups, manage scheduling, and leverage our network for warm introductions to partner-level investors at 100+ funds.' },
-                    { title: 'Mock Pitch Sessions &amp; Q&A Prep', content: '<strong>We stress-test founders against the toughest investor questions.</strong> 90-minute mock pitch sessions with feedback on narrative, body language, slide flow, and objection handling. Includes a 50+ question bank covering financials, market, competition, team, and exit scenarios.' }
-                ]
-            },
-            {
-                id: 'fpa',
-                title: 'FP&amp;A<br>&amp; Strategic Finance',
-                subs: [
-                    { title: 'Strategic Financial Modelling', content: '<strong>90% of early-stage financial models have fundamental errors.</strong> We build institutional-grade 3-statement models (P&L, Balance Sheet, Cash Flow) with scenario toggles, driver-based projections, and investor-ready formatting. <br><br><strong>Framework:</strong> Driver-based modeling with sensitivity analysis.<br><strong>Deliverable:</strong> Fully linked Excel/Google Sheets model, 3-year monthly projections, 12-page documentation, and a 2-hour training session for your team.', popular: true },
-                    { title: 'Runway Planning &amp; Burn Rate Optimization', content: '<strong>29% of startups fail because they run out of cash.</strong> We build scenario-planning models that map runway under optimistic, base, and conservative revenue cases — with specific cost-reduction triggers and hiring freezes at defined cash thresholds. <br><br><strong>Output:</strong> Runway dashboard, monthly burn report template, and optimization recommendations (typical savings: 15-30% of monthly burn).', popular: true },
-                    { title: 'Unit Economics Optimization', content: '<strong>Unprofitable unit economics destroy even high-growth companies.</strong> We deep-dive into LTV-to-CAC ratio, gross margin trends, contribution margin per channel, payback period, and churn analysis. <br><br><strong>Benchmarks:</strong> Healthy SaaS LTV/CAC > 3x, payback period < 12 months, gross margin > 70%.<br><strong>Impact:</strong> We\'ve helped clients improve unit economics by 40-60% within one quarter.', popular: true },
-                    { title: 'Company Valuation Frameworks', content: '<strong>Valuation isn\'t magic — it\'s math backed by narrative.</strong> We calculate defendable valuation ranges using DCF, comparable company analysis, precedent transactions, and the Venture Capital method. Each range is stress-tested across 5 scenarios. <br><br><strong>Market data:</strong> Comps from 200+ relevant M&A and funding transactions in your sector.<br><strong>Output:</strong> Valuation memo (15+ pages) ready for investor discussion.', popular: true },
-                    { title: 'Board Packs &amp; Investor Reporting Templates', content: 'Monthly and quarterly board pack templates with executive summary, KPI dashboard, financial review, milestones vs plan, and forward-looking guidance. Designed to build investor confidence and streamline board meetings.<br><br><strong>Includes:</strong> 10-slide deck template, 5-page report template, and a KPI definition guide with 30+ metrics.' },
-                    { title: 'Automated KPI Dashboards', content: 'Real-time executive dashboards via Looker Studio, Power BI, or Metabase — tracking revenue, CAC, burn rate, runway, gross margin, ARR/MRR, and cohort retention. Refreshed automatically from your data sources.<br><br><strong>Timeline:</strong> 2-3 weeks to first dashboard. Includes 3 months of maintenance.' },
-                    { title: 'Fund Incorporation &amp; Structuring Advisory', content: 'Strategic guidance on fund entity setup, domicile selection (India, Singapore, Mauritius, Delaware), SEBI/IFSCA compliance, fund document structuring, and tax optimization for cross-border fund architectures.' }
+                    { title: 'Pitch Deck &amp; Investor Narrative', content: '<strong>A deck built the way investors actually expect to read one — the problem, the fix, why now, the market, the competition, the product, how you make money, the team, the numbers, the ask.</strong> "Why now" gets equal weight to market size — timing is something investors weigh hard, not a throwaway slide. Built to answer the toughest likely question before it\'s asked.', popular: true },
+                    { title: 'Financial &amp; Unit Economics Modelling', content: '<strong>A 3-5 year model of revenue, costs, and cash — with a base case, an upside, and a downside, not one number pretending to be certain.</strong> Checked against a common rule of thumb: a customer should be worth roughly 3x what it costs to acquire them. That number moves a lot by business type and stage, so we set your real target rather than force-fitting the rule. We also track how fast you get paid back on that cost — two businesses can hit the same ratio and be in very different cash positions.', popular: true },
+                    { title: 'Fundraise Planning &amp; Investor Outreach', content: '<strong>Round size worked out from how much runway you need to hit your next real milestone — not picked to hit a nice-sounding valuation.</strong> An investor list sorted by who actually writes checks at your size and stage — not a mass list. Templates and guidance so you can run the outreach yourself, plus your documents organised so diligence doesn\'t stall later.', popular: true },
+                    { title: 'Runway &amp; Burn Planning', content: '<strong>We track how much cash it costs you to add ₹1 (or $1) of new recurring revenue.</strong> Spending under that amount is efficient; up to double is normal for an early, fast-growing company; well above double usually gets investors asking hard questions. We plan for a slower quarter too, not just the best case.' },
+                    { title: 'Pitch Rehearsal &amp; Q&amp;A Prep', content: '<strong>Mock sessions built around the actual hard questions investors ask at your specific stage — not generic Q&amp;A.</strong> Recorded and reviewed for pace, hedging, and confidence — small habits investors read as a signal about the founder.' },
+                    { title: 'Industry &amp; Sector Research', content: '<strong>Research on your sector and comparable companies, built to sharpen your own pitch and model — not published as advice to investors on what to buy.</strong> Kept framed that way on purpose: research for your own use stays outside SEBI\'s rules on investment research; advice to investors doesn\'t. Worth a lawyer\'s sign-off once retainer terms are set.' },
+                    { title: 'Valuation Modelling', content: '<strong>A working number using two methods checked against each other — comparable companies, and a cash-flow-based estimate.</strong> For your own negotiation use — not sold or worded as a certified valuation. That needs a registered valuer, which we\'re not.' }
                 ]
             }
         ];
@@ -4199,22 +4311,10 @@
                 const svc = serviceData[activeService];
                 if (!svc) return;
                 let html = '';
-                const popular = svc.subs.filter(s => s.popular);
-                const other = svc.subs.filter(s => !s.popular);
-                if (popular.length) {
-                    html += `<div class="hwh-sub-popular-label">Popular</div>`;
-                }
-                popular.forEach((sub, i) => {
-                    html += `<div class="hwh-sub-item" data-sub="${i}"><span>${sub.title}</span></div>`;
+                svc.subs.forEach((sub, i) => {
+                    const badge = i < 2 ? ' <span class="hwh-sub-badge">Popular</span>' : '';
+                    html += `<div class="hwh-sub-item" data-sub="${i}"><span>${sub.title}${badge}</span></div>`;
                 });
-                if (other.length) {
-                    html += `<div class="hwh-sub-other"><div class="hwh-sub-other-toggle" data-toggle="other"><i class="fa-solid fa-chevron-right"></i> Other Services</div><div class="hwh-sub-other-items" id="hwh-other-items">`;
-                    other.forEach((sub, i) => {
-                        const realIdx = popular.length + i;
-                        html += `<div class="hwh-sub-item" data-sub="${realIdx}"><span>${sub.title}</span></div>`;
-                    });
-                    html += `</div></div>`;
-                }
                 subsEl.innerHTML = html;
 
                 subsEl.querySelectorAll('.hwh-sub-item').forEach(el => {
@@ -4223,18 +4323,8 @@
                         selectSub(idx);
                     });
                 });
-                const toggle = subsEl.querySelector('.hwh-sub-other-toggle');
-                if (toggle) {
-                    toggle.addEventListener('click', () => {
-                        const items = document.getElementById('hwh-other-items');
-                        items.classList.toggle('open');
-                        const icon = toggle.querySelector('i');
-                        if (icon) icon.style.transform = items.classList.contains('open') ? 'rotate(90deg)' : '';
-                    });
-                }
 
-                if (popular.length) selectSub(0);
-                else if (other.length) selectSub(popular.length);
+                if (svc.subs.length) selectSub(0);
             }
 
             function selectSub(idx) {
@@ -4715,8 +4805,8 @@
                 ease: 'none',
                 scrollTrigger: {
                     trigger: conveyorContainer,
-                    start: 'top+=120 top',
-                    end: 'bottom+=1000 top',
+                    start: () => 'top top+=' + (window.innerHeight / 2 + 100),
+                    end: () => '+=' + (conveyorContainer.offsetHeight + 200),
                     scrub: true,
                     invalidateOnRefresh: true,
                     onUpdate: (self) => {
