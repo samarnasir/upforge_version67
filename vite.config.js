@@ -30,6 +30,8 @@ export default defineConfig({
         caseStudies: path.resolve(__dirname, 'case-studies/index.html'),
         kpmgAnthropic: path.resolve(__dirname, 'case-studies/kpmg-anthropic-alliance/index.html'),
         scoutlineCapital: path.resolve(__dirname, 'partners/scoutline-capital/index.html'),
+        privacyPolicy: path.resolve(__dirname, 'legal/privacy-policy.html'),
+        termsConditions: path.resolve(__dirname, 'legal/terms-conditions.html'),
         loadingScreen: path.resolve(__dirname, 'loading-screen-v2.html'),
       }
     }

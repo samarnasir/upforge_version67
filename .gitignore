@@ -16,3 +16,5 @@ yarn-error.log*
 *.sln
 
 .agents/
+public_html (1)/
+v2_site/
