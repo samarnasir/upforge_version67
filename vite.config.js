@@ -22,5 +22,16 @@ function copyOldWebsite() {
 }
 
 export default defineConfig({
-  plugins: [react(), copyOldWebsite()]
+  plugins: [react(), copyOldWebsite()],
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        caseStudies: path.resolve(__dirname, 'case-studies/index.html'),
+        kpmgAnthropic: path.resolve(__dirname, 'case-studies/kpmg-anthropic-alliance/index.html'),
+        scoutlineCapital: path.resolve(__dirname, 'partners/scoutline-capital/index.html'),
+        loadingScreen: path.resolve(__dirname, 'loading-screen-v2.html'),
+      }
+    }
+  }
 });

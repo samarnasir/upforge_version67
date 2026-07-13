@@ -3147,7 +3147,7 @@
             pointer-events: none;
         }
     </style>
-  <script type="module" crossorigin src="/assets/index-CAbMDTfy.js"></script>
+  <script type="module" crossorigin src="/assets/main-C0vpwBC5.js"></script>
 </head>
 
 <body class="loading-active">
@@ -4706,13 +4706,12 @@
                 roadblock: items[2][1] || '',
                 goal: items[3][1] || ''
             });
-            const calendlyUrl = 'https://calendly.com/shardulsingh/30min?' + params.toString();
+            const calendlyUrl = 'https://calendly.com/shardulsingh166/30min?' + params.toString();
 
             h += '<div class="diag-summary-cta diag-fade">' +
                 '<p>Based on your responses, we\'d like to offer a free diagnostic session to help identify your biggest opportunities, bottlenecks, and next steps.</p>' +
                 
-                '<form action="https://formspree.io/f/xlgkpryn" method="POST">' +
-                '<input type="hidden" name="_next" value="' + escapeHTML(calendlyUrl) + '">' +
+                '<form action="https://formspree.io/f/xlgkpryn" method="POST" onsubmit="window.open(\'' + escapeHTML(calendlyUrl) + '\', \'_blank\'); return true;">' +
                 '<input type="hidden" name="_subject" value="New Diagnostic Assessment Submission!">' +
                 '<input type="hidden" name="Stage" value="' + escapeHTML(items[0][1] || 'N/A') + '">' +
                 '<input type="hidden" name="Problem" value="' + escapeHTML(items[1][1] || 'N/A') + '">' +
@@ -4841,7 +4840,7 @@
         .circular-gallery:active {
             cursor: grabbing;
         }
-    </style>
+    </style>
 </body>
 
 </html>
