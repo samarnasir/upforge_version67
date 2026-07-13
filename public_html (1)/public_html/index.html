@@ -99,6 +99,46 @@
             box-shadow: 0 0 0 4px rgba(52, 98, 252, 0.16), 0 0 0 8px rgba(52, 98, 252, 0.08);
         }
 
+        /* Loading Overlay */
+        #loader-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            pointer-events: none;
+        }
+        #loader-overlay.loaded {
+            pointer-events: none;
+        }
+        .loader-text {
+            text-align: center;
+            position: relative;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .loader-line {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(60px, 10vw, 130px);
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            font-weight: 400;
+            text-transform: uppercase;
+            color: var(--white);
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            will-change: transform, opacity;
+        }
+        .loader-we-hate { position: relative; }
+        .loader-traditional { color: var(--primary); }
+
         /* Hero Section */
         .hero {
             height: 100vh;
@@ -2209,14 +2249,11 @@
             margin-bottom: 48px;
         }
         .insights-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 28px;
         }
         .insight-card {
-            max-width: 900px;
-            width: 100%;
             background: #fff;
             border-radius: 20px;
             border: 1px solid rgba(9, 45, 83, 0.08);
@@ -3124,148 +3161,19 @@
                 right: 10px;
             }
         }
-
-        /* ─── LOADER ───────────────────────────────────────────── */
-        #loader-overlay {
-            position: fixed;
-            inset: -20px;
-            width: calc(100% + 40px);
-            height: calc(100vh + 40px);
-            background: url('assets/images/hero/hero.jpeg') center/cover no-repeat;
-            filter: blur(15px);
-            z-index: 8;
-            opacity: 1;
-            transition: opacity 0.5s ease, filter 0.5s ease;
-            pointer-events: none;
-        }
-
-        body.loading-active .traditional {
-            opacity: 0 !important;
-        }
-        body.loading-active .hero-paper {
-            opacity: 0 !important;
-        }
-        body.loading-active .navbar {
-            opacity: 0 !important;
-            pointer-events: none;
-        }
     </style>
 </head>
 
-<body class="loading-active">
+<body>
 
-    <script>
-        (function() {
-            document.addEventListener('DOMContentLoaded', () => {
-                const weHate = document.querySelector('.we-hate');
-                const traditional = document.querySelector('.traditional');
-                const consulting = document.querySelector('.consulting');
-                const papers = document.querySelectorAll('.hero-paper');
-                const navbar = document.querySelector('.navbar');
-
-                if (!weHate || !traditional || !consulting) return;
-
-                // 1. Prepare initial states and overrides
-                traditional.style.opacity = '0';
-                traditional.style.transform = 'scale(0.98)';
-                traditional.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-
-                papers.forEach(paper => {
-                    paper.style.opacity = '0';
-                    paper.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-                    const currentTransform = paper.style.transform || '';
-                    paper.dataset.originalTransform = currentTransform;
-                    paper.style.transform = currentTransform + ' scale(0.95) translateY(20px)';
-                });
-
-                if (navbar) {
-                    navbar.style.opacity = '0';
-                    navbar.style.pointerEvents = 'none';
-                }
-
-                // 2. Measure sizes after fonts are ready for pixel-perfect alignment
-                const initAnimation = () => {
-                    // Temporarily remove loading-active to measure the natural coordinates correctly
-                    document.body.classList.remove('loading-active');
-                    
-                    // Clear overrides to get actual coordinates
-                    weHate.style.transform = 'none';
-                    consulting.style.transform = 'none';
-                    traditional.style.transform = 'none';
-
-                    // Force repaint to make sure browser applies the layout without transforms
-                    weHate.offsetHeight;
-
-                    const hateRect = weHate.getBoundingClientRect();
-                    const tradRect = traditional.getBoundingClientRect();
-                    const consRect = consulting.getBoundingClientRect();
-                    
-                    const tradCenterY = tradRect.top + tradRect.height / 2;
-                    
-                    // Calculate offsets to align them touch-to-touch at the center Y of traditional
-                    const weHateOffsetY = tradCenterY - hateRect.bottom;
-                    const consultingOffsetY = tradCenterY - consRect.top;
-
-                    // Position them closed together
-                    weHate.style.transform = `translateY(${weHateOffsetY}px)`;
-                    consulting.style.transform = `translateY(${consultingOffsetY}px)`;
-                    
-                    weHate.style.transition = 'none';
-                    consulting.style.transition = 'none';
-
-                    // Force repaint to register the initial closed position
-                    weHate.offsetHeight;
-
-                    // 3. Run animation sequence
-                    setTimeout(() => {
-                        // Slide apart: 700ms (smooth ease-in-out curve)
-                        weHate.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
-                        consulting.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
-                        
-                        weHate.style.transform = 'translateY(0)';
-                        consulting.style.transform = 'translateY(0)';
-
-                        // Reveal TRADITIONAL, papers, and fade out overlay: 300-400ms
-                        setTimeout(() => {
-                            traditional.style.opacity = '1';
-                            traditional.style.transform = 'scale(1)';
-                            
-                            const overlay = document.getElementById('loader-overlay');
-                            if (overlay) {
-                                overlay.style.opacity = '0';
-                                overlay.style.filter = 'blur(0px)';
-                                setTimeout(() => overlay.remove(), 500);
-                            }
-
-                            // Stagger reveal of papers (50-80ms)
-                            papers.forEach((paper, i) => {
-                                setTimeout(() => {
-                                    paper.style.opacity = '1';
-                                    paper.style.transform = paper.dataset.originalTransform || '';
-                                    // Remove transitions after they finish to avoid GSAP scroll lag
-                                    setTimeout(() => {
-                                        paper.style.transition = '';
-                                    }, 600);
-                                }, i * 65);
-                            });
-
-                            if (navbar) {
-                                navbar.style.transition = 'opacity 0.6s ease';
-                                navbar.style.opacity = '1';
-                                navbar.style.pointerEvents = 'auto';
-                            }
-                        }, 250); // Start revealing mid-slide
-                    }, 200); // 200ms initial hold
-                };
-
-                if (document.fonts && document.fonts.ready) {
-                    document.fonts.ready.then(initAnimation);
-                } else {
-                    setTimeout(initAnimation, 300);
-                }
-            });
-        })();
-    </script>
+    <!-- Loading Overlay -->
+    <div id="loader-overlay">
+        <div class="loader-text">
+            <div class="loader-line loader-we-hate">We Hate</div>
+            <div class="loader-line loader-traditional">Traditional</div>
+            <div class="loader-line loader-consulting">Consulting</div>
+        </div>
+    </div>
 
     <nav class="navbar">
         <div class="logo"><img src="assets/images/brand/logo.png" alt="UpForge"></div>
@@ -3284,8 +3192,6 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <!-- ─── LOADER OVERLAY ─── -->
-        <div id="loader-overlay"></div>
         <div class="grid-bg"></div>
 
         <!-- Scattered Papers -->
@@ -3309,25 +3215,6 @@
             <div class="hate-text traditional">Traditional</div>
             <div class="hate-text consulting">Consulting</div>
         </div>
-        <script>
-            (function() {
-                const weHate = document.querySelector('.we-hate');
-                const traditional = document.querySelector('.traditional');
-                const consulting = document.querySelector('.consulting');
-                if (weHate && traditional && consulting) {
-                    const hateRect = weHate.getBoundingClientRect();
-                    const tradRect = traditional.getBoundingClientRect();
-                    const consRect = consulting.getBoundingClientRect();
-                    const tradCenterY = tradRect.top + tradRect.height / 2;
-                    const weHateOffsetY = tradCenterY - hateRect.bottom;
-                    const consultingOffsetY = tradCenterY - consRect.top;
-                    weHate.style.transform = 'translateY(' + weHateOffsetY + 'px)';
-                    consulting.style.transform = 'translateY(' + consultingOffsetY + 'px)';
-                    traditional.style.opacity = '0';
-                    traditional.style.transform = 'scale(0.98)';
-                }
-            })();
-        </script>
 
         <div class="scroll-indicator">
             <svg width="30" height="50" viewBox="0 0 30 50">
@@ -4131,7 +4018,6 @@
         function rebuildHeroScene() {
             applyHeroPaperLayout();
             buildHeroTimeline();
-            ScrollTrigger.sort();
             ScrollTrigger.refresh();
         }
 
@@ -4183,6 +4069,43 @@
         });
 
         gsap.ticker.lagSmoothing(0);
+
+        // ── LOADING ANIMATION ──
+        function initLoader() {
+            const overlay = document.getElementById('loader-overlay');
+            const weHate = overlay.querySelector('.loader-we-hate');
+            const traditional = overlay.querySelector('.loader-traditional');
+            const consulting = overlay.querySelector('.loader-consulting');
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    gsap.to(overlay, {
+                        opacity: 0,
+                        duration: 0.6,
+                        ease: 'power2.inOut',
+                        onComplete: () => {
+                            overlay.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+
+            tl.fromTo([weHate, traditional, consulting],
+                { y: 0, opacity: 1 },
+                { y: 0, opacity: 1, duration: 0.4 }
+            )
+            .to(weHate, { y: -80, opacity: 0.7, duration: 0.7, ease: 'power2.out' }, 0.3)
+            .to(consulting, { y: 80, opacity: 0.7, duration: 0.7, ease: 'power2.out' }, 0.3)
+            .to(traditional, { scale: 1.15, duration: 0.7, ease: 'power2.out' }, 0.3)
+            .to(traditional, { scale: 1, duration: 0.3 }, 1.1)
+            .to(overlay, { opacity: 0, duration: 0.5 }, 1.4);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.overflow = 'hidden';
+            setTimeout(initLoader, 400);
+        });
 
         // Parallax effect on scroll
         let ticking = false;
@@ -4708,34 +4631,13 @@
                 roadblock: items[2][1] || '',
                 goal: items[3][1] || ''
             });
-            const calendlyUrl = 'https://calendly.com/shardulsingh166/30min?' + params.toString();
-
-            window.handleDiagSubmit = async (event) => {
-                event.preventDefault();
-                const form = event.target;
-                const button = form.querySelector('button[type="submit"]');
-                button.disabled = true;
-                button.innerHTML = 'Submitting... <i class="fa-solid fa-spinner fa-spin"></i>';
-
-                try {
-                    await fetch(form.action, {
-                        method: 'POST',
-                        body: new FormData(form),
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-                    window.location.href = calendlyUrl;
-                } catch (error) {
-                    console.error('Submission error:', error);
-                    window.location.href = calendlyUrl;
-                }
-            };
+            const calendlyUrl = 'https://calendly.com/shardulsingh/30min?' + params.toString();
 
             h += '<div class="diag-summary-cta diag-fade">' +
                 '<p>Based on your responses, we\'d like to offer a free diagnostic session to help identify your biggest opportunities, bottlenecks, and next steps.</p>' +
                 
-                '<form action="https://formspree.io/f/xlgkpryn" method="POST" onsubmit="window.handleDiagSubmit(event);">' +
+                '<form action="https://formspree.io/f/xlgkpryn" method="POST">' +
+                '<input type="hidden" name="_next" value="' + escapeHTML(calendlyUrl) + '">' +
                 '<input type="hidden" name="_subject" value="New Diagnostic Assessment Submission!">' +
                 '<input type="hidden" name="Stage" value="' + escapeHTML(items[0][1] || 'N/A') + '">' +
                 '<input type="hidden" name="Problem" value="' + escapeHTML(items[1][1] || 'N/A') + '">' +
@@ -4828,8 +4730,8 @@
                 ease: 'none',
                 scrollTrigger: {
                     trigger: conveyorContainer,
-                    start: () => 'top top+=' + (window.innerHeight / 2 + 100),
-                    end: () => '+=' + (conveyorContainer.offsetHeight + 200),
+                    start: 'top+=120 top',
+                    end: 'bottom+=1000 top',
                     scrub: true,
                     invalidateOnRefresh: true,
                     onUpdate: (self) => {
@@ -5331,12 +5233,10 @@
             }
         }
 
-
         const teamGalleryContainer = document.getElementById('team-gallery');
         if (teamGalleryContainer) {
             const initGallery = () => {
                 const isMobile = window.innerWidth <= 768;
-
                 new App(teamGalleryContainer, {
                     bend: isMobile ? 1.5 : 3,
                     textColor: '#ffffff',

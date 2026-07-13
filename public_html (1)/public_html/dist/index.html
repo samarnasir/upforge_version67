@@ -99,6 +99,46 @@
             box-shadow: 0 0 0 4px rgba(52, 98, 252, 0.16), 0 0 0 8px rgba(52, 98, 252, 0.08);
         }
 
+        /* Loading Overlay */
+        #loader-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            pointer-events: none;
+        }
+        #loader-overlay.loaded {
+            pointer-events: none;
+        }
+        .loader-text {
+            text-align: center;
+            position: relative;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .loader-line {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(60px, 10vw, 130px);
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            font-weight: 400;
+            text-transform: uppercase;
+            color: var(--white);
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            will-change: transform, opacity;
+        }
+        .loader-we-hate { position: relative; }
+        .loader-traditional { color: var(--primary); }
+
         /* Hero Section */
         .hero {
             height: 100vh;
@@ -107,7 +147,7 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            background: url('assets/images/hero/hero.jpeg') center/cover no-repeat;
+            background: url('/assets/hero-BNfmkjik.jpeg') center/cover no-repeat;
         }
 
         .hero-text {
@@ -2209,14 +2249,11 @@
             margin-bottom: 48px;
         }
         .insights-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 28px;
         }
         .insight-card {
-            max-width: 900px;
-            width: 100%;
             background: #fff;
             border-radius: 20px;
             border: 1px solid rgba(9, 45, 83, 0.08);
@@ -3124,151 +3161,23 @@
                 right: 10px;
             }
         }
-
-        /* ─── LOADER ───────────────────────────────────────────── */
-        #loader-overlay {
-            position: fixed;
-            inset: -20px;
-            width: calc(100% + 40px);
-            height: calc(100vh + 40px);
-            background: url('assets/images/hero/hero.jpeg') center/cover no-repeat;
-            filter: blur(15px);
-            z-index: 8;
-            opacity: 1;
-            transition: opacity 0.5s ease, filter 0.5s ease;
-            pointer-events: none;
-        }
-
-        body.loading-active .traditional {
-            opacity: 0 !important;
-        }
-        body.loading-active .hero-paper {
-            opacity: 0 !important;
-        }
-        body.loading-active .navbar {
-            opacity: 0 !important;
-            pointer-events: none;
-        }
     </style>
+  <script type="module" crossorigin src="/assets/index-cuJUPC8x.js"></script>
 </head>
 
-<body class="loading-active">
+<body>
 
-    <script>
-        (function() {
-            document.addEventListener('DOMContentLoaded', () => {
-                const weHate = document.querySelector('.we-hate');
-                const traditional = document.querySelector('.traditional');
-                const consulting = document.querySelector('.consulting');
-                const papers = document.querySelectorAll('.hero-paper');
-                const navbar = document.querySelector('.navbar');
-
-                if (!weHate || !traditional || !consulting) return;
-
-                // 1. Prepare initial states and overrides
-                traditional.style.opacity = '0';
-                traditional.style.transform = 'scale(0.98)';
-                traditional.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-
-                papers.forEach(paper => {
-                    paper.style.opacity = '0';
-                    paper.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-                    const currentTransform = paper.style.transform || '';
-                    paper.dataset.originalTransform = currentTransform;
-                    paper.style.transform = currentTransform + ' scale(0.95) translateY(20px)';
-                });
-
-                if (navbar) {
-                    navbar.style.opacity = '0';
-                    navbar.style.pointerEvents = 'none';
-                }
-
-                // 2. Measure sizes after fonts are ready for pixel-perfect alignment
-                const initAnimation = () => {
-                    // Temporarily remove loading-active to measure the natural coordinates correctly
-                    document.body.classList.remove('loading-active');
-                    
-                    // Clear overrides to get actual coordinates
-                    weHate.style.transform = 'none';
-                    consulting.style.transform = 'none';
-                    traditional.style.transform = 'none';
-
-                    // Force repaint to make sure browser applies the layout without transforms
-                    weHate.offsetHeight;
-
-                    const hateRect = weHate.getBoundingClientRect();
-                    const tradRect = traditional.getBoundingClientRect();
-                    const consRect = consulting.getBoundingClientRect();
-                    
-                    const tradCenterY = tradRect.top + tradRect.height / 2;
-                    
-                    // Calculate offsets to align them touch-to-touch at the center Y of traditional
-                    const weHateOffsetY = tradCenterY - hateRect.bottom;
-                    const consultingOffsetY = tradCenterY - consRect.top;
-
-                    // Position them closed together
-                    weHate.style.transform = `translateY(${weHateOffsetY}px)`;
-                    consulting.style.transform = `translateY(${consultingOffsetY}px)`;
-                    
-                    weHate.style.transition = 'none';
-                    consulting.style.transition = 'none';
-
-                    // Force repaint to register the initial closed position
-                    weHate.offsetHeight;
-
-                    // 3. Run animation sequence
-                    setTimeout(() => {
-                        // Slide apart: 700ms (smooth ease-in-out curve)
-                        weHate.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
-                        consulting.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
-                        
-                        weHate.style.transform = 'translateY(0)';
-                        consulting.style.transform = 'translateY(0)';
-
-                        // Reveal TRADITIONAL, papers, and fade out overlay: 300-400ms
-                        setTimeout(() => {
-                            traditional.style.opacity = '1';
-                            traditional.style.transform = 'scale(1)';
-                            
-                            const overlay = document.getElementById('loader-overlay');
-                            if (overlay) {
-                                overlay.style.opacity = '0';
-                                overlay.style.filter = 'blur(0px)';
-                                setTimeout(() => overlay.remove(), 500);
-                            }
-
-                            // Stagger reveal of papers (50-80ms)
-                            papers.forEach((paper, i) => {
-                                setTimeout(() => {
-                                    paper.style.opacity = '1';
-                                    paper.style.transform = paper.dataset.originalTransform || '';
-                                    // Remove transitions after they finish to avoid GSAP scroll lag
-                                    setTimeout(() => {
-                                        paper.style.transition = '';
-                                    }, 600);
-                                }, i * 65);
-                            });
-
-                            if (navbar) {
-                                navbar.style.transition = 'opacity 0.6s ease';
-                                navbar.style.opacity = '1';
-                                navbar.style.pointerEvents = 'auto';
-                            }
-                        }, 250); // Start revealing mid-slide
-                    }, 200); // 200ms initial hold
-                };
-
-                if (document.fonts && document.fonts.ready) {
-                    document.fonts.ready.then(initAnimation);
-                } else {
-                    setTimeout(initAnimation, 300);
-                }
-            });
-        })();
-    </script>
+    <!-- Loading Overlay -->
+    <div id="loader-overlay">
+        <div class="loader-text">
+            <div class="loader-line loader-we-hate">We Hate</div>
+            <div class="loader-line loader-traditional">Traditional</div>
+            <div class="loader-line loader-consulting">Consulting</div>
+        </div>
+    </div>
 
     <nav class="navbar">
-        <div class="logo"><img src="assets/images/brand/logo.png" alt="UpForge"></div>
+        <div class="logo"><img src="/assets/logo-Daz97ldJ.png" alt="UpForge"></div>
         <ul class="nav-links">
             <li><a href="#who-we-are">Who We Are</a></li>
             <li><a href="#our-services">Our Services</a></li>
@@ -3284,50 +3193,29 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <!-- ─── LOADER OVERLAY ─── -->
-        <div id="loader-overlay"></div>
         <div class="grid-bg"></div>
 
         <!-- Scattered Papers -->
-        <img src="assets/images/hero/1.png" class="hero-paper" style="width:160px; top:2%; left:2%; transform:rotate(-10deg)">
-        <img src="assets/images/hero/2.png" class="hero-paper" style="width:140px; top:2%; right:2%; transform:rotate(10deg)">
-        <img src="assets/images/hero/3.png" class="hero-paper" style="width:180px; bottom:2%; left:2%; transform:rotate(12deg)">
-        <img src="assets/images/hero/4.png" class="hero-paper" style="width:150px; bottom:2%; right:2%; transform:rotate(-12deg)">
-        <img src="assets/images/hero/5.png" class="hero-paper" style="width:130px; top:20%; left:14%; transform:rotate(-18deg)">
-        <img src="assets/images/hero/6.png" class="hero-paper" style="width:170px; top:20%; right:14%; transform:rotate(18deg)">
-        <img src="assets/images/hero/7.png" class="hero-paper" style="width:120px; bottom:35%; left:18%; transform:rotate(5deg)">
-        <img src="assets/images/hero/8.png" class="hero-paper" style="width:160px; bottom:20%; right:18%; transform:rotate(-5deg)">
-        <img src="assets/images/hero/9.png" class="hero-paper" style="width:150px; top:38%; left:4%; transform:rotate(-14deg)">
-        <img src="assets/images/hero/10.png" class="hero-paper" style="width:140px; top:38%; right:4%; transform:rotate(14deg)">
-        <img src="assets/images/hero/11.png" class="hero-paper" style="width:240px; top:8%; left:25%; transform:rotate(-8deg)">
-        <img src="assets/images/hero/12.png" class="hero-paper" style="width:240px; top:8%; right:25%; transform:rotate(8deg)">
-        <img src="assets/images/hero/13.png" class="hero-paper" style="width:230px; bottom:8%; left:15%; transform:rotate(4deg)">
-        <img src="assets/images/hero/14.png" class="hero-paper" style="width:230px; bottom:4%; right:18%; transform:rotate(-4deg)">
+        <img src="/assets/1-BSYsFsHE.png" class="hero-paper" style="width:160px; top:2%; left:2%; transform:rotate(-10deg)">
+        <img src="/assets/2-4IQU80ud.png" class="hero-paper" style="width:140px; top:2%; right:2%; transform:rotate(10deg)">
+        <img src="/assets/3-DSWwMJU6.png" class="hero-paper" style="width:180px; bottom:2%; left:2%; transform:rotate(12deg)">
+        <img src="/assets/4-B2GTDZpQ.png" class="hero-paper" style="width:150px; bottom:2%; right:2%; transform:rotate(-12deg)">
+        <img src="/assets/5-BsLV8Y_B.png" class="hero-paper" style="width:130px; top:20%; left:14%; transform:rotate(-18deg)">
+        <img src="/assets/6-CdXNER7I.png" class="hero-paper" style="width:170px; top:20%; right:14%; transform:rotate(18deg)">
+        <img src="/assets/7-CwNhGqu2.png" class="hero-paper" style="width:120px; bottom:35%; left:18%; transform:rotate(5deg)">
+        <img src="/assets/8-ZdikqAkZ.png" class="hero-paper" style="width:160px; bottom:20%; right:18%; transform:rotate(-5deg)">
+        <img src="/assets/9-BlEvA6mh.png" class="hero-paper" style="width:150px; top:38%; left:4%; transform:rotate(-14deg)">
+        <img src="/assets/10-DNhgmT0t.png" class="hero-paper" style="width:140px; top:38%; right:4%; transform:rotate(14deg)">
+        <img src="/assets/11-BHpLB3JZ.png" class="hero-paper" style="width:240px; top:8%; left:25%; transform:rotate(-8deg)">
+        <img src="/assets/12-BoK_nT_G.png" class="hero-paper" style="width:240px; top:8%; right:25%; transform:rotate(8deg)">
+        <img src="/assets/13-CfXfmiiO.png" class="hero-paper" style="width:230px; bottom:8%; left:15%; transform:rotate(4deg)">
+        <img src="/assets/14-D_r-yClt.png" class="hero-paper" style="width:230px; bottom:4%; right:18%; transform:rotate(-4deg)">
 
         <div class="hero-text">
             <div class="hate-text we-hate">We Hate</div>
             <div class="hate-text traditional">Traditional</div>
             <div class="hate-text consulting">Consulting</div>
         </div>
-        <script>
-            (function() {
-                const weHate = document.querySelector('.we-hate');
-                const traditional = document.querySelector('.traditional');
-                const consulting = document.querySelector('.consulting');
-                if (weHate && traditional && consulting) {
-                    const hateRect = weHate.getBoundingClientRect();
-                    const tradRect = traditional.getBoundingClientRect();
-                    const consRect = consulting.getBoundingClientRect();
-                    const tradCenterY = tradRect.top + tradRect.height / 2;
-                    const weHateOffsetY = tradCenterY - hateRect.bottom;
-                    const consultingOffsetY = tradCenterY - consRect.top;
-                    weHate.style.transform = 'translateY(' + weHateOffsetY + 'px)';
-                    consulting.style.transform = 'translateY(' + consultingOffsetY + 'px)';
-                    traditional.style.opacity = '0';
-                    traditional.style.transform = 'scale(0.98)';
-                }
-            })();
-        </script>
 
         <div class="scroll-indicator">
             <svg width="30" height="50" viewBox="0 0 30 50">
@@ -3484,7 +3372,7 @@
 
             <div class="comparison-grid" id="comparison-boxes">
                 <article class="comparison-card old">
-                    <img class="comparison-visual" src="assets/images/consultants/tradconsultant2.jpeg" alt="Traditional consultant at work">
+                    <img class="comparison-visual" src="/assets/tradconsultant2-VALvckRX.jpeg" alt="Traditional consultant at work">
                     <div class="card-label">Traditional Consultant</div>
                     <div class="rotating-feature-wrapper" id="trad-rotator-1">
                         <div class="rotating-item active">Long discovery cycles before anything practical ships</div>
@@ -3496,7 +3384,7 @@
                     </div>
                 </article>
                 <article class="comparison-card new">
-                    <img class="comparison-visual" src="assets/images/consultants/ourconsultant2.jpeg" alt="Our consultant working with a client">
+                    <img class="comparison-visual" src="/assets/ourconsultant2-DiXMGY28.jpeg" alt="Our consultant working with a client">
                     <div class="card-label">Our Consultant</div>
                     <div class="rotating-feature-wrapper" id="our-rotator-1">
                         <div class="rotating-item active">Fast diagnosis paired with a concrete plan tied to business
@@ -3524,7 +3412,7 @@
             <div class="partners-grid">
                 <div class="partner-card">
                     <div class="partner-logo-wrap">
-                        <img src="assets/images/partners/scoutline.png" alt="Scoutline Capital">
+                        <img src="/assets/scoutline-4i7VW8R8.png" alt="Scoutline Capital">
                     </div>
                     <h3 class="partner-name">Scoutline Capital</h3>
                     <span class="partner-type">Startup Advisory &bull; Fundraising</span>
@@ -3536,7 +3424,7 @@
                 </div>
                 <div class="partner-card">
                     <div class="partner-logo-wrap">
-                        <img src="assets/images/partners/bmm-logo-2.png" alt="Brown Men Marketing">
+                        <img src="/assets/bmm-logo-2-BrcPkZ7l.png" alt="Brown Men Marketing">
                     </div>
                     <h3 class="partner-name">Brown Men Marketing</h3>
                     <span class="partner-type">Growth Marketing &bull; Brand Strategy</span>
@@ -3560,31 +3448,31 @@
 
             <div class="team-mobile-gallery" style="display: none;">
                 <div class="team-member-card">
-                    <img src="assets/images/team/shardul.jpeg" alt="Shardul Singh">
+                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
                     <a href="https://www.linkedin.com/in/shardul-singh-b06671312/" target="_blank" class="member-name">Shardul Singh</a>
                 </div>
                 <div class="team-member-card">
-                    <img src="assets/images/team/zaara.jpeg" alt="Zaara Zaidi">
+                    <img src="/assets/zaara-s-9l6WeW.jpeg" alt="Zaara Zaidi">
                     <a href="https://www.linkedin.com/in/zaarazaidi/" target="_blank" class="member-name">Zaara Zaidi</a>
                 </div>
                 <div class="team-member-card">
-                    <img src="assets/images/team/gaurav.jpeg" alt="Gaurav Kalal">
+                    <img src="/assets/gaurav-EXv0WHD7.jpeg" alt="Gaurav Kalal">
                     <a href="https://www.linkedin.com/in/-gauravkalal-/" target="_blank" class="member-name">Gaurav Kalal</a>
                 </div>
                 <div class="team-member-card">
-                    <img src="assets/images/team/samar.jpeg" alt="Samar Nasir">
+                    <img src="/assets/samar-EhR63goM.jpeg" alt="Samar Nasir">
                     <a href="https://www.linkedin.com/in/samar-nasir-/" target="_blank" class="member-name">Samar Nasir</a>
                 </div>
                 <div class="team-member-card">
-                    <img src="assets/images/team/ojas.jpeg" alt="Ojas Srivastava">
+                    <img src="/assets/ojas-CFzveMO7.jpeg" alt="Ojas Srivastava">
                     <a href="https://www.linkedin.com/in/ojasri/" target="_blank" class="member-name">Ojas Srivastava</a>
                 </div>
                 <div class="team-member-card">
-                    <img src="assets/images/team/tirth.jpeg" alt="Tirth Virkar">
+                    <img src="/assets/tirth-HvDQWvtJ.jpeg" alt="Tirth Virkar">
                     <a href="https://www.linkedin.com/in/tirthvirkar/" target="_blank" class="member-name">Tirth Virkar</a>
                 </div>
                 <div class="team-member-card">
-                    <img src="assets/images/team/ajeet.jpeg" alt="Ajeet Verma">
+                    <img src="/assets/ajeet-75sbNhbw.jpeg" alt="Ajeet Verma">
                     <a href="https://www.linkedin.com/in/ajeet-vermai/" target="_blank" class="member-name">Ajeet Verma</a>
                 </div>
             </div>
@@ -3606,7 +3494,7 @@
                 <p class="testimonial-text">"UpForge changed how we look at our consumers, they allowed us to position
                     our business for higher brand trust and more conversions."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/veda.png" alt="Veda" class="author-img">
+                    <img src="/assets/veda-BHCnO4oJ.png" alt="Veda" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Founder, Finland-Based Jewellery Company</span>
                     </div>
@@ -3618,7 +3506,7 @@
                 <p class="testimonial-text">"Gen Z doesn't move like any other generation. Instead of trying to decode
                     them from the outside, UpForge gave us helpful insights that we could apply to our business."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/zubair.png" alt="Zubair" class="author-img">
+                    <img src="/assets/zubair-CeVS_5z0.png" alt="Zubair" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Founder, Dubai-Based B2B Services Firm</span>
                     </div>
@@ -3630,7 +3518,7 @@
                 <p class="testimonial-text">"I admire what your team is building, rare clarity and execution at this
                     stage."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/excfo.png" alt="Ex-CFO" class="author-img">
+                    <img src="/assets/excfo-BwR1nKez.png" alt="Ex-CFO" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Former CFO, Leading FMCG Brand</span>
                     </div>
@@ -3642,7 +3530,7 @@
                 <p class="testimonial-text">"They helped us lean into new tech and diversify before we got left behind.
                     UpForge basically futureproofed our business so we're ready for whatever comes next."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/security_founder.png" alt="Founder" class="author-img">
+                    <img src="/assets/security_founder-CsRJ-zPN.png" alt="Founder" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Founder, Security & Logistics Firm</span>
                     </div>
@@ -3655,7 +3543,7 @@
                 <p class="testimonial-text">"UpForge changed how we look at our consumers, they allowed us to position
                     our business for higher brand trust and more conversions."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/veda.png" alt="Veda" class="author-img">
+                    <img src="/assets/veda-BHCnO4oJ.png" alt="Veda" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Founder, Finland-Based Jewellery Company</span>
                     </div>
@@ -3667,7 +3555,7 @@
                 <p class="testimonial-text">"Gen Z doesn't move like any other generation. Instead of trying to decode
                     them from the outside, UpForge gave us helpful insights that we could apply to our business."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/zubair.png" alt="Zubair" class="author-img">
+                    <img src="/assets/zubair-CeVS_5z0.png" alt="Zubair" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Founder, Dubai-Based B2B Services Firm</span>
                     </div>
@@ -3679,7 +3567,7 @@
                 <p class="testimonial-text">"I admire what your team is building, rare clarity and execution at this
                     stage."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/excfo.png" alt="Ex-CFO" class="author-img">
+                    <img src="/assets/excfo-BwR1nKez.png" alt="Ex-CFO" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Former CFO, Leading FMCG Brand</span>
                     </div>
@@ -3691,7 +3579,7 @@
                 <p class="testimonial-text">"They helped us lean into new tech and diversify before we got left behind.
                     UpForge basically futureproofed our business so we're ready for whatever comes next."</p>
                 <div class="testimonial-author">
-                    <img src="assets/images/testimonials/security_founder.png" alt="Founder" class="author-img">
+                    <img src="/assets/security_founder-CsRJ-zPN.png" alt="Founder" class="author-img">
                     <div class="author-info">
                         <span class="author-name">Founder, Security & Logistics Firm</span>
                     </div>
@@ -3723,7 +3611,7 @@
                     </div>
                 </div>
                 <div class="founder-image-wrap">
-                    <img src="assets/images/team/shardul.jpeg" alt="Shardul Singh">
+                    <img src="/assets/shardul-CjKCd_5i.jpeg" alt="Shardul Singh">
                 </div>
             </div>
         </div>
@@ -3759,8 +3647,8 @@
         style="background: #fff; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #666; width: 100%;">
         <div>&copy;2026 UpForge. All rights reserved</div>
         <div style="display: flex; gap: 30px;">
-            <a href="legal/privacy-policy.html" style="color: #666; text-decoration: none; font-weight: 500;">Privacy Policy</a>
-            <a href="legal/terms-conditions.html" style="color: #666; text-decoration: none; font-weight: 500;">Terms &amp; Conditions</a>
+            <a href="#" style="color: #666; text-decoration: none; font-weight: 500;">Privacy & Policy</a>
+            <a href="#" style="color: #666; text-decoration: none; font-weight: 500;">Terms & Condition</a>
         </div>
     </footer>
 
@@ -4131,7 +4019,6 @@
         function rebuildHeroScene() {
             applyHeroPaperLayout();
             buildHeroTimeline();
-            ScrollTrigger.sort();
             ScrollTrigger.refresh();
         }
 
@@ -4183,6 +4070,43 @@
         });
 
         gsap.ticker.lagSmoothing(0);
+
+        // ── LOADING ANIMATION ──
+        function initLoader() {
+            const overlay = document.getElementById('loader-overlay');
+            const weHate = overlay.querySelector('.loader-we-hate');
+            const traditional = overlay.querySelector('.loader-traditional');
+            const consulting = overlay.querySelector('.loader-consulting');
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    gsap.to(overlay, {
+                        opacity: 0,
+                        duration: 0.6,
+                        ease: 'power2.inOut',
+                        onComplete: () => {
+                            overlay.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+
+            tl.fromTo([weHate, traditional, consulting],
+                { y: 0, opacity: 1 },
+                { y: 0, opacity: 1, duration: 0.4 }
+            )
+            .to(weHate, { y: -80, opacity: 0.7, duration: 0.7, ease: 'power2.out' }, 0.3)
+            .to(consulting, { y: 80, opacity: 0.7, duration: 0.7, ease: 'power2.out' }, 0.3)
+            .to(traditional, { scale: 1.15, duration: 0.7, ease: 'power2.out' }, 0.3)
+            .to(traditional, { scale: 1, duration: 0.3 }, 1.1)
+            .to(overlay, { opacity: 0, duration: 0.5 }, 1.4);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.overflow = 'hidden';
+            setTimeout(initLoader, 400);
+        });
 
         // Parallax effect on scroll
         let ticking = false;
@@ -4708,34 +4632,13 @@
                 roadblock: items[2][1] || '',
                 goal: items[3][1] || ''
             });
-            const calendlyUrl = 'https://calendly.com/shardulsingh166/30min?' + params.toString();
-
-            window.handleDiagSubmit = async (event) => {
-                event.preventDefault();
-                const form = event.target;
-                const button = form.querySelector('button[type="submit"]');
-                button.disabled = true;
-                button.innerHTML = 'Submitting... <i class="fa-solid fa-spinner fa-spin"></i>';
-
-                try {
-                    await fetch(form.action, {
-                        method: 'POST',
-                        body: new FormData(form),
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-                    window.location.href = calendlyUrl;
-                } catch (error) {
-                    console.error('Submission error:', error);
-                    window.location.href = calendlyUrl;
-                }
-            };
+            const calendlyUrl = 'https://calendly.com/shardulsingh/30min?' + params.toString();
 
             h += '<div class="diag-summary-cta diag-fade">' +
                 '<p>Based on your responses, we\'d like to offer a free diagnostic session to help identify your biggest opportunities, bottlenecks, and next steps.</p>' +
                 
-                '<form action="https://formspree.io/f/xlgkpryn" method="POST" onsubmit="window.handleDiagSubmit(event);">' +
+                '<form action="https://formspree.io/f/xlgkpryn" method="POST">' +
+                '<input type="hidden" name="_next" value="' + escapeHTML(calendlyUrl) + '">' +
                 '<input type="hidden" name="_subject" value="New Diagnostic Assessment Submission!">' +
                 '<input type="hidden" name="Stage" value="' + escapeHTML(items[0][1] || 'N/A') + '">' +
                 '<input type="hidden" name="Problem" value="' + escapeHTML(items[1][1] || 'N/A') + '">' +
@@ -4828,8 +4731,8 @@
                 ease: 'none',
                 scrollTrigger: {
                     trigger: conveyorContainer,
-                    start: () => 'top top+=' + (window.innerHeight / 2 + 100),
-                    end: () => '+=' + (conveyorContainer.offsetHeight + 200),
+                    start: 'top+=120 top',
+                    end: 'bottom+=1000 top',
                     scrub: true,
                     invalidateOnRefresh: true,
                     onUpdate: (self) => {
@@ -4865,527 +4768,6 @@
             cursor: grabbing;
         }
     </style>
-    <script type="module">
-        import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'https://esm.sh/ogl@1.0.11';
-
-        function debounce(func, wait) {
-            let timeout;
-            return function (...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
-            };
-        }
-
-        function lerp(p1, p2, t) {
-            return p1 + (p2 - p1) * t;
-        }
-
-        function autoBind(instance) {
-            const proto = Object.getPrototypeOf(instance);
-            Object.getOwnPropertyNames(proto).forEach(key => {
-                if (key !== 'constructor' && typeof instance[key] === 'function') {
-                    instance[key] = instance[key].bind(instance);
-                }
-            });
-        }
-
-        function createTextTexture(gl, text, font = '700 100px "Plus Jakarta Sans"', color = 'white') {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            context.font = font;
-            const metrics = context.measureText(text);
-            const textWidth = Math.ceil(metrics.width);
-            const textHeight = Math.ceil(parseInt(font, 10)) || 30;
-            canvas.width = textWidth + 20;
-            canvas.height = textHeight + 20;
-            context.font = font;
-            context.fillStyle = color;
-            context.textBaseline = 'middle';
-            context.textAlign = 'center';
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.fillText(text, canvas.width / 2, canvas.height / 2);
-            const texture = new Texture(gl, { generateMipmaps: false });
-            texture.image = canvas;
-            texture.needsUpdate = true;
-            return { texture, width: canvas.width, height: canvas.height };
-        }
-
-        class Title {
-            constructor({ gl, plane, renderer, text, textColor = '#ffffff', font = '700 100px "Plus Jakarta Sans"' }) {
-                autoBind(this);
-                this.gl = gl;
-                this.plane = plane;
-                this.renderer = renderer;
-                this.text = text;
-                this.textColor = textColor;
-                this.font = font;
-                this.createMesh();
-            }
-            createMesh() {
-                const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
-                const geometry = new Plane(this.gl);
-                const program = new Program(this.gl, {
-                    vertex: `
-        attribute vec3 position;
-        attribute vec2 uv;
-        uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix;
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-                    fragment: `
-        precision highp float;
-        uniform sampler2D tMap;
-        varying vec2 vUv;
-        void main() {
-          vec4 color = texture2D(tMap, vUv);
-          if (color.a < 0.1) discard;
-          gl_FragColor = color;
-        }
-      `,
-                    uniforms: { tMap: { value: texture } },
-                    transparent: true
-                });
-                this.mesh = new Mesh(this.gl, { geometry, program });
-                const aspect = width / height;
-                const textHeight = this.plane.scale.y * 0.42;
-                const textWidth = textHeight * aspect;
-                this.mesh.scale.set(textWidth, textHeight, 1);
-                this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.35;
-                this.mesh.setParent(this.plane);
-            }
-        }
-
-        class Media {
-            constructor({
-                geometry,
-                gl,
-                image,
-                index,
-                length,
-                renderer,
-                scene,
-                screen,
-                text,
-                viewport,
-                bend,
-                textColor,
-                borderRadius = 0,
-                font
-            }) {
-                this.extra = 0;
-                this.geometry = geometry;
-                this.gl = gl;
-                this.image = image;
-                this.index = index;
-                this.length = length;
-                this.renderer = renderer;
-                this.scene = scene;
-                this.screen = screen;
-                this.text = text;
-                this.viewport = viewport;
-                this.bend = bend;
-                this.textColor = textColor;
-                this.borderRadius = borderRadius;
-                this.font = font;
-                this.createShader();
-                this.createMesh();
-                this.createTitle();
-                this.onResize();
-            }
-            createShader() {
-                const texture = new Texture(this.gl, {
-                    generateMipmaps: true
-                });
-                this.program = new Program(this.gl, {
-                    depthTest: false,
-                    depthWrite: false,
-                    vertex: `
-        precision highp float;
-        attribute vec3 position;
-        attribute vec2 uv;
-        uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix;
-        uniform float uTime;
-        uniform float uSpeed;
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          vec3 p = position;
-          p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-        }
-      `,
-                    fragment: `
-        precision highp float;
-        uniform vec2 uImageSizes;
-        uniform vec2 uPlaneSizes;
-        uniform sampler2D tMap;
-        uniform float uBorderRadius;
-        varying vec2 vUv;
-        
-        float roundedBoxSDF(vec2 p, vec2 b, float r) {
-          vec2 d = abs(p) - b;
-          return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
-        }
-        
-        void main() {
-          vec2 ratio = vec2(
-            min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
-            min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
-          );
-          vec2 uv = vec2(
-            vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-            vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
-          );
-          vec4 color = texture2D(tMap, uv);
-          
-          float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
-          
-          // Smooth antialiasing for edges
-          float edgeSmooth = 0.002;
-          float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
-          
-          gl_FragColor = vec4(color.rgb, alpha);
-        }
-      `,
-                    uniforms: {
-                        tMap: { value: texture },
-                        uPlaneSizes: { value: [0, 0] },
-                        uImageSizes: { value: [1, 1] },
-                        uSpeed: { value: 0 },
-                        uTime: { value: 100 * Math.random() },
-                        uBorderRadius: { value: this.borderRadius }
-                    },
-                    transparent: true
-                });
-                const img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.src = this.image;
-                img.onload = () => {
-                    texture.image = img;
-                    texture.needsUpdate = true;
-                    this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-                };
-            }
-            createMesh() {
-                this.plane = new Mesh(this.gl, {
-                    geometry: this.geometry,
-                    program: this.program
-                });
-                this.plane.setParent(this.scene);
-            }
-            createTitle() {
-                this.title = new Title({
-                    gl: this.gl,
-                    plane: this.plane,
-                    renderer: this.renderer,
-                    text: this.text,
-                    textColor: this.textColor,
-                    font: this.font
-                });
-            }
-            update(scroll, direction) {
-                this.plane.position.x = this.x - scroll.current - this.extra;
-
-                const x = this.plane.position.x;
-                const H = this.viewport.width / 2;
-
-                if (this.bend === 0) {
-                    this.plane.position.y = 0;
-                    this.plane.rotation.z = 0;
-                } else {
-                    const B_abs = Math.abs(this.bend);
-                    const R = (H * H + B_abs * B_abs) / (2 * B_abs);
-                    const effectiveX = Math.min(Math.abs(x), H);
-
-                    const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
-                    if (this.bend > 0) {
-                        this.plane.position.y = -arc;
-                        this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
-                    } else {
-                        this.plane.position.y = arc;
-                        this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
-                    }
-                }
-
-                this.speed = scroll.current - scroll.last;
-                this.program.uniforms.uTime.value += 0.04;
-                this.program.uniforms.uSpeed.value = this.speed;
-
-                const planeOffset = this.plane.scale.x / 2;
-                const viewportOffset = this.viewport.width / 2;
-                this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
-                this.isAfter = this.plane.position.x - planeOffset > viewportOffset;
-                if (direction === 'right' && this.isBefore) {
-                    this.extra -= this.widthTotal;
-                    this.isBefore = this.isAfter = false;
-                }
-                if (direction === 'left' && this.isAfter) {
-                    this.extra += this.widthTotal;
-                    this.isBefore = this.isAfter = false;
-                }
-            }
-            onResize({ screen, viewport } = {}) {
-                if (screen) this.screen = screen;
-                if (viewport) {
-                    this.viewport = viewport;
-                    if (this.plane.program.uniforms.uViewportSizes) {
-                        this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
-                    }
-                }
-                this.scale = this.screen.height / 1500;
-                const isMobile = window.innerWidth <= 768;
-
-                // Adjust scale calculation for mobile to prevent tiny cards
-                const baseScaleY = isMobile ? 1200 : 900;
-                const baseScaleX = isMobile ? 1000 : 700;
-
-                this.plane.scale.y = (this.viewport.height * (baseScaleY * this.scale)) / this.screen.height;
-                this.plane.scale.x = (this.viewport.width * (baseScaleX * this.scale)) / this.screen.width;
-
-                this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
-                this.padding = isMobile ? 1.2 : 2; // Less padding on mobile
-                this.width = this.plane.scale.x + this.padding;
-                this.widthTotal = this.width * this.length;
-                this.x = this.width * this.index;
-            }
-        }
-
-        class App {
-            constructor(
-                container,
-                {
-                    items,
-                    bend,
-                    textColor = '#ffffff',
-                    borderRadius = 0,
-                    font = '700 36px "Plus Jakarta Sans"',
-                    scrollSpeed = 2,
-                    scrollEase = 0.05
-                } = {}
-            ) {
-                document.documentElement.classList.remove('no-js');
-                this.container = container;
-                this.scrollSpeed = scrollSpeed;
-                this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
-                this.onCheckDebounce = debounce(this.onCheck, 200);
-                this.createRenderer();
-                this.createCamera();
-                this.createScene();
-                this.onResize();
-                this.createGeometry();
-                this.createMedias(items, bend, textColor, borderRadius, font);
-                this.update();
-                this.addEventListeners();
-            }
-            createRenderer() {
-                this.renderer = new Renderer({
-                    alpha: true,
-                    antialias: true,
-                    dpr: Math.min(window.devicePixelRatio || 1, 2)
-                });
-                this.gl = this.renderer.gl;
-                this.gl.clearColor(0, 0, 0, 0);
-                this.container.appendChild(this.gl.canvas);
-            }
-            createCamera() {
-                this.camera = new Camera(this.gl);
-                this.camera.fov = 45;
-                this.camera.position.z = 20;
-            }
-            createScene() {
-                this.scene = new Transform();
-            }
-            createGeometry() {
-                this.planeGeometry = new Plane(this.gl, {
-                    heightSegments: 50,
-                    widthSegments: 100
-                });
-            }
-            createMedias(items, bend = 1, textColor, borderRadius, font) {
-                const defaultItems = [
-                    { image: `https://i.ibb.co/TQ6v7kX/shardul.jpg`, text: 'Shardul Singh' },
-                    { image: `https://i.ibb.co/sdSbM852/zaara.jpg`, text: 'Zaara Zaidi' },
-                    { image: `https://i.ibb.co/Y4pct9nv/samar.jpg`, text: 'Samar Nasir' },
-                    { image: `https://i.ibb.co/DPS9mcQ0/ojas.jpg`, text: 'Ojas Srivastava' },
-                    { image: `https://i.ibb.co/TM6gwL5s/tirth.jpg`, text: 'Tirth Virkar' },
-                    { image: `https://i.ibb.co/BHSpSjhb/ajeet.jpg`, text: 'Ajeet Verma' },
-                    { image: `https://i.ibb.co/yFvmB972/gaurav.jpg`, text: 'Gaurav Kalal' },
-                ];
-                const galleryItems = items && items.length ? items : defaultItems;
-                this.mediasImages = galleryItems.concat(galleryItems);
-                this.medias = this.mediasImages.map((data, index) => {
-                    return new Media({
-                        geometry: this.planeGeometry,
-                        gl: this.gl,
-                        image: data.image,
-                        index,
-                        length: this.mediasImages.length,
-                        renderer: this.renderer,
-                        scene: this.scene,
-                        screen: this.screen,
-                        text: data.text,
-                        viewport: this.viewport,
-                        bend,
-                        textColor,
-                        borderRadius,
-                        font
-                    });
-                });
-            }
-            onTouchDown(e) {
-                this.isDown = true;
-                this.scroll.position = this.scroll.current;
-                this.start = e.touches ? e.touches[0].clientX : e.clientX;
-            }
-            onTouchMove(e) {
-                if (!this.isDown) return;
-                const x = e.touches ? e.touches[0].clientX : e.clientX;
-                const distance = (this.start - x) * (this.scrollSpeed * 0.025);
-                this.scroll.target = this.scroll.position + distance;
-            }
-            onTouchUp() {
-                this.isDown = false;
-                this.onCheck();
-            }
-            onWheel(e) {
-                const delta = e.deltaY || e.wheelDelta || e.detail;
-                this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
-                this.onCheckDebounce();
-            }
-            onCheck() {
-                if (!this.medias || !this.medias[0]) return;
-                const width = this.medias[0].width;
-                const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
-                const item = width * itemIndex;
-                this.scroll.target = this.scroll.target < 0 ? -item : item;
-            }
-            onResize() {
-                this.screen = {
-                    width: this.container.clientWidth,
-                    height: this.container.clientHeight
-                };
-                this.renderer.setSize(this.screen.width, this.screen.height);
-                this.camera.perspective({
-                    aspect: this.screen.width / this.screen.height
-                });
-                const fov = (this.camera.fov * Math.PI) / 180;
-                const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
-                const width = height * this.camera.aspect;
-                this.viewport = { width, height };
-                if (this.medias) {
-                    this.medias.forEach(media => media.onResize({ screen: this.screen, viewport: this.viewport }));
-                }
-            }
-            update() {
-                this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
-                const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
-                if (this.medias) {
-                    this.medias.forEach(media => media.update(this.scroll, direction));
-                }
-                this.renderer.render({ scene: this.scene, camera: this.camera });
-                this.scroll.last = this.scroll.current;
-                this.raf = window.requestAnimationFrame(this.update.bind(this));
-            }
-            addEventListeners() {
-                this.boundOnResize = this.onResize.bind(this);
-                this.boundOnWheel = this.onWheel.bind(this);
-                this.boundOnTouchDown = this.onTouchDown.bind(this);
-                this.boundOnTouchMove = this.onTouchMove.bind(this);
-                this.boundOnTouchUp = this.onTouchUp.bind(this);
-
-                window.addEventListener('resize', this.boundOnResize);
-
-                // Attach primary interaction events to the container only
-                this.container.addEventListener('mousewheel', this.boundOnWheel);
-                this.container.addEventListener('wheel', this.boundOnWheel);
-                this.container.addEventListener('mousedown', this.boundOnTouchDown);
-                this.container.addEventListener('touchstart', this.boundOnTouchDown);
-
-                // Track move/up on window to catch events outside the container during an active drag
-                window.addEventListener('mousemove', this.boundOnTouchMove);
-                window.addEventListener('mouseup', this.boundOnTouchUp);
-                window.addEventListener('touchmove', this.boundOnTouchMove);
-                window.addEventListener('touchend', this.boundOnTouchUp);
-            }
-            destroy() {
-                window.cancelAnimationFrame(this.raf);
-                window.removeEventListener('resize', this.boundOnResize);
-
-                this.container.removeEventListener('mousewheel', this.boundOnWheel);
-                this.container.removeEventListener('wheel', this.boundOnWheel);
-                this.container.removeEventListener('mousedown', this.boundOnTouchDown);
-                this.container.removeEventListener('touchstart', this.boundOnTouchDown);
-
-                window.removeEventListener('mousemove', this.boundOnTouchMove);
-                window.removeEventListener('mouseup', this.boundOnTouchUp);
-                window.removeEventListener('touchmove', this.boundOnTouchMove);
-                window.removeEventListener('touchend', this.boundOnTouchUp);
-                if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
-                    this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
-                }
-            }
-        }
-
-
-        const teamGalleryContainer = document.getElementById('team-gallery');
-        if (teamGalleryContainer) {
-            const initGallery = () => {
-                const isMobile = window.innerWidth <= 768;
-
-                new App(teamGalleryContainer, {
-                    bend: isMobile ? 1.5 : 3,
-                    textColor: '#ffffff',
-                    borderRadius: 0.05,
-                    font: isMobile ? '700 80px "Plus Jakarta Sans"' : '700 100px "Plus Jakarta Sans"',
-                    scrollSpeed: isMobile ? 1.5 : 2,
-                    scrollEase: 0.02
-                });
-            };
-
-            if (document.fonts && document.fonts.ready) {
-                document.fonts.ready.then(initGallery);
-            } else {
-                window.addEventListener('load', initGallery);
-            }
-        }
-        // Step-by-step Comparison Rotation Logic
-        function setupRotator(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            const items = container.querySelectorAll('.rotating-item');
-            let currentIndex = 0;
-
-            setInterval(() => {
-                const currentItem = items[currentIndex];
-                currentIndex = (currentIndex + 1) % items.length;
-                const nextItem = items[currentIndex];
-
-                // Exit current
-                currentItem.classList.remove('active');
-                currentItem.classList.add('exit');
-
-                // Enter next
-                nextItem.classList.remove('exit');
-                nextItem.classList.add('active');
-
-                // Cleanup exit class after transition
-                setTimeout(() => {
-                    currentItem.classList.remove('exit');
-                }, 600);
-            }, 3500);
-        }
-
-        window.addEventListener('load', () => {
-            setupRotator('trad-rotator-1');
-            setupRotator('our-rotator-1');
-        });
-    </script>
 </body>
 
 </html>

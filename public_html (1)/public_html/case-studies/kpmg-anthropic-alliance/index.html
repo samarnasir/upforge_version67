@@ -1,0 +1,4196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KPMG&ndash;Anthropic Alliance | Upforge Consulting Case Study</title>
+  <meta name="description" content="Upforge Consulting case-study dashboard on the KPMG-Anthropic global alliance and KPMG Digital Gateway Powered by Claude." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, Helvetica, Arial, sans-serif;
+      --bg: #092d53;
+      --bg-2: #092d53;
+      --bg-3: #061f3b;
+      --panel: #ffffff;
+      --panel-strong: #ffffff;
+      --panel-soft: rgba(52, 98, 252, 0.11);
+      --line: rgba(255, 255, 255, 0.2);
+      --line-strong: rgba(52, 98, 252, 0.55);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.78);
+      --muted-2: rgba(255, 255, 255, 0.55);
+      --card-text: #092d53;
+      --card-muted: #47556a;
+      --kpmg: #00338d;
+      --anthropic: #d97757;
+      --cyan: #3462fc;
+      --green: #1f9d6a;
+      --red: #d74b40;
+      --amber: #3462fc;
+      --blue-soft: rgba(52, 98, 252, 0.14);
+      --orange-soft: rgba(217, 119, 87, 0.13);
+      --cyan-soft: rgba(52, 98, 252, 0.11);
+      --shadow: 0 22px 70px rgba(3, 16, 33, 0.28);
+      --radius: 8px;
+      --radius-sm: 6px;
+      --nav-h: 72px;
+      --max: 1220px;
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f7f2e9;
+      --bg-2: #eee6da;
+      --bg-3: #e7ddd0;
+      --panel: rgba(255, 255, 255, 0.82);
+      --panel-strong: rgba(255, 255, 255, 0.96);
+      --panel-soft: rgba(24, 32, 40, 0.055);
+      --line: rgba(40, 38, 34, 0.14);
+      --line-strong: rgba(40, 38, 34, 0.24);
+      --text: #181715;
+      --muted: #5d544c;
+      --muted-2: #82776b;
+      --shadow: 0 24px 70px rgba(76, 61, 45, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--nav-h) + 28px);
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 30rem),
+        linear-gradient(135deg, var(--bg), var(--bg-2) 54%, var(--bg));
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.55;
+      letter-spacing: 0;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    body.print-mode {
+      --bg: #ffffff;
+      --bg-2: #f6f8fb;
+      --panel: rgba(255, 255, 255, 0.98);
+      --panel-strong: #ffffff;
+      --text: #07111f;
+      --muted: #31435f;
+      --line: rgba(12, 24, 39, 0.16);
+      background: #ffffff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.1;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 48px);
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: var(--nav-h);
+      backdrop-filter: blur(22px);
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .progress-shell {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--kpmg), var(--anthropic));
+      box-shadow: none;
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      min-height: var(--nav-h);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: max-content;
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(244, 238, 228, 0.14), rgba(184, 121, 66, 0.12));
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 10px 0;
+      min-width: 0;
+    }
+
+    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 650;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: var(--panel-soft);
+      border-color: var(--line);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .icon-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+      background: var(--panel-strong);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+      margin-right: 12px;
+    }
+    .back-link:hover {
+      color: var(--text);
+      background: var(--panel-soft);
+    }
+    .tooltip-wrap {
+      position: relative;
+    }
+
+    .tooltip-wrap::after,
+    .term-tip::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 10px);
+      transform: translateX(-50%) translateY(4px);
+      max-width: min(280px, 80vw);
+      width: max-content;
+      background: var(--panel-strong);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      line-height: 1.35;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+      z-index: 80;
+    }
+
+    .nav-actions .tooltip-wrap::after,
+    .back-to-top.tooltip-wrap::after {
+      left: auto;
+      right: 0;
+      transform: translateY(4px);
+    }
+
+    .nav-actions .tooltip-wrap:hover::after,
+    .back-to-top.tooltip-wrap:hover::after {
+      transform: translateY(0);
+    }
+
+    .tooltip-wrap:hover::after,
+    .term-tip:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .term-tip {
+      position: relative;
+      color: var(--cyan);
+      border-bottom: 1px dotted rgba(201, 167, 108, 0.72);
+      cursor: help;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 84px 0;
+      position: relative;
+    }
+
+    .hero {
+      width: 100%;
+      min-height: calc(100vh - var(--nav-h));
+      display: grid;
+      align-items: end;
+      padding: 0;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.35), transparent 18rem),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px);
+      transform: scale(1.03);
+    }
+
+    :root[data-theme="light"] .hero-media,
+    body.print-mode .hero-media {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.18), transparent 18rem),
+        repeating-linear-gradient(90deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px);
+    }
+
+    .hero-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 86px 0 42px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.55fr);
+      gap: 34px;
+      align-items: end;
+    }
+
+    .hero-copy {
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .date-badge,
+    .chip,
+    .source-pill,
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 7px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .date-badge {
+      color: var(--anthropic);
+      background: rgba(184, 121, 66, 0.14);
+      border-color: rgba(184, 121, 66, 0.32);
+    }
+
+    .chip {
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--font-sans);
+      letter-spacing: 0;
+      line-height: 1.02;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 5.7rem);
+      font-weight: 600;
+      max-width: 1100px;
+      text-wrap: balance;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      text-wrap: balance;
+    }
+
+    h3 {
+      font-size: clamp(1.18rem, 1.7vw, 1.55rem);
+    }
+
+    .hero-subtitle {
+      margin: 22px 0 0;
+      max-width: 880px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 42px;
+      border-radius: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, #f1e7d7, #c9a76c);
+      color: #17130f;
+      border-color: transparent;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+    }
+
+    .hero-panel {
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel-strong) 88%, transparent);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .alliance-logos {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .logo-tile {
+      min-height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      border: 1px solid rgba(24, 23, 21, 0.12);
+      background: #ffffff;
+      padding: 12px;
+      text-align: center;
+      color: #171717;
+      overflow: hidden;
+    }
+
+    .logo-tile.compact {
+      min-height: 50px;
+      min-width: 120px;
+      padding: 9px 11px;
+    }
+
+    .logo-tile img {
+      max-height: 42px;
+      max-width: 150px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .logo-fallback {
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 1.02rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      color: #171717;
+    }
+
+    .logo-sub {
+      display: block;
+      color: #5a5a5a;
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .plus-line {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    .panel-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .kpi-card,
+    .card,
+    .glass-table,
+    .metric-card,
+    .source-card,
+    .stakeholder-card,
+    .risk-card,
+    .known-panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(6px);
+      border-radius: var(--radius);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .kpi-card {
+      min-height: 150px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(244, 238, 228, 0.08), transparent);
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .kpi-card:hover::before { opacity: 1; }
+
+    .kpi-value {
+      position: relative;
+      font-family: var(--font-sans);
+      font-size: clamp(1.65rem, 2.7vw, 2.45rem);
+      line-height: 1;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .kpi-label {
+      position: relative;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 650;
+    }
+
+    .source-link {
+      position: relative;
+      color: var(--cyan);
+      font-size: 0.74rem;
+      font-weight: 750;
+      margin-top: 12px;
+      width: fit-content;
+    }
+
+    .source-link:hover { text-decoration: underline; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.48fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+
+    .section-kicker {
+      color: #b7c7ff;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+      margin: 0 0 10px;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .source-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .source-pill {
+      color: var(--cyan);
+      background: rgba(201, 167, 108, 0.08);
+      border-color: rgba(201, 167, 108, 0.22);
+    }
+
+    .source-pill:hover { border-color: rgba(201, 167, 108, 0.42); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .card {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card.accent-blue {
+      background:
+        linear-gradient(135deg, rgba(66, 105, 157, 0.12), transparent 46%),
+        var(--panel);
+    }
+
+    .card.accent-orange {
+      background:
+        linear-gradient(135deg, rgba(184, 121, 66, 0.14), transparent 48%),
+        var(--panel);
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .lead {
+      color: var(--text);
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .quote-card {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .callout {
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(184, 121, 66, 0.25);
+      background: rgba(184, 121, 66, 0.1);
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    .visual-band {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .image-card {
+      min-height: 220px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-3);
+    }
+
+    .image-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5, 9, 20, 0.05), rgba(5, 9, 20, 0.74)),
+        var(--bg-img) center / cover;
+      transition: transform 600ms ease;
+    }
+
+    .image-card:hover::before { transform: scale(1.05); }
+
+    :root[data-theme="light"] .image-card::before,
+    body.print-mode .image-card::before {
+      background:
+        linear-gradient(180deg, rgba(246, 248, 251, 0.02), rgba(7, 17, 31, 0.64)),
+        var(--bg-img) center / cover;
+    }
+
+    .image-card span {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.94rem;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+    }
+
+    .glass-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 860px;
+    }
+
+    th,
+    td {
+      padding: 15px 16px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      color: var(--text);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      background: rgba(255, 255, 255, 0.055);
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .table-primary {
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .status-badge {
+      font-size: 0.68rem;
+      padding: 5px 8px;
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      display: inline-flex;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .status-confirmed {
+      color: #064e3b;
+      background: #e5f8ee;
+      border-color: #8bd8b1;
+    }
+
+    .status-partial {
+      color: #6a3c00;
+      background: #fff1d6;
+      border-color: #e4ba63;
+    }
+
+    .status-undisclosed {
+      color: #7c1f1b;
+      background: #ffe4e1;
+      border-color: #e79b95;
+    }
+
+    .rationale-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .bullet-list li {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .bullet-list li::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-top: 8px;
+      background: var(--amber);
+      box-shadow: none;
+    }
+
+    .accent-orange .bullet-list li::before {
+      background: linear-gradient(135deg, var(--anthropic), var(--amber));
+      box-shadow: none;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .chart-card {
+      grid-column: span 6;
+      min-height: 420px;
+    }
+
+    .chart-card.large {
+      grid-column: span 7;
+    }
+
+    .chart-card.side {
+      grid-column: span 5;
+    }
+
+    .chart-shell {
+      height: 280px;
+      margin-top: 18px;
+    }
+
+    .chart-shell canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .metric-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .metric-card {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .metric-number {
+      font-family: var(--font-sans);
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: var(--cyan);
+      min-width: 94px;
+    }
+
+    .metric-card p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .impact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .impact-row {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.46fr) minmax(220px, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .impact-track {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .impact-bar {
+      width: var(--w);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--kpmg), var(--anthropic));
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    .claim-note {
+      margin-top: 16px;
+      color: var(--amber);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(var(--kpmg), var(--anthropic));
+      opacity: 0.65;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 18px;
+      position: relative;
+    }
+
+    .timeline-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: var(--panel-strong);
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      box-shadow: none;
+      z-index: 1;
+    }
+
+    .timeline-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .timeline-card:hover {
+      transform: translateX(4px);
+      border-color: var(--line-strong);
+    }
+
+    .timeline-date {
+      color: var(--anthropic);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .timeline-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .arch-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(66, 105, 157, 0.08), transparent 42%),
+        linear-gradient(315deg, rgba(184, 121, 66, 0.1), transparent 44%),
+        var(--panel);
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .arch-flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(145px, 1fr));
+      gap: 12px;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .arch-box {
+      min-height: 132px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+      padding: 16px;
+      position: relative;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .arch-box:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      width: 18px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+
+    .arch-box h3,
+    .mini-branch h3 {
+      font-size: 1rem;
+      line-height: 1.18;
+    }
+
+    .arch-box p,
+    .mini-branch p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .arch-label {
+      margin-top: 18px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--amber);
+      font-weight: 800;
+      border: 1px solid rgba(255, 209, 102, 0.24);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255, 209, 102, 0.08);
+    }
+
+    .mini-branches {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .mini-branch {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 18px 44px 18px 18px;
+      color: var(--text);
+      font-weight: 800;
+      position: relative;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "+";
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--cyan);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    details[open] summary::after { content: "-"; }
+
+    details p {
+      margin: 0;
+      padding: 0 18px 18px;
+      color: var(--muted);
+    }
+
+    .stakeholder-map {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .network-core {
+      min-height: 500px;
+      position: sticky;
+      top: calc(var(--nav-h) + 22px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(244, 238, 228, 0.06), transparent),
+        var(--panel);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .network-core svg {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    .node-label {
+      fill: var(--text);
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .stakeholder-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .stakeholder-card {
+      padding: 16px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .stakeholder-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      background: var(--panel-strong);
+    }
+
+    .stakeholder-card h3 {
+      font-size: 1.04rem;
+      margin-bottom: 10px;
+    }
+
+    .stakeholder-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .label {
+      color: var(--cyan);
+      font-weight: 850;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .party-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .party-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .pros-cons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .pc-column {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .pc-column:last-child { border-bottom: 0; }
+
+    .pc-title {
+      color: var(--text);
+      font-weight: 850;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .pc-column ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .pc-column li + li { margin-top: 8px; }
+
+    .heatmap {
+      min-width: 940px;
+    }
+
+    .heatmap .risk-likelihood,
+    .heatmap .risk-impact {
+      color: #06111d;
+      font-weight: 850;
+      border-radius: 6px;
+      display: inline-flex;
+      justify-content: center;
+      min-width: 92px;
+      padding: 5px 8px;
+    }
+
+    .heat-high { background: #ff7676; }
+    .heat-medhigh { background: #ffad66; }
+    .heat-medium { background: #ffd166; }
+
+    .risk-note {
+      margin-top: 14px;
+      color: var(--amber);
+      font-weight: 750;
+      font-size: 0.9rem;
+    }
+
+    .risk-details-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .risk-card summary {
+      font-size: 0.94rem;
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .known-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .known-panel {
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .known-panel.known {
+      background:
+        linear-gradient(135deg, rgba(114, 230, 165, 0.13), transparent 42%),
+        var(--panel);
+    }
+
+    .known-panel.unknown {
+      background:
+        linear-gradient(135deg, rgba(255, 118, 118, 0.13), transparent 42%),
+        var(--panel);
+    }
+
+    .known-panel h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .known-panel ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .known-panel li {
+      color: var(--muted);
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+    }
+
+    .known-panel li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 8px;
+      background: var(--green);
+    }
+
+    .unknown li::before { background: var(--red); }
+
+    .takeaway-hero {
+      min-height: 430px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 16% 26%, rgba(52, 98, 252, 0.36), transparent 20rem),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 74px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.07) 0 1px, transparent 1px 74px),
+        #061f3b;
+      display: grid;
+      align-items: end;
+      padding: 32px;
+      overflow: hidden;
+    }
+
+    :root[data-theme="light"] .takeaway-hero,
+    body.print-mode .takeaway-hero {
+      background:
+        radial-gradient(circle at 16% 26%, rgba(52, 98, 252, 0.22), transparent 20rem),
+        repeating-linear-gradient(90deg, rgba(9,45,83,0.08) 0 1px, transparent 1px 74px),
+        repeating-linear-gradient(0deg, rgba(9,45,83,0.08) 0 1px, transparent 1px 74px),
+        #092d53;
+      color: #fff;
+    }
+
+    .takeaway-hero h2 {
+      color: #fff;
+      max-width: 940px;
+    }
+
+    .takeaway-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .takeaway-card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px;
+      color: var(--muted);
+      font-weight: 700;
+      min-height: 122px;
+    }
+
+    .source-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .search-box {
+      width: min(520px, 100%);
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 0 12px;
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+      min-height: 46px;
+      font: inherit;
+    }
+
+    .search-box input::placeholder { color: var(--muted-2); }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .source-card {
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+      min-height: 132px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .source-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--line-strong);
+      background: var(--panel-strong);
+    }
+
+    .source-card strong {
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 1.02rem;
+    }
+
+    .source-card span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      word-break: break-word;
+    }
+
+    .source-card .source-type {
+      color: var(--cyan);
+      font-size: 0.72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .footer {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 0.88rem;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    /* Upforge Consulting visual alignment */
+    body {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(52, 98, 252, 0.22), transparent 18rem),
+        radial-gradient(circle at 92% 10%, rgba(255, 255, 255, 0.09), transparent 20rem),
+        linear-gradient(135deg, #092d53 0%, #0b3a68 48%, #092d53 100%);
+    }
+
+    .ambient {
+      display: block;
+      z-index: 0;
+      opacity: 0.28;
+      background:
+        linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.08) 42% 42.25%, transparent 42.25% 100%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 82px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 82px);
+      animation: ambientDrift 18s linear infinite alternate;
+    }
+
+    @keyframes ambientDrift {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-22px, -18px, 0); }
+    }
+
+    .top-nav {
+      position: fixed;
+      width: 100%;
+      background: #ffffff;
+      color: var(--card-text);
+      border-bottom: 3px solid #3462fc;
+      backdrop-filter: none;
+    }
+
+    main {
+      padding-top: var(--nav-h);
+    }
+
+    .brand {
+      gap: 12px;
+      color: var(--card-text);
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: auto;
+      height: auto;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .brand-mark img {
+      width: 118px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nav-links a {
+      color: #092d53;
+      font-family: var(--font-sans);
+      font-size: 1.02rem;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #3462fc;
+      background: rgba(52, 98, 252, 0.08);
+      border-color: rgba(52, 98, 252, 0.22);
+    }
+
+    .icon-button {
+      width: auto;
+      background: #ffffff;
+      color: #092d53;
+      border: 1.5px solid rgba(9, 45, 83, 0.14);
+      box-shadow: none;
+      padding: 0 12px;
+      gap: 7px;
+      grid-auto-flow: column;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero {
+      min-height: calc(92vh - var(--nav-h));
+      background: #092d53;
+    }
+
+    .hero-media {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.35), transparent 18rem),
+        linear-gradient(115deg, rgba(255,255,255,0.1) 0 1px, transparent 1px 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px) !important;
+      opacity: 0.62;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+      align-items: end;
+    }
+
+    .hero-copy {
+      max-width: 1120px;
+    }
+
+    .case-brand {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      color: rgba(255, 255, 255, 0.86);
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .case-brand img {
+      width: 136px;
+      height: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .hero-logo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .heading-logo {
+      width: clamp(145px, 17vw, 235px);
+      min-height: 82px;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      border-radius: 4px;
+      padding: 18px 22px;
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+    }
+
+    .heading-logo img {
+      max-height: 48px;
+      width: 100%;
+      object-fit: contain;
+    }
+
+    .heading-logo-separator {
+      width: 42px;
+      height: 42px;
+      border: 2px solid rgba(255, 255, 255, 0.28);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(4rem, 13vw, 10.5rem);
+      line-height: 0.92;
+      max-width: 1260px;
+    }
+
+    h2 {
+      font-size: clamp(2.7rem, 6vw, 5.1rem);
+      line-height: 0.96;
+    }
+
+    .hero-subtitle,
+    .section-copy {
+      color: rgba(255, 255, 255, 0.82);
+      font-family: "Inter", Arial, sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.22rem);
+    }
+
+    .section-kicker,
+    .label,
+    .source-type,
+    .pc-title,
+    .timeline-date {
+      font-family: var(--font-sans);
+      letter-spacing: 0.06em;
+    }
+
+    .date-badge,
+    .chip {
+      border-radius: 4px;
+      border: 1.5px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .button {
+      border-radius: 4px;
+      font-family: "Inter", Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .button.primary {
+      background: #3462fc;
+      color: #ffffff;
+    }
+
+    .hero-actions .button:not(.primary) {
+      background: #ffffff;
+      color: #092d53;
+      border: 2px solid #ffffff;
+    }
+
+    .hero-actions .button:not(.primary):hover {
+      background: #f5f7ff;
+      border-color: #3462fc;
+      color: #092d53;
+    }
+
+    .section {
+      padding: 78px 0;
+    }
+
+    .section-head {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 100%;
+    }
+
+    .section-head h2 {
+      max-width: min(100%, 1380px);
+    }
+
+    .card,
+    .kpi-card,
+    .metric-card,
+    .source-card,
+    .stakeholder-card,
+    .risk-card,
+    .known-panel,
+    .timeline-card,
+    .arch-wrap,
+    .mini-branch,
+    details,
+    .takeaway-card,
+    .table-wrap {
+      background: #ffffff;
+      color: var(--card-text);
+      border: 2px solid rgba(52, 98, 252, 0.18);
+      border-radius: 4px;
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.13);
+      backdrop-filter: none;
+    }
+
+    .card p,
+    .card li,
+    .metric-card p,
+    .stakeholder-card p,
+    .timeline-card p,
+    .arch-box p,
+    .mini-branch p,
+    details p,
+    td,
+    .known-panel li,
+    .pc-column ul,
+    .takeaway-card,
+    .source-card span,
+    .kpi-label,
+    .impact-row {
+      color: var(--card-muted);
+      font-family: "Inter", Arial, sans-serif;
+    }
+
+    .card h3,
+    .kpi-value,
+    .metric-number,
+    .source-card strong,
+    .stakeholder-card h3,
+    .known-panel h3,
+    summary,
+    th,
+    .table-primary {
+      color: var(--card-text);
+    }
+
+    .lead,
+    .callout,
+    .party-head,
+    .pc-title,
+    .risk-note,
+    .claim-note {
+      color: var(--card-text) !important;
+    }
+
+    .callout {
+      background: #f5f7ff;
+      border-color: rgba(52, 98, 252, 0.2);
+    }
+
+    .risk-note {
+      display: block;
+      background: #ffffff;
+      color: #092d53 !important;
+      border: 2px solid rgba(52, 98, 252, 0.24);
+      border-left: 8px solid #3462fc;
+      border-radius: 4px;
+      padding: 16px 18px;
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.13);
+    }
+
+    th {
+      background: #f5f7ff;
+      color: var(--card-text);
+    }
+
+    .glass-table,
+    table {
+      background: #ffffff;
+    }
+
+    .section:not(#sources) .source-link,
+    .section:not(#sources) .source-stack,
+    main > section:not(#sources) .source-link,
+    main > section:not(#sources) .source-stack {
+      display: none !important;
+    }
+
+    .kpi-grid {
+      margin-top: 34px;
+    }
+
+    .kpi-card .kpi-value {
+      overflow-wrap: anywhere;
+    }
+
+    .kpi-card:last-child .kpi-value {
+      font-size: clamp(2rem, 3.3vw, 3.1rem);
+      line-height: 0.95;
+    }
+
+    .source-card {
+      min-height: 148px;
+    }
+
+    #sources .section-head h2 {
+      max-width: 1180px;
+    }
+
+    #sources .source-grid {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-auto-flow: row dense;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    #sources .source-card {
+      min-height: 188px;
+      height: 100%;
+      align-content: start;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    #sources .source-card strong {
+      font-size: clamp(1.18rem, 1.5vw, 1.58rem);
+      line-height: 1;
+    }
+
+    #sources .source-card span:not(.source-type) {
+      font-size: 0.92rem;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    #sources .search-box {
+      background: #ffffff;
+      border: 2px solid rgba(52, 98, 252, 0.18);
+      color: var(--card-text);
+    }
+
+    #sources .search-box input,
+    #sources .search-box svg {
+      color: var(--card-text);
+    }
+
+    #sources .search-box input::placeholder {
+      color: #66758b;
+    }
+
+    .card,
+    .kpi-card,
+    .metric-card,
+    .stakeholder-card,
+    .known-panel,
+    .takeaway-card,
+    .source-card,
+    .timeline-card {
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .card:hover,
+    .kpi-card:hover,
+    .metric-card:hover,
+    .stakeholder-card:hover,
+    .known-panel:hover,
+    .takeaway-card:hover,
+    .timeline-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(52, 98, 252, 0.42);
+      box-shadow: 0 24px 64px rgba(3, 16, 33, 0.2);
+    }
+
+    .glossary-grid,
+    .risk-details-grid {
+      align-items: start;
+    }
+
+    details {
+      align-self: start;
+      overflow: hidden;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    details[open] {
+      border-color: rgba(52, 98, 252, 0.55);
+      box-shadow: 0 20px 52px rgba(3, 16, 33, 0.18);
+    }
+
+    details:not([open]) p {
+      display: none;
+    }
+
+    .risk-card summary {
+      min-height: auto;
+    }
+
+    .network-core {
+      background: #ffffff;
+      border: 2px solid rgba(52, 98, 252, 0.18);
+    }
+
+    .stakeholder-map {
+      grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.55fr);
+      align-items: start;
+    }
+
+    .network-core {
+      position: relative;
+      top: 0;
+      min-height: 420px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+    }
+
+    .network-core svg {
+      color: #092d53;
+      min-height: 360px;
+      max-height: 430px;
+    }
+
+    .network-core::after {
+      content: "Workflow owner  +  model provider  +  infrastructure  +  governance  +  users";
+      display: block;
+      color: #47556a;
+      background: #f5f7ff;
+      border: 1px solid rgba(52, 98, 252, 0.16);
+      border-radius: 4px;
+      padding: 12px 14px;
+      font-family: "Inter", Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .stakeholder-grid {
+      align-content: start;
+    }
+
+    .stakeholder-card {
+      min-height: 172px;
+    }
+
+    .stakeholder-insights {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .insight-tile {
+      background: #ffffff;
+      color: #092d53;
+      border: 2px solid rgba(52, 98, 252, 0.18);
+      border-radius: 4px;
+      padding: 18px;
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.13);
+      min-height: 132px;
+    }
+
+    .insight-tile span {
+      display: block;
+      color: #3462fc;
+      font-family: var(--font-sans);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 0.95;
+      margin-bottom: 8px;
+    }
+
+    .insight-tile p {
+      margin: 0;
+      color: #47556a;
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+    }
+
+    .control-panel {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 26px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .control-panel-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      border-radius: 4px;
+      padding: 16px;
+      color: #ffffff;
+      min-height: 134px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .control-panel-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -25% -40% auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 22px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .control-panel-card strong {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .control-panel-card span {
+      color: rgba(255, 255, 255, 0.82);
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .node-label {
+      fill: #092d53 !important;
+      font-size: 13px;
+      paint-order: stroke;
+      stroke: #ffffff;
+      stroke-width: 3px;
+      stroke-linejoin: round;
+    }
+
+    .network-core circle:first-of-type {
+      fill: rgba(52, 98, 252, 0.1);
+      stroke: rgba(52, 98, 252, 0.55);
+    }
+
+    .chart-card {
+      position: relative;
+    }
+
+    .chart-note-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chart-note {
+      background: #f5f7ff;
+      border: 1px solid rgba(52, 98, 252, 0.16);
+      border-radius: 4px;
+      padding: 12px;
+      color: var(--card-text);
+      font-family: "Inter", Arial, sans-serif;
+      font-weight: 700;
+      min-height: 84px;
+    }
+
+    .chart-note span {
+      display: block;
+      color: #3462fc;
+      font-family: var(--font-sans);
+      font-size: 1.9rem;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    :root[data-theme="light"] {
+      --bg: #ffffff;
+      --text: #092d53;
+      --muted: #42526a;
+      --muted-2: #66758b;
+      --line: rgba(9, 45, 83, 0.14);
+      --line-strong: rgba(52, 98, 252, 0.5);
+    }
+
+    :root[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(52, 98, 252, 0.12), transparent 18rem),
+        linear-gradient(135deg, #ffffff 0%, #f5f7ff 52%, #ffffff 100%);
+    }
+
+    :root[data-theme="light"] .top-nav {
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    :root[data-theme="light"] .hero,
+    :root[data-theme="light"] .section:not(#sources) {
+      color: #092d53;
+    }
+
+    :root[data-theme="light"] .section-kicker {
+      color: #3462fc;
+    }
+
+    :root[data-theme="light"] .hero-subtitle,
+    :root[data-theme="light"] .section-copy {
+      color: #42526a;
+    }
+
+    :root[data-theme="light"] .case-brand,
+    :root[data-theme="light"] .date-badge,
+    :root[data-theme="light"] .chip {
+      color: #092d53;
+      border-color: rgba(9, 45, 83, 0.18);
+      background: rgba(52, 98, 252, 0.08);
+    }
+
+    :root[data-theme="light"] .case-brand img {
+      filter: none;
+    }
+
+    :root[data-theme="light"] .control-panel-card {
+      background: #ffffff;
+      color: #092d53;
+      border-color: rgba(52, 98, 252, 0.2);
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.1);
+    }
+
+    :root[data-theme="light"] .control-panel-card span {
+      color: #47556a;
+    }
+
+    /* Final polish layer: readable system typography and complete theme states. */
+    body,
+    button,
+    input,
+    textarea,
+    select,
+    .brand,
+    .button,
+    .logo-fallback,
+    .logo-sub,
+    .hero-subtitle,
+    .section-copy,
+    .card p,
+    .card li,
+    .metric-card p,
+    .stakeholder-card p,
+    .timeline-card p,
+    .arch-box p,
+    .mini-branch p,
+    details p,
+    td,
+    .known-panel li,
+    .pc-column ul,
+    .takeaway-card,
+    .source-card span,
+    .kpi-label,
+    .impact-row,
+    .insight-tile p,
+    .control-panel-card span,
+    .chart-note {
+      font-family: var(--font-sans) !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    .kpi-value,
+    .metric-number,
+    .chart-note span,
+    .source-card strong,
+    .insight-tile span,
+    .control-panel-card strong,
+    .section-kicker,
+    .label,
+    .source-type,
+    .pc-title,
+    .timeline-date,
+    .date-badge,
+    .chip,
+    summary,
+    th {
+      font-family: var(--font-sans) !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: 800;
+      line-height: 1.04;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 6.4vw, 5.3rem);
+      max-width: 1120px;
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 3.8vw, 3.4rem);
+      max-width: 1180px;
+    }
+
+    h3 {
+      font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+      line-height: 1.18;
+    }
+
+    .kpi-value,
+    .metric-number,
+    .chart-note span,
+    .insight-tile span,
+    .control-panel-card strong {
+      font-weight: 800;
+      line-height: 1.02;
+    }
+
+    .kpi-value {
+      font-size: clamp(1.55rem, 2vw, 2.15rem);
+    }
+
+    .kpi-card:last-child .kpi-value {
+      font-size: clamp(1.35rem, 1.8vw, 1.9rem);
+      line-height: 1.05;
+    }
+
+    .control-panel-card strong {
+      font-size: clamp(1.35rem, 1.9vw, 2rem);
+    }
+
+    .date-badge,
+    .chip {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .section-kicker,
+    .label,
+    .source-type,
+    .timeline-date {
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    html[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 10% 8%, rgba(52, 98, 252, 0.12), transparent 20rem),
+        linear-gradient(135deg, #ffffff 0%, #f6f8ff 48%, #ffffff 100%) !important;
+      color: #092d53;
+    }
+
+    html[data-theme="light"] .ambient {
+      background:
+        linear-gradient(180deg, rgba(52, 98, 252, 0.055), transparent 44%),
+        repeating-linear-gradient(0deg, rgba(9, 45, 83, 0.035) 0 1px, transparent 1px 48px);
+    }
+
+    html[data-theme="light"] #particle-canvas {
+      opacity: 0.06;
+    }
+
+    html[data-theme="light"] .hero,
+    html[data-theme="light"] .section:not(#sources) {
+      color: #092d53;
+    }
+
+    html[data-theme="light"] .hero {
+      background: linear-gradient(180deg, #f7f9ff 0%, #ffffff 92%);
+    }
+
+    html[data-theme="light"] .hero-media {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(52, 98, 252, 0.16), transparent 18rem),
+        repeating-linear-gradient(90deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(0deg, rgba(9,45,83,0.055) 0 1px, transparent 1px 96px);
+    }
+
+    html[data-theme="light"] .hero-subtitle,
+    html[data-theme="light"] .section-copy {
+      color: #42526a;
+    }
+
+    html[data-theme="light"] .case-brand,
+    html[data-theme="light"] .date-badge,
+    html[data-theme="light"] .chip {
+      color: #092d53;
+      background: rgba(52, 98, 252, 0.08);
+      border-color: rgba(9, 45, 83, 0.18);
+    }
+
+    html[data-theme="light"] .control-panel-card {
+      background: #ffffff;
+      color: #092d53;
+      border-color: rgba(52, 98, 252, 0.2);
+      box-shadow: 0 18px 42px rgba(3, 16, 33, 0.1);
+    }
+
+    html[data-theme="light"] .control-panel-card span {
+      color: #47556a;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .section-head,
+      .two-col,
+      .stakeholder-map {
+        grid-template-columns: 1fr;
+      }
+
+      .source-stack { justify-content: flex-start; }
+      .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+      .chart-card,
+      .chart-card.large,
+      .chart-card.side {
+        grid-column: span 12;
+      }
+
+      .network-core { position: relative; top: 0; min-height: 360px; }
+      .network-core svg { min-height: 360px; }
+      .visual-band { grid-template-columns: repeat(2, 1fr); }
+      .arch-flow { grid-template-columns: repeat(3, minmax(145px, 1fr)); }
+      .arch-box:nth-child(3)::after { display: none; }
+      .glossary-grid,
+      .source-grid,
+      .comparison-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .risk-details-grid,
+      .takeaway-grid,
+      .control-panel,
+      .stakeholder-insights {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root { --nav-h: 64px; }
+
+      .nav-inner {
+        width: min(100% - 20px, var(--max));
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+      }
+
+      .brand span:last-child { display: none; }
+
+      .nav-links {
+        grid-column: 1 / -1;
+        order: 3;
+        padding: 0 0 10px;
+      }
+
+      .hero { min-height: auto; }
+      .hero-inner { padding-top: 62px; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-card { min-height: 132px; }
+      .alliance-logos { grid-template-columns: 1fr; }
+      .plus-line { margin: 0 auto; }
+      .section { padding: 58px 0; width: min(100% - 22px, var(--max)); }
+      .hero-inner { width: min(100% - 22px, var(--max)); }
+      .rationale-grid,
+      .known-grid,
+      .stakeholder-grid,
+      .visual-band,
+      .glossary-grid,
+      .comparison-grid,
+      .mini-branches,
+      .takeaway-grid,
+      .risk-details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .control-panel,
+      .stakeholder-insights {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #sources .source-grid,
+      .source-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .dashboard-grid { gap: 14px; }
+      .card { padding: 18px; }
+      .chart-card { min-height: auto; }
+      .chart-shell { height: 250px; }
+      .impact-row {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .arch-flow { grid-template-columns: 1fr; }
+      .arch-box::after { display: none; }
+      .takeaway-hero { padding: 22px; min-height: 420px; }
+      .source-controls { align-items: stretch; flex-direction: column; }
+      .footer { width: min(100% - 22px, var(--max)); }
+    }
+
+    @media (max-width: 460px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .control-panel,
+      .stakeholder-insights { grid-template-columns: 1fr; }
+      .nav-actions { gap: 5px; }
+      .icon-button { width: 36px; height: 36px; }
+    }
+
+    /* Final spacing pass: reduce empty stretches while keeping exhibits breathable. */
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-inner {
+      padding: 64px 0 34px;
+    }
+
+    .hero-grid {
+      gap: 26px;
+      align-items: start;
+    }
+
+    .section {
+      padding: 64px 0;
+    }
+
+    .section-head {
+      margin-bottom: 22px;
+    }
+
+    .hero-subtitle {
+      margin-top: 16px;
+    }
+
+    .hero-actions {
+      margin-top: 22px;
+    }
+
+    .kpi-grid {
+      margin-top: 24px;
+    }
+
+    .kpi-card {
+      min-height: 126px;
+    }
+
+    .control-panel {
+      margin-top: 20px;
+    }
+
+    .control-panel-card,
+    .insight-tile {
+      min-height: 112px;
+    }
+
+    .chart-card {
+      min-height: 380px;
+    }
+
+    .chart-shell {
+      height: 250px;
+    }
+
+    .timeline {
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .stakeholder-card {
+      min-height: 144px;
+    }
+
+    .network-core {
+      min-height: 360px;
+    }
+
+    .network-core svg {
+      min-height: 310px;
+    }
+
+    @media (max-width: 760px) {
+      .section {
+        padding: 44px 0;
+      }
+
+      .hero-inner {
+        padding: 38px 0 28px;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 12vw, 3.6rem);
+      }
+
+      h2 {
+        font-size: clamp(1.7rem, 9vw, 3rem);
+      }
+
+      .hero-subtitle,
+      .section-copy {
+        font-size: 0.98rem;
+      }
+
+      .date-badge,
+      .chip {
+        white-space: normal;
+        min-height: 36px;
+      }
+
+      .kpi-grid,
+      .control-panel,
+      .stakeholder-insights,
+      .dashboard-grid {
+        gap: 10px;
+      }
+
+      .kpi-grid,
+      .control-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      .kpi-card,
+      .control-panel-card,
+      .insight-tile,
+      .stakeholder-card {
+        min-height: auto;
+      }
+
+      .kpi-card {
+        padding: 12px;
+      }
+
+      .kpi-value {
+        font-size: 1.35rem !important;
+      }
+
+      .kpi-card:last-child .kpi-value {
+        font-size: 1.08rem !important;
+      }
+
+      .kpi-label {
+        font-size: 0.76rem;
+      }
+
+      .control-panel-card {
+        padding: 12px;
+      }
+
+      .control-panel-card strong {
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+      }
+
+      .control-panel-card span {
+        font-size: 0.76rem;
+        line-height: 1.35;
+      }
+
+      .chart-shell {
+        height: 230px;
+      }
+
+      .network-core {
+        min-height: auto;
+      }
+
+      .network-core svg {
+        min-height: 280px;
+      }
+
+      .takeaway-hero {
+        min-height: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      #particle-canvas { display: none; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media print {
+      @page { margin: 0.45in; }
+      body {
+        background: #fff !important;
+        color: #07111f !important;
+      }
+      .top-nav,
+      #particle-canvas,
+      .ambient,
+      .back-to-top,
+      .hero-actions,
+      .nav-actions {
+        display: none !important;
+      }
+      .hero,
+      .section,
+      .footer {
+        width: 100% !important;
+        padding: 20px 0 !important;
+        min-height: auto !important;
+      }
+      .card,
+      .kpi-card,
+      .source-card,
+      .known-panel,
+      .table-wrap,
+      .arch-wrap,
+      details,
+      .timeline-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        background: #fff !important;
+        border-color: #ccd6e3 !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      a { color: #004b91 !important; text-decoration: underline; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="top-nav">
+    <div class="nav-inner">
+      <a class="brand" href="../" aria-label="Back to case studies">
+        <span class="brand-mark"><img src="assets/logos/upforge-logo.png" alt="Upforge Consulting logo" /></span>
+        <span>Case Study</span>
+      </a>
+      <nav class="nav-links" aria-label="Section navigation">
+        <a href="#summary">Summary</a>
+        <a href="#breakdown">Deal</a>
+        <a href="#rationale">Rationale</a>
+        <a href="#data">Metrics</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#stakeholders">Stakeholders</a>
+        <a href="#risks">Risks</a>
+        <a href="#competitive">Landscape</a>
+        <a href="#known">Diligence</a>
+        <a href="#takeaways">Takeaways</a>
+        <a href="#sources">Sources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="../" class="back-link">
+          <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> All Case Studies
+        </a>
+        <button class="icon-button tooltip-wrap" id="themeToggle" type="button" aria-label="Toggle theme" data-tip="Toggle full theme">
+          <i data-lucide="sun-moon"></i>
+          <span>Theme</span>
+        </button>
+        <button class="icon-button tooltip-wrap" id="printModeToggle" type="button" aria-label="Print dashboard" data-tip="Print or save PDF">
+          <i data-lucide="file-down"></i>
+          <span>Print</span>
+        </button>
+      </div>
+    </div>
+    <div class="progress-shell" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="case-brand reveal">
+              <img src="assets/logos/upforge-logo.png" alt="Upforge Consulting logo" />
+              <span>A Case Study by Upforge Consulting.</span>
+            </div>
+            <div class="hero-logo-row reveal" aria-label="KPMG and Anthropic alliance logos">
+              <div class="heading-logo">
+                <img src="assets/logos/kpmg-logo.svg" alt="KPMG logo" />
+              </div>
+              <div class="heading-logo-separator">+</div>
+              <div class="heading-logo">
+                <img src="assets/logos/anthropic-logo.svg" alt="Anthropic logo" />
+              </div>
+            </div>
+            <div class="eyebrow reveal">
+              <span class="date-badge"><i data-lucide="calendar-days"></i>Announced: 19 May 2026</span>
+              <span class="chip">Global AI Alliance</span>
+              <span class="chip">Tax &amp; Legal Transformation</span>
+              <span class="chip">Private Equity Channel</span>
+              <span class="chip">Agentic AI</span>
+              <span class="chip">Enterprise Workflow Automation</span>
+            </div>
+            <h1 class="reveal">KPMG&ndash;Anthropic Alliance</h1>
+            <p class="hero-subtitle reveal">A platform-embedding alliance pairing KPMG's delivery engine with Anthropic's Claude models across tax, legal, advisory, and private equity workflows.</p>
+            <div class="hero-actions reveal">
+              <a class="button primary" href="#summary"><i data-lucide="arrow-down-right"></i>Read the case</a>
+              <a class="button" href="#known"><i data-lucide="list-checks"></i>Diligence view</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value"><span class="counter" data-target="276000" data-format="compact-plus">0</span></div>
+              <div class="kpi-label">KPMG people globally</div>
+            </div>
+            <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value"><span class="counter" data-target="138">0</span></div>
+              <div class="kpi-label">Countries and territories</div>
+            </div>
+            <a class="source-link" href="https://kpmg.com/pk/en/about/performance.html" target="_blank" rel="noopener">Source: KPMG</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value">$<span class="counter" data-target="39.8" data-decimals="1">0</span>B</div>
+              <div class="kpi-label">KPMG FY25 global revenue</div>
+            </div>
+            <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html" target="_blank" rel="noopener">Source: KPMG</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value">$<span class="counter" data-target="9.3" data-decimals="1">0</span>B</div>
+              <div class="kpi-label">Tax &amp; Legal FY25 revenue</div>
+            </div>
+            <a class="source-link" href="https://kpmg.com/pk/en/about/performance.html" target="_blank" rel="noopener">Source: KPMG</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value"><span class="counter" data-target="7.5" data-decimals="1">0</span>%</div>
+              <div class="kpi-label">Tax &amp; Legal growth</div>
+            </div>
+            <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html" target="_blank" rel="noopener">Source: KPMG</a>
+          </article>
+          <article class="kpi-card reveal">
+            <div>
+              <div class="kpi-value">Weeks &rarr; Minutes</div>
+              <div class="kpi-label">Workflow compression claim</div>
+            </div>
+            <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a>
+          </article>
+        </div>
+        <div class="control-panel reveal" aria-label="Case control panel">
+          <div class="control-panel-card">
+            <strong>Platform</strong>
+            <span>Claude sits inside Digital Gateway, not beside it as a loose chatbot.</span>
+          </div>
+          <div class="control-panel-card">
+            <strong>8 / 12</strong>
+            <span>Eight key facts are public; twelve diligence items remain undisclosed.</span>
+          </div>
+          <div class="control-panel-card">
+            <strong>Human</strong>
+            <span>Tax, legal, and advisory work still needs human review.</span>
+          </div>
+          <div class="control-panel-card">
+            <strong>Multi-model</strong>
+            <span>Public reporting indicates KPMG remains ecosystem-based.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="summary" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Summary</p>
+          <h2>Not a chatbot license. A platform-embedding move.</h2>
+        </div>
+        <div class="source-stack">
+          <a class="source-pill" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a>
+          <a class="source-pill" href="https://www.anthropic.com/news/anthropic-kpmg" target="_blank" rel="noopener">Source: Anthropic</a>
+          <a class="source-pill" href="https://fortune.com/2026/05/26/kpmg-anthropic-claude-partnership-big-four-ai/" target="_blank" rel="noopener">Source: Fortune</a>
+        </div>
+      </div>
+      <div class="two-col">
+        <article class="card accent-blue reveal">
+          <p class="lead">KPMG and Anthropic announced a global alliance on 19 May 2026 to embed Claude into KPMG Digital Gateway, with early emphasis on Tax &amp; Legal and private equity.</p>
+          <p>The strategic point is where the AI sits: inside a KPMG-controlled client-delivery environment, not as a standalone assistant. The <span class="term-tip" data-tip="The business workflow environment that controls data, permissions, approvals, logging, and orchestration.">platform layer</span> controls permissions, review, logging, and client experience.</p>
+          <p>Public materials reference access for 276,000+ KPMG professionals, Claude Cowork, Managed Agents, Claude Code, and KPMG as Anthropic's preferred PE consultant.</p>
+        </article>
+        <aside class="card quote-card accent-orange reveal">
+          <h3>What this deal really is</h3>
+          <div class="callout">A platform-embedding alliance: KPMG owns the workflow surface, Anthropic supplies the <span class="term-tip" data-tip="The AI model used for reasoning, generation, coding, and document analysis.">model layer</span> and agents, and clients use AI through KPMG delivery.</div>
+          <p>Important nuance: KPMG called the arrangement an "exclusive alliance," while later reporting said its broader AI strategy remains multi-model, including Microsoft Copilot and Google Gemini. Safest read: this Claude initiative has an exclusive element; KPMG's overall AI stack remains ecosystem-based.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="breakdown" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Deal Breakdown</p>
+          <h2>What is disclosed, and what it implies strategically.</h2>
+        </div>
+        <div class="source-stack">
+          <a class="source-pill" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a>
+          <a class="source-pill" href="https://www.anthropic.com/news/anthropic-kpmg" target="_blank" rel="noopener">Source: Anthropic</a>
+          <a class="source-pill" href="https://www.wsj.com/cfo-journal/kpmg-taps-anthropic-to-revamp-global-tax-advisory-platforms-853093bb" target="_blank" rel="noopener">Source: WSJ</a>
+        </div>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Publicly Disclosed Detail</th>
+              <th>Strategic Meaning</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="table-primary">Announcement date</td>
+              <td>19 May 2026</td>
+              <td>Formal launch of the global alliance</td>
+              <td><span class="status-badge status-confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td class="table-primary">Launch vehicle</td>
+              <td>KPMG Digital Gateway Powered by Claude</td>
+              <td>Productized client-delivery platform</td>
+              <td><span class="status-badge status-confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td class="table-primary">Initial focus</td>
+              <td>Tax clients, legal workflows, private equity</td>
+              <td>High-value, document-heavy, regulated work</td>
+              <td><span class="status-badge status-confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td class="table-primary">Workforce deployment</td>
+              <td>Claude access for 276,000+ KPMG people</td>
+              <td>Major internal adoption and training challenge</td>
+              <td><span class="status-badge status-confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td class="table-primary">Embedded products</td>
+              <td>Claude Cowork, Managed Agents, Claude Code</td>
+              <td>Agentic workflow automation and coding modernization</td>
+              <td><span class="status-badge status-partial">Partly specified</span></td>
+            </tr>
+            <tr>
+              <td class="table-primary">PE channel role</td>
+              <td>KPMG named preferred consultant for private equity</td>
+              <td>Gives Anthropic consulting-led market access</td>
+              <td><span class="status-badge status-confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td class="table-primary">Commercial terms</td>
+              <td>Deal value, duration, pricing not publicly disclosed</td>
+              <td>Important diligence gap</td>
+              <td><span class="status-badge status-undisclosed">Not publicly disclosed</span></td>
+            </tr>
+            <tr>
+              <td class="table-primary">Audit scope</td>
+              <td>Not directly integrated into audit workflows according to WSJ</td>
+              <td>Reduces professional-independence risk</td>
+              <td><span class="status-badge status-partial">Partly specified</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="rationale" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Strategic Rationale</p>
+          <h2>Why both sides wanted this alliance visible.</h2>
+        </div>
+        <div class="source-stack">
+          <a class="source-pill" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a>
+          <a class="source-pill" href="https://www.anthropic.com/news/anthropic-kpmg" target="_blank" rel="noopener">Source: Anthropic</a>
+          <a class="source-pill" href="https://www.anthropic.com/news/claude-partner-network" target="_blank" rel="noopener">Source: Partner Network</a>
+        </div>
+      </div>
+      <div class="rationale-grid">
+        <article class="card accent-blue reveal">
+          <h3>Why KPMG did this</h3>
+          <ul class="bullet-list">
+            <li>Strengthens fast-growing Tax &amp; Legal.</li>
+            <li>Moves AI into client workflow, not a side chatbot.</li>
+            <li>Differentiates Digital Gateway across tax, legal, advisory, and PE.</li>
+            <li>Improves the PE value-creation offer.</li>
+            <li>Supports productivity across 276,000+ professionals.</li>
+            <li>Keeps KPMG in control of workflow while Claude powers the model layer.</li>
+          </ul>
+        </article>
+        <article class="card accent-orange reveal">
+          <h3>Why Anthropic did this</h3>
+          <ul class="bullet-list">
+            <li>Gains a marquee Big Four deployment.</li>
+            <li>Reaches regulated enterprise workflows.</li>
+            <li>Expands into tax, legal, cyber, and PE.</li>
+            <li>Uses KPMG as a global client channel.</li>
+            <li>Reinforces its partner-led enterprise strategy.</li>
+            <li>Creates proof points against rival model providers.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="data" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Data Visuals</p>
+          <h2>The metrics that make the alliance material.</h2>
+        </div>
+        <p class="section-copy">Read the financial scale, service-line growth, adoption data, and impact claims together. Impact claims are company claims or proprietary estimates, not audited outcomes.</p>
+      </div>
+      <div class="dashboard-grid">
+        <article class="card chart-card reveal">
+          <h3>KPMG FY25 Revenue Mix</h3>
+          <p>Revenue by function, totaling $39.8B.</p>
+          <div class="chart-shell"><canvas id="revenueChart" aria-label="KPMG FY25 revenue mix chart"></canvas></div>
+          <div class="chart-note-grid" aria-label="Revenue values">
+            <div class="chart-note"><span>$16.4B</span>Advisory</div>
+            <div class="chart-note"><span>$14.1B</span>Audit</div>
+            <div class="chart-note"><span>$9.3B</span>Tax &amp; Legal</div>
+          </div>
+          <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html" target="_blank" rel="noopener">Source: KPMG FY25 revenue release</a>
+        </article>
+        <article class="card chart-card reveal">
+          <h3>KPMG Growth by Function</h3>
+          <p>Tax &amp; Legal had the fastest growth among the three major functions.</p>
+          <div class="chart-shell"><canvas id="growthChart" aria-label="KPMG FY25 growth by function chart"></canvas></div>
+          <div class="chart-note-grid" aria-label="Growth values">
+            <div class="chart-note"><span>7.5%</span>Tax &amp; Legal</div>
+            <div class="chart-note"><span>6.0%</span>Audit</div>
+            <div class="chart-note"><span>2.9%</span>Advisory</div>
+          </div>
+          <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html" target="_blank" rel="noopener">Source: KPMG FY25 revenue release</a>
+        </article>
+        <article class="card chart-card side reveal">
+          <h3>AI Adoption Study</h3>
+          <p>KPMG and UT Austin found a small sophisticated-user cohort in workplace AI usage.</p>
+          <div class="metric-stack">
+            <div class="metric-card">
+              <div class="metric-number">1.4M</div>
+              <p>Workplace AI interactions analyzed</p>
+            </div>
+            <div class="metric-card">
+              <div class="metric-number">2,597</div>
+              <p>Unique users in the study</p>
+            </div>
+            <div class="metric-card">
+              <div class="metric-number">~5%</div>
+              <p>Sophisticated AI users</p>
+            </div>
+          </div>
+          <a class="source-link" href="https://kpmg.com/us/en/media/news/utaustin-kpmg-study.html" target="_blank" rel="noopener">Source: KPMG + UT Austin</a>
+        </article>
+        <article class="card chart-card large reveal">
+          <h3>Claimed Operational Impact</h3>
+          <p>Company claims and proprietary estimates only; not audited outcomes.</p>
+          <div class="impact-list">
+            <div class="impact-row">
+              <strong>Tax-regulation agent build time</strong>
+              <div class="impact-track"><div class="impact-bar" style="--w: 92%"></div></div>
+              <span>Weeks &rarr; Minutes</span>
+            </div>
+            <div class="impact-row">
+              <strong>KPMG Blaze delivery claim</strong>
+              <div class="impact-track"><div class="impact-bar" style="--w: 50%"></div></div>
+              <span>Half the time</span>
+            </div>
+            <div class="impact-row">
+              <strong>KPMG Blaze cost claim</strong>
+              <div class="impact-track"><div class="impact-bar" style="--w: 50%"></div></div>
+              <span>Half the cost</span>
+            </div>
+            <div class="impact-row">
+              <strong>Cost reduction claim</strong>
+              <div class="impact-track"><div class="impact-bar" style="--w: 80%"></div></div>
+              <span>50%-80%</span>
+            </div>
+            <div class="impact-row">
+              <strong>Speed improvement claim</strong>
+              <div class="impact-track"><div class="impact-bar" style="--w: 100%"></div></div>
+              <span>10x</span>
+            </div>
+          </div>
+          <div class="claim-note">Label: public company claims / proprietary estimates, not audited outcomes.</div>
+          <div class="source-stack" style="justify-content: flex-start; margin-top: 12px;">
+            <a class="source-pill" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a>
+            <a class="source-pill" href="https://kpmg.com/kpmg-us/content/dam/kpmg/pdf/2026/kpmg-blaze.pdf" target="_blank" rel="noopener">Source: KPMG Blaze PDF</a>
+          </div>
+        </article>
+        <article class="card chart-card reveal">
+          <h3>Diligence Visibility</h3>
+          <p>Known facts help, but the diligence gap is material.</p>
+          <div class="chart-shell"><canvas id="visibilityChart" aria-label="Publicly known versus not disclosed chart"></canvas></div>
+          <div class="chart-note-grid" aria-label="Diligence values">
+            <div class="chart-note"><span>8</span>Publicly known items</div>
+            <div class="chart-note"><span>12</span>Not publicly disclosed items</div>
+            <div class="chart-note"><span>1</span>Key interpretation: multi-model stack</div>
+          </div>
+        </article>
+        <article class="card chart-card reveal">
+          <h3>Risk Exposure Profile</h3>
+          <p>Analytical scoring from public disclosures, not company ratings.</p>
+          <div class="chart-shell"><canvas id="riskProfileChart" aria-label="Risk exposure profile chart"></canvas></div>
+          <div class="chart-note-grid" aria-label="Risk profile notes">
+            <div class="chart-note"><span>5/5</span>Model output risk</div>
+            <div class="chart-note"><span>4/5</span>Data / residency risk</div>
+            <div class="chart-note"><span>4/5</span>Independence oversight</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="timeline" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Timeline</p>
+          <h2>The alliance follows years of platform, cloud, and AI moves.</h2>
+        </div>
+        <p class="section-copy">KPMG's Digital Gateway/Azure path meets Anthropic's consulting-channel push.</p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="landmark"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">21 Jun 2022</div>
+            <p>KPMG and Microsoft add new Digital Gateway applications. <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2022/06/kpmg-and-microsoft-collaborate-to-help-c-suites.html" target="_blank" rel="noopener">Source: KPMG</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="blocks"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">17 Jun 2025</div>
+            <p>KPMG launches Workbench on Microsoft technology / Azure AI Foundry. <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2025/06/kpmg-launches-a-multi-agent-ai-platform-transforming-client-delivery-and-ways-of-working-across-the-global-organization.html" target="_blank" rel="noopener">Source: KPMG</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="bar-chart-3"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">16 Dec 2025</div>
+            <p>KPMG reports FY25 global revenue growth. <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html" target="_blank" rel="noopener">Source: KPMG</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="scale"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">3 Feb 2026</div>
+            <p>KPMG launches Tax AI Accelerator on Digital Gateway and Azure OpenAI. <a class="source-link" href="https://kpmg.com/us/en/media/news/tax-ai-accelerator-program.html" target="_blank" rel="noopener">Source: KPMG</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="scan-line"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">19 Mar 2026</div>
+            <p>KPMG and UT Austin publish workplace AI usage study. <a class="source-link" href="https://kpmg.com/us/en/media/news/utaustin-kpmg-study.html" target="_blank" rel="noopener">Source: KPMG</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="briefcase-business"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">4 May 2026</div>
+            <p>Anthropic announces an AI services company with PE backers. <a class="source-link" href="https://www.anthropic.com/news/enterprise-ai-services-company" target="_blank" rel="noopener">Source: Anthropic</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="handshake"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">14 May 2026</div>
+            <p>Anthropic expands alliance with PwC. <a class="source-link" href="https://www.anthropic.com/news/pwc-expanded-partnership" target="_blank" rel="noopener">Source: Anthropic</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="sparkles"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">19 May 2026</div>
+            <p>KPMG and Anthropic announce global alliance. <a class="source-link" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="git-branch"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">26 May 2026</div>
+            <p>Fortune reports KPMG's wider AI strategy remains non-exclusive. <a class="source-link" href="https://fortune.com/2026/05/26/kpmg-anthropic-claude-partnership-big-four-ai/" target="_blank" rel="noopener">Source: Fortune</a></p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"><i data-lucide="shield-check"></i></div>
+          <div class="timeline-card">
+            <div class="timeline-date">28 May 2026</div>
+            <p>WSJ reports Claude is not directly integrated into audit workflows. <a class="source-link" href="https://www.wsj.com/cfo-journal/kpmg-taps-anthropic-to-revamp-global-tax-advisory-platforms-853093bb" target="_blank" rel="noopener">Source: WSJ</a></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="architecture" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Technical Architecture</p>
+          <h2>Public sources identify the layers, not the hosting route.</h2>
+        </div>
+        <div class="source-stack">
+          <a class="source-pill" href="https://kpmg.com/xx/en/our-insights/ai-and-technology/kpmg-digital-gateway.html" target="_blank" rel="noopener">Source: Digital Gateway</a>
+          <a class="source-pill" href="https://kpmg.com/us/en/capabilities-services/ai/kpmg-workbench.html" target="_blank" rel="noopener">Source: Workbench</a>
+          <a class="source-pill" href="https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry" target="_blank" rel="noopener">Source: Claude in Microsoft Foundry</a>
+        </div>
+      </div>
+      <div class="arch-wrap reveal">
+        <div class="arch-flow" aria-label="Architecture flow">
+          <div class="arch-box">
+            <h3>Client Data + KPMG Proprietary Tools</h3>
+            <p>Source systems, documents, tax/legal content, and KPMG assets.</p>
+          </div>
+          <div class="arch-box">
+            <h3>KPMG Digital Gateway on Microsoft Azure</h3>
+            <p>Workflow platform, client access, and orchestration.</p>
+          </div>
+          <div class="arch-box">
+            <h3>KPMG Governance Layer</h3>
+            <p>Trusted AI, cyber, risk, approvals, and audit trails.</p>
+          </div>
+          <div class="arch-box">
+            <h3>Claude Cowork + Managed Agents</h3>
+            <p><span class="term-tip" data-tip="A workflow where AI performs a sequence of steps, uses tools, and returns a reviewable deliverable.">Agentic</span> task execution and automation.</p>
+          </div>
+          <div class="arch-box">
+            <h3>Claude Service Endpoint</h3>
+            <p>Model calls, tools, and service routing.</p>
+          </div>
+          <div class="arch-box">
+            <h3>AI Outputs back into Digital Gateway</h3>
+            <p>Summaries, drafts, agents, and reviewable outputs.</p>
+          </div>
+        </div>
+        <div class="arch-label"><i data-lucide="alert-triangle"></i>Exact model-hosting route is not publicly specified.</div>
+        <div class="mini-branches">
+          <div class="mini-branch">
+            <h3>KPMG Blaze for PE use cases</h3>
+            <p>PE value creation and IT modernization.</p>
+          </div>
+          <div class="mini-branch">
+            <h3>&rarr; Claude Code</h3>
+            <p>Code modernization and delivery acceleration.</p>
+          </div>
+          <div class="mini-branch">
+            <h3>&rarr; IT modernization</h3>
+            <p>Treat acceleration as a company claim / proprietary estimate.</p>
+          </div>
+        </div>
+        <div class="source-stack" style="justify-content: flex-start; margin-top: 16px;">
+          <a class="source-pill" href="https://platform.claude.com/docs/en/managed-agents/overview" target="_blank" rel="noopener">Source: Managed Agents</a>
+          <a class="source-pill" href="https://claude.com/product/claude-code" target="_blank" rel="noopener">Source: Claude Code</a>
+          <a class="source-pill" href="https://kpmg.com/xx/en/what-we-do/services/ai/trusted-ai-framework.html" target="_blank" rel="noopener">Source: KPMG Trusted AI</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="glossary" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Technical Terms Explained</p>
+          <h2>Plain-English glossary for the deal.</h2>
+        </div>
+        <div class="source-stack">
+          <a class="source-pill" href="https://platform.claude.com/docs/en/intro" target="_blank" rel="noopener">Source: Claude docs</a>
+          <a class="source-pill" href="https://platform.claude.com/docs/en/manage-claude/api-and-data-retention" target="_blank" rel="noopener">Source: Data retention docs</a>
+          <a class="source-pill" href="https://kpmg.com/us/en/capabilities-services/ai/kpmg-workbench.html" target="_blank" rel="noopener">Source: KPMG Workbench</a>
+        </div>
+      </div>
+      <div class="glossary-grid">
+        <details class="reveal"><summary>Large Language Model</summary><p>An AI system that understands and generates text, code, and reasoning outputs.</p></details>
+        <details class="reveal"><summary>Frontier AI</summary><p>The newest, most capable AI models for reasoning, coding, document analysis, and workflow automation.</p></details>
+        <details class="reveal"><summary>Agentic Workflow</summary><p>AI performing multiple steps: reading documents, checking rules, drafting outputs, using tools, and returning a deliverable.</p></details>
+        <details class="reveal"><summary>API</summary><p>A software interface that lets one system communicate with another.</p></details>
+        <details class="reveal"><summary>Data Sovereignty</summary><p>Control over where data is stored, processed, and governed.</p></details>
+        <details class="reveal"><summary>Zero Data Retention</summary><p>A setup where prompts and outputs are not stored after processing, except narrow legal or abuse-prevention exceptions.</p></details>
+        <details class="reveal"><summary>Model Layer</summary><p>The AI model used for reasoning and generation.</p></details>
+        <details class="reveal"><summary>Platform Layer</summary><p>The workflow environment controlling data, permissions, UX, approvals, logging, and orchestration.</p></details>
+        <details class="reveal"><summary>Human-in-the-loop</summary><p>A control model where humans review, approve, or override AI outputs before high-stakes use.</p></details>
+      </div>
+    </section>
+
+    <section id="stakeholders" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Stakeholder Map</p>
+          <h2>Who needs the alliance to work, and why.</h2>
+        </div>
+        <p class="section-copy">Analytical view based on public deal structure and enterprise AI governance needs.</p>
+      </div>
+      <div class="stakeholder-map">
+        <aside class="network-core reveal" aria-label="Stakeholder network diagram">
+          <svg viewBox="0 0 480 520" role="img" aria-label="Network map centered on Digital Gateway Powered by Claude">
+            <defs>
+              <linearGradient id="nodeLine" x1="0" x2="1">
+                <stop offset="0" stop-color="#42699d" stop-opacity="0.75" />
+                <stop offset="1" stop-color="#b87942" stop-opacity="0.75" />
+              </linearGradient>
+            </defs>
+            <g stroke="url(#nodeLine)" stroke-width="1.4" opacity="0.75">
+              <line x1="240" y1="260" x2="240" y2="80" />
+              <line x1="240" y1="260" x2="80" y2="160" />
+              <line x1="240" y1="260" x2="395" y2="160" />
+              <line x1="240" y1="260" x2="86" y2="382" />
+              <line x1="240" y1="260" x2="390" y2="386" />
+              <line x1="240" y1="260" x2="240" y2="452" />
+            </g>
+            <circle cx="240" cy="260" r="64" fill="rgba(97,225,255,0.14)" stroke="rgba(97,225,255,0.55)" />
+            <text x="240" y="252" text-anchor="middle" class="node-label">Digital Gateway</text>
+            <text x="240" y="270" text-anchor="middle" class="node-label">Powered by Claude</text>
+            <g fill="rgba(255,255,255,0.08)" stroke="rgba(171,206,255,0.28)">
+              <circle cx="240" cy="80" r="44" />
+              <circle cx="80" cy="160" r="42" />
+              <circle cx="395" cy="160" r="42" />
+              <circle cx="86" cy="382" r="42" />
+              <circle cx="390" cy="386" r="42" />
+              <circle cx="240" cy="452" r="42" />
+            </g>
+            <text x="240" y="84" text-anchor="middle" class="node-label">KPMG</text>
+            <text x="80" y="164" text-anchor="middle" class="node-label">Anthropic</text>
+            <text x="395" y="164" text-anchor="middle" class="node-label">Azure</text>
+            <text x="86" y="386" text-anchor="middle" class="node-label">Clients</text>
+            <text x="390" y="390" text-anchor="middle" class="node-label">Risk</text>
+            <text x="240" y="456" text-anchor="middle" class="node-label">Professionals</text>
+          </svg>
+        </aside>
+        <div class="stakeholder-grid">
+          <article class="stakeholder-card reveal"><h3>KPMG global leadership</h3><p><span class="label">Role</span> Sponsor and allocator.</p><p><span class="label">Incentive</span> AI differentiation.</p><p><span class="label">Concern</span> ROI and risk posture.</p></article>
+          <article class="stakeholder-card reveal"><h3>Tax &amp; Legal practice</h3><p><span class="label">Role</span> Initial workflow owner.</p><p><span class="label">Incentive</span> Faster regulated work.</p><p><span class="label">Concern</span> Accuracy and trust.</p></article>
+          <article class="stakeholder-card reveal"><h3>Private Equity practice</h3><p><span class="label">Role</span> PE go-to-market channel.</p><p><span class="label">Incentive</span> Value creation.</p><p><span class="label">Concern</span> Proof of economics.</p></article>
+          <article class="stakeholder-card reveal"><h3>Advisory / AI &amp; Data Labs</h3><p><span class="label">Role</span> Build use cases.</p><p><span class="label">Incentive</span> Reusable delivery patterns.</p><p><span class="label">Concern</span> Portability and debt.</p></article>
+          <article class="stakeholder-card reveal"><h3>Cybersecurity and AI assurance teams</h3><p><span class="label">Role</span> Governance and assurance.</p><p><span class="label">Incentive</span> Trusted deployment.</p><p><span class="label">Concern</span> Permissions and audit trails.</p></article>
+          <article class="stakeholder-card reveal"><h3>276,000+ professionals</h3><p><span class="label">Role</span> Users and reviewers.</p><p><span class="label">Incentive</span> Productivity.</p><p><span class="label">Concern</span> Training and workflow change.</p></article>
+          <article class="stakeholder-card reveal"><h3>Anthropic enterprise partnerships</h3><p><span class="label">Role</span> Alliance expansion.</p><p><span class="label">Incentive</span> Big Four distribution.</p><p><span class="label">Concern</span> Delivery performance.</p></article>
+          <article class="stakeholder-card reveal"><h3>Claude product teams</h3><p><span class="label">Role</span> Model, agent, and code capabilities.</p><p><span class="label">Incentive</span> Workflow proof points.</p><p><span class="label">Concern</span> Reliability and tooling safety.</p></article>
+          <article class="stakeholder-card reveal"><h3>Privacy, compliance, and security teams</h3><p><span class="label">Role</span> Data controls.</p><p><span class="label">Incentive</span> Regulated adoption.</p><p><span class="label">Concern</span> Cross-border obligations.</p></article>
+          <article class="stakeholder-card reveal"><h3>Microsoft Azure</h3><p><span class="label">Role</span> Platform infrastructure.</p><p><span class="label">Incentive</span> AI workload stickiness.</p><p><span class="label">Concern</span> Routing clarity.</p></article>
+          <article class="stakeholder-card reveal"><h3>Clients</h3><p><span class="label">Role</span> Tax, legal, PE, and regulated users.</p><p><span class="label">Incentive</span> Faster KPMG expertise.</p><p><span class="label">Concern</span> Data, review, accountability.</p></article>
+          <article class="stakeholder-card reveal"><h3>Regulators / risk functions</h3><p><span class="label">Role</span> Oversight bodies and committees.</p><p><span class="label">Incentive</span> Transparent controls.</p><p><span class="label">Concern</span> Misuse and independence.</p></article>
+          <div class="stakeholder-insights reveal" aria-label="Stakeholder synthesis">
+            <div class="insight-tile"><span>3</span><p>Primary workflow markets: tax, legal, and private equity value creation.</p></div>
+            <div class="insight-tile"><span>4</span><p>Control domains to watch: privacy, security, independence, and model quality.</p></div>
+            <div class="insight-tile"><span>1</span><p>Core strategic question: who owns the client workflow layer?</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros-cons" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Pros and Cons by Party</p>
+          <h2>Upside is real, but governance has to work.</h2>
+        </div>
+        <p class="section-copy">A concise view of public disclosures and standard enterprise AI diligence.</p>
+      </div>
+      <div class="comparison-grid">
+        <article class="card party-card reveal">
+          <div class="party-head"><h3>KPMG</h3></div>
+          <div class="pros-cons">
+            <div class="pc-column">
+              <div class="pc-title"><i data-lucide="plus-circle"></i>Pros</div>
+              <ul>
+                <li>Stronger Digital Gateway differentiation.</li>
+                <li>Better Tax &amp; Legal automation.</li>
+                <li>Access to Claude across workforce.</li>
+                <li>Stronger private equity value proposition.</li>
+                <li>Keeps client workflow inside KPMG's platform.</li>
+                <li>Sharper Big Four AI positioning.</li>
+              </ul>
+            </div>
+            <div class="pc-column">
+              <div class="pc-title"><i data-lucide="alert-circle"></i>Cons / Risks</div>
+              <ul>
+                <li>Vendor dependence on Anthropic.</li>
+                <li>Model-risk exposure.</li>
+                <li>Data privacy and residency ambiguity.</li>
+                <li>Change burden across 276,000+ people.</li>
+                <li>Professional-independence constraints.</li>
+                <li>Contract terms not publicly disclosed.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+        <article class="card party-card reveal">
+          <div class="party-head"><h3>Anthropic</h3></div>
+          <div class="pros-cons">
+            <div class="pc-column">
+              <div class="pc-title"><i data-lucide="plus-circle"></i>Pros</div>
+              <ul>
+                <li>Big Four enterprise distribution.</li>
+                <li>Regulated workflow proof point.</li>
+                <li>Access to KPMG's global client base.</li>
+                <li>Expansion into tax, legal, cyber, and PE.</li>
+                <li>Stronger position against OpenAI.</li>
+              </ul>
+            </div>
+            <div class="pc-column">
+              <div class="pc-title"><i data-lucide="alert-circle"></i>Cons / Risks</div>
+              <ul>
+                <li>Pressure in high-stakes workflows.</li>
+                <li>Multi-jurisdiction compliance burden.</li>
+                <li>Reputational risk if AI outputs fail.</li>
+                <li>Possible channel conflict.</li>
+                <li>Enterprise privacy and security expectations.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+        <article class="card party-card reveal">
+          <div class="party-head"><h3>Clients</h3></div>
+          <div class="pros-cons">
+            <div class="pc-column">
+              <div class="pc-title"><i data-lucide="plus-circle"></i>Pros</div>
+              <ul>
+                <li>Faster workflows.</li>
+                <li>KPMG expertise and AI in one platform.</li>
+                <li>Reduced context switching.</li>
+                <li>Potential cost and cycle-time gains.</li>
+              </ul>
+            </div>
+            <div class="pc-column">
+              <div class="pc-title"><i data-lucide="alert-circle"></i>Cons / Risks</div>
+              <ul>
+                <li>Need clarity on retention and hosting.</li>
+                <li>Need human review for high-stakes advice.</li>
+                <li>Risk of overreliance on AI outputs.</li>
+                <li>Need clear accountability.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="risks" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Risk Heatmap</p>
+          <h2>The real risk is uncontrolled adoption.</h2>
+        </div>
+        <p class="section-copy">Analytical judgments from public disclosures; not KPMG or Anthropic risk ratings.</p>
+      </div>
+      <div class="table-wrap reveal">
+        <table class="heatmap">
+          <thead>
+            <tr>
+              <th>Risk</th>
+              <th>Likelihood</th>
+              <th>Impact</th>
+              <th>Mitigation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="table-primary">Model hallucination / incorrect outputs</td><td><span class="risk-likelihood heat-high">High</span></td><td><span class="risk-impact heat-high">High</span></td><td>Human review, QA sampling, audit trails</td></tr>
+            <tr><td class="table-primary">Data privacy / residency uncertainty</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-impact heat-high">High</span></td><td>Explicit contractual clauses</td></tr>
+            <tr><td class="table-primary">Vendor lock-in</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-impact heat-medhigh">Medium-High</span></td><td>Multi-model architecture</td></tr>
+            <tr><td class="table-primary">Professional-independence concerns</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-impact heat-high">High</span></td><td>Ring-fence audit and restricted-client work</td></tr>
+            <tr><td class="table-primary">Adoption failure</td><td><span class="risk-likelihood heat-high">High</span></td><td><span class="risk-impact heat-medium">Medium</span></td><td>Training, champions, workflow redesign</td></tr>
+            <tr><td class="table-primary">IP ownership ambiguity</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-impact heat-medium">Medium</span></td><td>Contractual IP provisions</td></tr>
+            <tr><td class="table-primary">Security exposure from agentic tools</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-impact heat-high">High</span></td><td>Sandboxing, permission controls, logging</td></tr>
+            <tr><td class="table-primary">Reputational risk</td><td><span class="risk-likelihood heat-medium">Medium</span></td><td><span class="risk-impact heat-high">High</span></td><td>Governance, disclosure, controlled rollout</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="risk-note reveal">Risk ratings here are analytical judgments from public disclosures, not disclosed KPMG or Anthropic ratings.</div>
+      <div class="risk-details-grid">
+        <details class="risk-card reveal"><summary>Model hallucination</summary><p>Tax and legal work needs QA, human signoff, and traceable source grounding.</p></details>
+        <details class="risk-card reveal"><summary>Data privacy</summary><p>KPMG-specific hosting, residency, and zero-data-retention terms are not public.</p></details>
+        <details class="risk-card reveal"><summary>Independence</summary><p>WSJ says Claude is not directly integrated into audit workflows, reducing but not removing oversight concerns.</p></details>
+        <details class="risk-card reveal"><summary>Agentic tools</summary><p>Agents need scoped permissions, logs, sandboxing, and approval workflows.</p></details>
+      </div>
+    </section>
+
+    <section id="competitive" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Competitive Landscape</p>
+          <h2>Claude and OpenAI are using consulting channels to reach enterprise workflows.</h2>
+        </div>
+        <div class="source-stack">
+          <a class="source-pill" href="https://www.anthropic.com/news/deloitte-anthropic-partnership" target="_blank" rel="noopener">Source: Deloitte + Anthropic</a>
+          <a class="source-pill" href="https://openai.com/index/frontier-alliance-partners/" target="_blank" rel="noopener">Source: OpenAI Frontier Alliances</a>
+        </div>
+      </div>
+      <div class="logo-strip reveal" aria-label="Required logo placeholders">
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/kpmg-logo.svg --><img src="assets/logos/kpmg-logo.svg" alt="KPMG logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>KPMG</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/anthropic-logo.svg --><img src="assets/logos/anthropic-logo.svg" alt="Anthropic logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>Anthropic</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/claude-logo.svg --><img src="assets/logos/claude-logo.svg" alt="Claude logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>Claude</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/microsoft-azure-logo.svg --><img src="assets/logos/microsoft-azure-logo.svg" alt="Microsoft Azure logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>Microsoft Azure</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/openai-logo.svg --><img src="assets/logos/openai-logo.svg" alt="OpenAI logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>OpenAI</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/deloitte-logo.svg --><img src="assets/logos/deloitte-logo.svg" alt="Deloitte logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>Deloitte</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/pwc-logo.svg --><img src="assets/logos/pwc-logo.svg" alt="PwC logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>PwC</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/mckinsey-logo.svg --><img src="assets/logos/mckinsey-logo.svg" alt="McKinsey logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>McKinsey</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/bcg-logo.svg --><img src="assets/logos/bcg-logo.svg" alt="BCG logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>BCG</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/accenture-logo.svg --><img src="assets/logos/accenture-logo.svg" alt="Accenture logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>Accenture</span></div>
+        <div class="logo-tile compact"><!-- Real logo insertion point: dashboard/assets/logos/capgemini-logo.svg --><img src="assets/logos/capgemini-logo.svg" alt="Capgemini logo" onerror="this.hidden=true; this.nextElementSibling.hidden=false;" /><span class="logo-fallback" hidden>Capgemini</span></div>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead>
+            <tr>
+              <th>Alliance / Firm</th>
+              <th>Model Provider</th>
+              <th>Nature of Relationship</th>
+              <th>Strategic Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="table-primary">KPMG + Anthropic</td><td>Claude</td><td>Digital Gateway platform embedding</td><td>Workflow-level enterprise AI</td></tr>
+            <tr><td class="table-primary">Deloitte + Anthropic</td><td>Claude</td><td>Workforce and industry solutions</td><td>Anthropic Big Four expansion</td></tr>
+            <tr><td class="table-primary">PwC + Anthropic</td><td>Claude</td><td>Expanded strategic alliance</td><td>Consulting-led Claude deployment</td></tr>
+            <tr><td class="table-primary">McKinsey + OpenAI</td><td>OpenAI</td><td>Frontier Alliance</td><td>Enterprise AI transformation</td></tr>
+            <tr><td class="table-primary">BCG + OpenAI</td><td>OpenAI</td><td>Frontier Alliance</td><td>Strategic AI consulting deployment</td></tr>
+            <tr><td class="table-primary">Accenture + OpenAI</td><td>OpenAI</td><td>Enterprise partnership</td><td>AI transformation at scale</td></tr>
+            <tr><td class="table-primary">Capgemini + OpenAI</td><td>OpenAI</td><td>Frontier Alliance</td><td>Systems integration channel</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="source-stack reveal" style="justify-content: flex-start; margin-top: 14px;">
+        <a class="source-pill" href="https://www.anthropic.com/news/pwc-expanded-partnership" target="_blank" rel="noopener">Source: Anthropic PwC</a>
+        <a class="source-pill" href="https://openai.com/index/accenture-partnership/" target="_blank" rel="noopener">Source: OpenAI Accenture</a>
+      </div>
+    </section>
+
+    <section id="known" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Publicly Known vs. Not Disclosed</p>
+          <h2>The diligence view: known facts versus open questions.</h2>
+        </div>
+        <p class="section-copy">No assumptions are made on deal value, duration, pricing, revenue share, or minimum spend.</p>
+      </div>
+      <div class="known-grid">
+        <article class="known-panel known reveal">
+          <h3><i data-lucide="check-circle-2"></i>Publicly Known</h3>
+          <ul>
+            <li>Alliance announced on 19 May 2026.</li>
+            <li>Claude embedded into KPMG Digital Gateway.</li>
+            <li>Initial focus includes Tax &amp; Legal and private equity.</li>
+            <li>Claude access planned for 276,000+ KPMG people.</li>
+            <li>KPMG named preferred consultant for private equity.</li>
+            <li>Digital Gateway is built on Microsoft Azure.</li>
+            <li>KPMG Workbench is built on Microsoft technology / Azure AI Foundry.</li>
+            <li>Claude not directly integrated into audit workflows according to WSJ.</li>
+          </ul>
+        </article>
+        <article class="known-panel unknown reveal">
+          <h3><i data-lucide="circle-help"></i>Not Publicly Disclosed</h3>
+          <ul>
+            <li>Deal value.</li>
+            <li>Contract duration.</li>
+            <li>Pricing model.</li>
+            <li>Minimum spend.</li>
+            <li>Revenue-sharing arrangement.</li>
+            <li>Exact exclusivity boundaries.</li>
+            <li>Exact Claude model versions.</li>
+            <li>Exact model-hosting route.</li>
+            <li>Zero-data-retention status for KPMG.</li>
+            <li>Specific data-residency arrangement.</li>
+            <li>IP ownership for co-developed PE products.</li>
+            <li>SLAs / indemnities / termination rights.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="source-stack reveal" style="justify-content: flex-start; margin-top: 14px;">
+        <a class="source-pill" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener">Source: KPMG</a>
+        <a class="source-pill" href="https://www.anthropic.com/news/anthropic-kpmg" target="_blank" rel="noopener">Source: Anthropic</a>
+        <a class="source-pill" href="https://fortune.com/2026/05/26/kpmg-anthropic-claude-partnership-big-four-ai/" target="_blank" rel="noopener">Source: Fortune</a>
+        <a class="source-pill" href="https://www.wsj.com/cfo-journal/kpmg-taps-anthropic-to-revamp-global-tax-advisory-platforms-853093bb" target="_blank" rel="noopener">Source: WSJ</a>
+      </div>
+    </section>
+
+    <section id="takeaways" class="section">
+      <div class="takeaway-hero reveal">
+        <div>
+          <p class="section-kicker" style="color:#c9a76c;">Consulting Takeaways</p>
+          <h2>The lesson is not "pick Claude." It is: control workflow, keep models flexible, and build governance early.</h2>
+        </div>
+      </div>
+      <div class="takeaway-grid">
+        <div class="takeaway-card reveal">Own the platform layer, not just the AI license.</div>
+        <div class="takeaway-card reveal">Start with high-value, document-heavy, judgment-intensive workflows.</div>
+        <div class="takeaway-card reveal">Use AI to compress cycle time, not remove professional accountability.</div>
+        <div class="takeaway-card reveal">Negotiate data, retention, residency, and IP rights upfront.</div>
+        <div class="takeaway-card reveal">Preserve multi-model portability.</div>
+        <div class="takeaway-card reveal">Build human-in-the-loop controls.</div>
+        <div class="takeaway-card reveal">Measure economics, not just adoption.</div>
+        <div class="takeaway-card reveal">Treat training and change management as core value drivers.</div>
+      </div>
+    </section>
+
+    <section id="sources" class="section">
+      <div class="section-head reveal">
+        <div>
+          <p class="section-kicker">Source Library</p>
+          <h2>Primary sources, reporting, and technical docs.</h2>
+        </div>
+        <p class="section-copy">Use the filter to find supporting source cards.</p>
+      </div>
+      <div class="source-controls reveal">
+        <label class="search-box">
+          <i data-lucide="search"></i>
+          <input id="sourceSearch" type="search" placeholder="Search source library" aria-label="Search source library" />
+        </label>
+      </div>
+      <div class="source-grid" id="sourceGrid">
+        <a class="source-card reveal" href="https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html" target="_blank" rel="noopener"><span class="source-type">Primary</span><strong>KPMG press release</strong><span>https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html</span></a>
+        <a class="source-card reveal" href="https://www.anthropic.com/news/anthropic-kpmg" target="_blank" rel="noopener"><span class="source-type">Primary</span><strong>Anthropic announcement</strong><span>https://www.anthropic.com/news/anthropic-kpmg</span></a>
+        <a class="source-card reveal" href="https://www.wsj.com/cfo-journal/kpmg-taps-anthropic-to-revamp-global-tax-advisory-platforms-853093bb" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>WSJ coverage</strong><span>https://www.wsj.com/cfo-journal/kpmg-taps-anthropic-to-revamp-global-tax-advisory-platforms-853093bb</span></a>
+        <a class="source-card reveal" href="https://fortune.com/2026/05/26/kpmg-anthropic-claude-partnership-big-four-ai/" target="_blank" rel="noopener"><span class="source-type">Reporting</span><strong>Fortune interview</strong><span>https://fortune.com/2026/05/26/kpmg-anthropic-claude-partnership-big-four-ai/</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html" target="_blank" rel="noopener"><span class="source-type">Financial</span><strong>KPMG FY25 revenue release</strong><span>https://kpmg.com/xx/en/media/press-releases/2025/12/kpmg-delivers-rise-in-global-revenue.html</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/pk/en/about/performance.html" target="_blank" rel="noopener"><span class="source-type">Financial</span><strong>KPMG performance summary</strong><span>https://kpmg.com/pk/en/about/performance.html</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/xx/en/our-insights/ai-and-technology/kpmg-digital-gateway.html" target="_blank" rel="noopener"><span class="source-type">Platform</span><strong>KPMG Digital Gateway</strong><span>https://kpmg.com/xx/en/our-insights/ai-and-technology/kpmg-digital-gateway.html</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/us/en/capabilities-services/ai/kpmg-workbench.html" target="_blank" rel="noopener"><span class="source-type">Platform</span><strong>KPMG Workbench</strong><span>https://kpmg.com/us/en/capabilities-services/ai/kpmg-workbench.html</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/xx/en/media/press-releases/2025/06/kpmg-launches-a-multi-agent-ai-platform-transforming-client-delivery-and-ways-of-working-across-the-global-organization.html" target="_blank" rel="noopener"><span class="source-type">Platform</span><strong>KPMG Workbench launch</strong><span>https://kpmg.com/xx/en/media/press-releases/2025/06/kpmg-launches-a-multi-agent-ai-platform-transforming-client-delivery-and-ways-of-working-across-the-global-organization.html</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/us/en/media/news/tax-ai-accelerator-program.html" target="_blank" rel="noopener"><span class="source-type">Platform</span><strong>KPMG Tax AI Accelerator</strong><span>https://kpmg.com/us/en/media/news/tax-ai-accelerator-program.html</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/us/en/media/news/utaustin-kpmg-study.html" target="_blank" rel="noopener"><span class="source-type">Study</span><strong>KPMG + UT Austin AI study</strong><span>https://kpmg.com/us/en/media/news/utaustin-kpmg-study.html</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/kpmg-us/content/dam/kpmg/pdf/2026/kpmg-blaze.pdf" target="_blank" rel="noopener"><span class="source-type">Claims</span><strong>KPMG Blaze PDF</strong><span>https://kpmg.com/kpmg-us/content/dam/kpmg/pdf/2026/kpmg-blaze.pdf</span></a>
+        <a class="source-card reveal" href="https://kpmg.com/xx/en/what-we-do/services/ai/trusted-ai-framework.html" target="_blank" rel="noopener"><span class="source-type">Governance</span><strong>KPMG Trusted AI</strong><span>https://kpmg.com/xx/en/what-we-do/services/ai/trusted-ai-framework.html</span></a>
+        <a class="source-card reveal" href="https://www.anthropic.com/news/claude-partner-network" target="_blank" rel="noopener"><span class="source-type">Partner</span><strong>Anthropic Claude Partner Network</strong><span>https://www.anthropic.com/news/claude-partner-network</span></a>
+        <a class="source-card reveal" href="https://platform.claude.com/docs/en/managed-agents/overview" target="_blank" rel="noopener"><span class="source-type">Docs</span><strong>Anthropic Managed Agents</strong><span>https://platform.claude.com/docs/en/managed-agents/overview</span></a>
+        <a class="source-card reveal" href="https://claude.com/product/claude-code" target="_blank" rel="noopener"><span class="source-type">Product</span><strong>Claude Code</strong><span>https://claude.com/product/claude-code</span></a>
+        <a class="source-card reveal" href="https://platform.claude.com/docs/en/intro" target="_blank" rel="noopener"><span class="source-type">Docs</span><strong>Claude documentation intro</strong><span>https://platform.claude.com/docs/en/intro</span></a>
+        <a class="source-card reveal" href="https://platform.claude.com/docs/en/manage-claude/api-and-data-retention" target="_blank" rel="noopener"><span class="source-type">Docs</span><strong>Claude API and data retention</strong><span>https://platform.claude.com/docs/en/manage-claude/api-and-data-retention</span></a>
+        <a class="source-card reveal" href="https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry" target="_blank" rel="noopener"><span class="source-type">Docs</span><strong>Claude in Microsoft Foundry</strong><span>https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry</span></a>
+        <a class="source-card reveal" href="https://www.anthropic.com/news/deloitte-anthropic-partnership" target="_blank" rel="noopener"><span class="source-type">Competitive</span><strong>Anthropic Deloitte partnership</strong><span>https://www.anthropic.com/news/deloitte-anthropic-partnership</span></a>
+        <a class="source-card reveal" href="https://www.anthropic.com/news/pwc-expanded-partnership" target="_blank" rel="noopener"><span class="source-type">Competitive</span><strong>Anthropic PwC partnership</strong><span>https://www.anthropic.com/news/pwc-expanded-partnership</span></a>
+        <a class="source-card reveal" href="https://www.anthropic.com/news/enterprise-ai-services-company" target="_blank" rel="noopener"><span class="source-type">Competitive</span><strong>Anthropic enterprise AI services company</strong><span>https://www.anthropic.com/news/enterprise-ai-services-company</span></a>
+        <a class="source-card reveal" href="https://openai.com/index/frontier-alliance-partners/" target="_blank" rel="noopener"><span class="source-type">Competitive</span><strong>OpenAI Frontier Alliances</strong><span>https://openai.com/index/frontier-alliance-partners/</span></a>
+        <a class="source-card reveal" href="https://openai.com/index/accenture-partnership/" target="_blank" rel="noopener"><span class="source-type">Competitive</span><strong>OpenAI Accenture partnership</strong><span>https://openai.com/index/accenture-partnership/</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><strong>Data integrity note:</strong> This dashboard does not estimate deal value, pricing, revenue share, duration, hosting route, or KPMG-specific retention terms. Undisclosed items are labeled "Not publicly disclosed."</p>
+  </footer>
+
+  <button class="icon-button back-to-top tooltip-wrap" id="backToTop" type="button" aria-label="Back to top" data-tip="Back to top">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const sourceColors = {
+      text: () => getComputedStyle(document.documentElement).getPropertyValue("--card-text").trim() || "#092d53",
+      muted: () => getComputedStyle(document.documentElement).getPropertyValue("--card-muted").trim() || "#47556a",
+      line: () => "rgba(9, 45, 83, 0.12)",
+      kpmg: () => getComputedStyle(document.documentElement).getPropertyValue("--kpmg").trim(),
+      anthropic: () => getComputedStyle(document.documentElement).getPropertyValue("--anthropic").trim(),
+      cyan: () => getComputedStyle(document.documentElement).getPropertyValue("--cyan").trim()
+    };
+
+    if (window.lucide) {
+      lucide.createIcons({ attrs: { width: 18, height: 18, strokeWidth: 2 } });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", (event) => {
+        const target = document.querySelector(anchor.getAttribute("href"));
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+      });
+    });
+
+    const progressBar = document.getElementById("progressBar");
+    const backToTop = document.getElementById("backToTop");
+    const navLinks = [...document.querySelectorAll(".nav-links a")];
+    const sections = navLinks.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+
+    function updateScrollState() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      backToTop.classList.toggle("visible", scrollTop > 700);
+
+      let current = sections[0]?.id;
+      sections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= 130) current = section.id;
+      });
+      navLinks.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === `#${current}`));
+    }
+
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+    updateScrollState();
+
+    backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" }));
+
+    const themeToggle = document.getElementById("themeToggle");
+    document.documentElement.removeAttribute("data-theme");
+
+    function refreshCharts() {
+      Object.values(window.dashboardCharts || {}).forEach((chart) => {
+        if (!chart || !chart.options) {
+          renderFallbackCharts();
+          return;
+        }
+        chart.options.plugins.legend.labels.color = sourceColors.text();
+        chart.options.scales && Object.values(chart.options.scales).forEach((scale) => {
+          if (scale.ticks) scale.ticks.color = sourceColors.text();
+          if (scale.grid) scale.grid.color = sourceColors.line();
+          if (scale.pointLabels) scale.pointLabels.color = sourceColors.text();
+        });
+        chart.update();
+      });
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "light" ? "" : "light";
+      if (next) {
+        document.documentElement.dataset.theme = next;
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+      refreshCharts();
+    });
+
+    const printModeToggle = document.getElementById("printModeToggle");
+    printModeToggle.addEventListener("click", () => {
+      window.print();
+    });
+
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateCounter(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.55 });
+
+    document.querySelectorAll(".counter").forEach((counter) => counterObserver.observe(counter));
+
+    function animateCounter(el) {
+      const target = Number(el.dataset.target);
+      const decimals = Number(el.dataset.decimals || 0);
+      const format = el.dataset.format || "";
+      const duration = prefersReducedMotion ? 0 : 1300;
+      const start = performance.now();
+
+      function formatValue(value) {
+        if (format === "compact-plus") return `${Math.round(value).toLocaleString()}+`;
+        return value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+      }
+
+      function frame(now) {
+        const pct = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - pct, 3);
+        el.textContent = formatValue(target * eased);
+        if (pct < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    if (window.gsap && window.ScrollTrigger && !prefersReducedMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.to(".hero-media", { scale: 1, duration: 1.8, ease: "power2.out" });
+      gsap.from(".heading-logo", { y: 18, scale: 0.98, duration: 0.7, stagger: 0.12, ease: "power3.out" });
+      gsap.from(".heading-logo-separator", { opacity: 0, scale: 0.7, rotate: -90, duration: 0.6, ease: "back.out(1.8)", delay: 0.25 });
+      gsap.utils.toArray(".reveal").forEach((el) => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 88%" }
+        });
+      });
+      gsap.utils.toArray(".dashboard-grid, .stakeholder-grid, .takeaway-grid, .source-grid").forEach((grid) => {
+        gsap.from(grid.children, {
+          opacity: 0,
+          y: 18,
+          duration: 0.55,
+          stagger: 0.045,
+          ease: "power2.out",
+          scrollTrigger: { trigger: grid, start: "top 86%" }
+        });
+      });
+      gsap.utils.toArray(".impact-bar").forEach((bar) => {
+        gsap.to(bar, {
+          scaleX: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: bar, start: "top 90%" }
+        });
+      });
+    } else {
+      document.querySelectorAll(".reveal").forEach((el) => {
+        el.style.opacity = 1;
+        el.style.transform = "none";
+      });
+      document.querySelectorAll(".impact-bar").forEach((bar) => {
+        bar.style.transform = "scaleX(1)";
+      });
+    }
+
+    function setupCanvas(canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, width: rect.width, height: rect.height };
+    }
+
+    function drawFallbackBar(canvasId, labels, values, suffix = "") {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvas(canvas);
+      const max = Math.max(...values) * 1.25;
+      const left = 42;
+      const bottom = 42;
+      const top = 28;
+      const plotH = height - top - bottom;
+      const barW = (width - left - 20) / values.length * 0.58;
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(9,45,83,0.14)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = top + (plotH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(left, y);
+        ctx.lineTo(width - 12, y);
+        ctx.stroke();
+      }
+      values.forEach((value, i) => {
+        const x = left + i * ((width - left - 20) / values.length) + 14;
+        const h = (value / max) * plotH;
+        const y = top + plotH - h;
+        ctx.fillStyle = [sourceColors.anthropic(), sourceColors.cyan(), sourceColors.kpmg()][i % 3];
+        ctx.fillRect(x, y, barW, h);
+        ctx.fillStyle = sourceColors.text();
+        ctx.font = "800 13px Inter, Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(`${value}${suffix}`, x + barW / 2, y - 10);
+        ctx.font = "700 11px Inter, Arial";
+        ctx.fillText(labels[i], x + barW / 2, height - 16);
+      });
+    }
+
+    function drawFallbackDoughnut() {
+      const canvas = document.getElementById("revenueChart");
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvas(canvas);
+      const values = [16.4, 14.1, 9.3];
+      const colors = [sourceColors.kpmg(), sourceColors.cyan(), sourceColors.anthropic()];
+      const total = values.reduce((a, b) => a + b, 0);
+      const cx = width / 2;
+      const cy = height / 2;
+      const r = Math.min(width, height) * 0.34;
+      let start = -Math.PI / 2;
+      ctx.clearRect(0, 0, width, height);
+      values.forEach((value, i) => {
+        const angle = (value / total) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, start, start + angle);
+        ctx.closePath();
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+        const mid = start + angle / 2;
+        ctx.fillStyle = sourceColors.text();
+        ctx.font = "800 12px Inter, Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(`${Math.round(value / total * 100)}%`, cx + Math.cos(mid) * r * 0.66, cy + Math.sin(mid) * r * 0.66);
+        start += angle;
+      });
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.58, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = sourceColors.text();
+      ctx.font = "900 20px Inter, Arial";
+      ctx.fillText("$39.8B", cx, cy - 4);
+      ctx.font = "700 11px Inter, Arial";
+      ctx.fillText("total", cx, cy + 18);
+    }
+
+    function drawFallbackRadar() {
+      const canvas = document.getElementById("riskProfileChart");
+      if (!canvas) return;
+      const { ctx, width, height } = setupCanvas(canvas);
+      const labels = ["Output", "Data", "Vendor", "Ind.", "Adopt.", "Security"];
+      const values = [5, 4, 3, 4, 4, 4];
+      const cx = width / 2;
+      const cy = height / 2 + 6;
+      const r = Math.min(width, height) * 0.32;
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(9,45,83,0.16)";
+      ctx.fillStyle = sourceColors.text();
+      ctx.font = "700 11px Inter, Arial";
+      ctx.textAlign = "center";
+      for (let level = 1; level <= 5; level++) {
+        ctx.beginPath();
+        labels.forEach((_, i) => {
+          const a = -Math.PI / 2 + i * Math.PI * 2 / labels.length;
+          const rr = r * level / 5;
+          const x = cx + Math.cos(a) * rr;
+          const y = cy + Math.sin(a) * rr;
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.stroke();
+      }
+      const points = values.map((value, i) => {
+        const a = -Math.PI / 2 + i * Math.PI * 2 / labels.length;
+        return { x: cx + Math.cos(a) * r * value / 5, y: cy + Math.sin(a) * r * value / 5, a };
+      });
+      ctx.beginPath();
+      points.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.fillStyle = "rgba(52,98,252,0.2)";
+      ctx.fill();
+      ctx.strokeStyle = sourceColors.cyan();
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      labels.forEach((label, i) => {
+        const a = -Math.PI / 2 + i * Math.PI * 2 / labels.length;
+        ctx.fillStyle = sourceColors.text();
+        ctx.fillText(label, cx + Math.cos(a) * (r + 26), cy + Math.sin(a) * (r + 22));
+      });
+    }
+
+    function renderFallbackCharts() {
+      window.dashboardCharts = { fallback: true };
+      drawFallbackDoughnut();
+      drawFallbackBar("growthChart", ["Tax", "Audit", "Advisory"], [7.5, 6.0, 2.9], "%");
+      drawFallbackBar("visibilityChart", ["Known", "Undisclosed"], [8, 12], "");
+      drawFallbackRadar();
+    }
+
+    function createCharts() {
+      if (!window.Chart) {
+        renderFallbackCharts();
+        return;
+      }
+      const valueLabelPlugin = {
+        id: "valueLabelPlugin",
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx;
+          const chartType = chart.config.type;
+          ctx.save();
+          ctx.fillStyle = sourceColors.text();
+          ctx.font = "700 12px Inter, Arial, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+
+          if (chartType === "bar") {
+            chart.data.datasets.forEach((dataset, datasetIndex) => {
+              const meta = chart.getDatasetMeta(datasetIndex);
+              meta.data.forEach((bar, index) => {
+                const value = dataset.data[index];
+                const suffix = chart.canvas.id === "visibilityChart" ? "" : "%";
+                ctx.fillText(`${value}${suffix}`, bar.x, bar.y - 12);
+              });
+            });
+          }
+
+          if (chartType === "doughnut") {
+            const total = chart.data.datasets[0].data.reduce((sum, value) => sum + value, 0);
+            ctx.font = "700 13px Inter, Arial, sans-serif";
+            chart.getDatasetMeta(0).data.forEach((arc, index) => {
+              const value = chart.data.datasets[0].data[index];
+              const pct = Math.round((value / total) * 100);
+              const point = arc.tooltipPosition();
+              ctx.fillText(`${pct}%`, point.x, point.y);
+            });
+            ctx.font = "800 18px Inter, Arial, sans-serif";
+            ctx.fillText("$39.8B", chart.chartArea.left + chart.chartArea.width / 2, chart.chartArea.top + chart.chartArea.height / 2 - 8);
+            ctx.font = "700 11px Inter, Arial, sans-serif";
+            ctx.fillText("total", chart.chartArea.left + chart.chartArea.width / 2, chart.chartArea.top + chart.chartArea.height / 2 + 14);
+          }
+          ctx.restore();
+        }
+      };
+
+      const commonPlugins = {
+        legend: { labels: { color: sourceColors.text(), boxWidth: 12, boxHeight: 12, font: { family: "Inter", weight: 700 } } },
+        tooltip: {
+          backgroundColor: "rgba(7, 17, 31, 0.95)",
+          borderColor: "rgba(171, 206, 255, 0.25)",
+          borderWidth: 1,
+          titleFont: { family: "Inter", weight: 700 },
+          bodyFont: { family: "Inter", weight: 600 },
+          padding: 12
+        }
+      };
+
+      window.dashboardCharts = {};
+
+      window.dashboardCharts.revenue = new Chart(document.getElementById("revenueChart"), {
+        type: "doughnut",
+        data: {
+          labels: ["Advisory $16.4B", "Audit $14.1B", "Tax & Legal $9.3B"],
+          datasets: [{
+            data: [16.4, 14.1, 9.3],
+            backgroundColor: [sourceColors.kpmg(), sourceColors.cyan(), sourceColors.anthropic()],
+            borderColor: "rgba(255,255,255,0.12)",
+            borderWidth: 2,
+            hoverOffset: 10
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "64%",
+          plugins: {
+            ...commonPlugins,
+            valueLabelPlugin: {},
+            tooltip: {
+              ...commonPlugins.tooltip,
+              callbacks: { label: (context) => `${context.label}: $${context.raw}B` }
+            }
+          }
+        },
+        plugins: [valueLabelPlugin]
+      });
+
+      window.dashboardCharts.growth = new Chart(document.getElementById("growthChart"), {
+        type: "bar",
+        data: {
+          labels: ["Tax & Legal", "Audit", "Advisory"],
+          datasets: [{
+            label: "FY25 growth",
+            data: [7.5, 6.0, 2.9],
+            borderRadius: 8,
+            backgroundColor: [sourceColors.anthropic(), sourceColors.cyan(), sourceColors.kpmg()],
+            borderColor: "rgba(255,255,255,0.12)",
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: sourceColors.text(), font: { family: "Inter", weight: 700 } }, grid: { display: false } },
+            y: { beginAtZero: true, suggestedMax: 8.5, ticks: { color: sourceColors.text(), callback: (value) => `${value}%` }, grid: { color: sourceColors.line() } }
+          },
+          plugins: {
+            ...commonPlugins,
+            valueLabelPlugin: {},
+            tooltip: {
+              ...commonPlugins.tooltip,
+              callbacks: { label: (context) => `${context.raw}% growth` }
+            }
+          }
+        },
+        plugins: [valueLabelPlugin]
+      });
+
+      window.dashboardCharts.visibility = new Chart(document.getElementById("visibilityChart"), {
+        type: "bar",
+        data: {
+          labels: ["Known", "Not disclosed"],
+          datasets: [{
+            label: "Diligence items",
+            data: [8, 12],
+            borderRadius: 8,
+            backgroundColor: [sourceColors.cyan(), sourceColors.anthropic()],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: sourceColors.text(), font: { family: "Inter", weight: 700 } }, grid: { display: false } },
+            y: { beginAtZero: true, suggestedMax: 14, ticks: { color: sourceColors.text(), precision: 0 }, grid: { color: sourceColors.line() } }
+          },
+          plugins: {
+            ...commonPlugins,
+            valueLabelPlugin: {},
+            tooltip: {
+              ...commonPlugins.tooltip,
+              callbacks: { label: (context) => `${context.raw} items` }
+            }
+          }
+        },
+        plugins: [valueLabelPlugin]
+      });
+
+      window.dashboardCharts.riskProfile = new Chart(document.getElementById("riskProfileChart"), {
+        type: "radar",
+        data: {
+          labels: ["Output", "Data", "Vendor", "Independence", "Adoption", "Security"],
+          datasets: [{
+            label: "Analytical exposure score",
+            data: [5, 4, 3, 4, 4, 4],
+            backgroundColor: "rgba(52, 98, 252, 0.18)",
+            borderColor: sourceColors.cyan(),
+            pointBackgroundColor: sourceColors.anthropic(),
+            pointBorderColor: "#ffffff",
+            pointRadius: 4,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              min: 0,
+              max: 5,
+              ticks: { color: sourceColors.text(), backdropColor: "transparent", stepSize: 1 },
+              grid: { color: sourceColors.line() },
+              angleLines: { color: sourceColors.line() },
+              pointLabels: { color: sourceColors.text(), font: { family: "Inter", weight: 700, size: 12 } }
+            }
+          },
+          plugins: {
+            ...commonPlugins,
+            tooltip: {
+              ...commonPlugins.tooltip,
+              callbacks: { label: (context) => `${context.raw}/5 analytical score` }
+            }
+          }
+        }
+      });
+    }
+    createCharts();
+
+    const sourceSearch = document.getElementById("sourceSearch");
+    const sourceCards = [...document.querySelectorAll(".source-card")];
+    sourceSearch.addEventListener("input", () => {
+      const query = sourceSearch.value.trim().toLowerCase();
+      sourceCards.forEach((card) => {
+        card.style.display = card.textContent.toLowerCase().includes(query) ? "" : "none";
+      });
+    });
+
+    document.querySelectorAll(".glossary-grid details").forEach((item) => item.setAttribute("name", "glossary"));
+    document.querySelectorAll(".risk-details-grid details").forEach((item) => item.setAttribute("name", "risk-details"));
+    document.querySelectorAll(".glossary-grid, .risk-details-grid").forEach((group) => {
+      group.querySelectorAll("details").forEach((item) => {
+        item.addEventListener("toggle", () => {
+          if (!item.open) return;
+          group.querySelectorAll("details").forEach((other) => {
+            if (other !== item) other.open = false;
+          });
+        });
+      });
+    });
+
+    function runParticles() {
+      const canvas = document.getElementById("particle-canvas");
+      if (!canvas || prefersReducedMotion) return;
+      const ctx = canvas.getContext("2d");
+      let width = 0;
+      let height = 0;
+      let nodes = [];
+
+      function resize() {
+        const cssWidth = document.documentElement.clientWidth;
+        const cssHeight = window.innerHeight;
+        width = canvas.width = cssWidth * window.devicePixelRatio;
+        height = canvas.height = cssHeight * window.devicePixelRatio;
+        canvas.style.width = `${cssWidth}px`;
+        canvas.style.height = `${cssHeight}px`;
+        const count = Math.min(92, Math.max(38, Math.floor(cssWidth / 18)));
+        nodes = Array.from({ length: count }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.22 * window.devicePixelRatio,
+          vy: (Math.random() - 0.5) * 0.22 * window.devicePixelRatio,
+          r: (Math.random() * 1.5 + 0.65) * window.devicePixelRatio
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        nodes.forEach((node, i) => {
+          node.x += node.vx;
+          node.y += node.vy;
+          if (node.x < 0 || node.x > width) node.vx *= -1;
+          if (node.y < 0 || node.y > height) node.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+          ctx.fillStyle = i % 3 === 0 ? "rgba(201,167,108,0.24)" : "rgba(143,166,181,0.2)";
+          ctx.fill();
+
+          for (let j = i + 1; j < nodes.length; j++) {
+            const other = nodes[j];
+            const dx = node.x - other.x;
+            const dy = node.y - other.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const maxDist = 130 * window.devicePixelRatio;
+            if (dist < maxDist) {
+              ctx.beginPath();
+              ctx.moveTo(node.x, node.y);
+              ctx.lineTo(other.x, other.y);
+              ctx.strokeStyle = `rgba(143,166,181,${0.055 * (1 - dist / maxDist)})`;
+              ctx.lineWidth = 1 * window.devicePixelRatio;
+              ctx.stroke();
+            }
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      window.addEventListener("resize", resize);
+      draw();
+    }
+    runParticles();
+  </script>
+</body>
+</html>
