@@ -4707,10 +4707,32 @@
             });
             const calendlyUrl = 'https://calendly.com/shardulsingh166/30min?' + params.toString();
 
+            window.handleDiagSubmit = async (event) => {
+                event.preventDefault();
+                const form = event.target;
+                const button = form.querySelector('button[type="submit"]');
+                button.disabled = true;
+                button.innerHTML = 'Submitting... <i class="fa-solid fa-spinner fa-spin"></i>';
+
+                try {
+                    await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    window.location.href = calendlyUrl;
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    window.location.href = calendlyUrl;
+                }
+            };
+
             h += '<div class="diag-summary-cta diag-fade">' +
                 '<p>Based on your responses, we\'d like to offer a free diagnostic session to help identify your biggest opportunities, bottlenecks, and next steps.</p>' +
                 
-                '<form action="https://formspree.io/f/xlgkpryn" method="POST" onsubmit="window.open(\'' + escapeHTML(calendlyUrl) + '\', \'_blank\'); return true;">' +
+                '<form action="https://formspree.io/f/xlgkpryn" method="POST" onsubmit="window.handleDiagSubmit(event);">' +
                 '<input type="hidden" name="_subject" value="New Diagnostic Assessment Submission!">' +
                 '<input type="hidden" name="Stage" value="' + escapeHTML(items[0][1] || 'N/A') + '">' +
                 '<input type="hidden" name="Problem" value="' + escapeHTML(items[1][1] || 'N/A') + '">' +
